@@ -21,6 +21,15 @@ export enum Muscles {
 }
 
 /**
+ * Equipment represents the different types of equipment that can be used in an exercise.
+ */
+export interface Equipment {
+  id?: string;
+  name: string;
+  description?: string;
+}
+
+/**
  * Exercise represents a template exercise in the exercise library.
  * It contains the basic information about an exercise that doesn't change.
  */
@@ -28,6 +37,7 @@ export interface Exercise {
   id?: string;
   title: string;
   muscles: Muscles[];
+  equipment?: Equipment[];
   description?: string;
 }
 
