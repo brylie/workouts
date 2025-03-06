@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { getRandomExercises, getExercisesByMuscle, getExercisesByEquipment } from './exerciseData';
-import { getEquipmentDetails, getEquipmentDetailsForTypes } from './equipmentData';
+import { getEquipmentDetails, getEquipmentDetailsForTypes, getEquipment, equipmentList } from './equipmentData';
 import { Muscles, Equipment } from './enums';
 import * as lib from './index';
 import type { EquipmentDetails, ExerciseDetails, WorkoutItem, Workout } from './types';
@@ -331,5 +331,68 @@ describe('Equipment enum', () => {
     expect(Equipment.CableMachine).toBe('cable-machine');
     expect(Equipment.SeatedRowingMachine).toBe('seated-rowing-machine');
     expect(Equipment.LegPressMachine).toBe('leg-press-machine');
+  });
+});
+
+// Test equipmentData.ts
+
+describe('getEquipment', () => {
+  it('should return the correct equipment details for the specified type', () => {
+    const equipment = getEquipment(Equipment.Treadmill);
+    expect(equipment).toEqual({
+      id: Equipment.Treadmill,
+      name: 'Treadmill',
+      description: 'A machine for walking or running while staying in one place.'
+    });
+  });
+
+  it('should return undefined for an invalid equipment type', () => {
+    const equipment = getEquipment('invalid' as Equipment);
+    expect(equipment).toBeUndefined();
+  });
+});
+
+describe('getEquipmentDetails', () => {
+  it('should return the correct equipment details for the specified type', () => {
+    const equipment = getEquipmentDetails(Equipment.Treadmill);
+    expect(equipment).toEqual({
+      id: Equipment.Treadmill,
+      name: 'Treadmill',
+      description: 'A machine for walking or running while staying in one place.'
+    });
+  });
+
+  it('should return undefined for an invalid equipment type', () => {
+    const equipment = getEquipmentDetails('invalid' as Equipment);
+    expect(equipment).toBeUndefined();
+  });
+});
+
+describe('getEquipmentDetailsForTypes', () => {
+  it('should return the correct equipment details for multiple types', () => {
+    const equipment = getEquipmentDetailsForTypes([Equipment.Treadmill, Equipment.Dumbbells]);
+    expect(equipment).toEqual([
+      {
+        id: Equipment.Treadmill,
+        name: 'Treadmill',
+        description: 'A machine for walking or running while staying in one place.'
+      },
+      {
+        id: Equipment.Dumbbells,
+        name: 'Dumbbells',
+        description: 'A pair of handheld weights used for various exercises.'
+      }
+    ]);
+  });
+
+  it('should return an empty array when no equipment types are provided', () => {
+    const equipment = getEquipmentDetailsForTypes([]);
+    expect(equipment).toHaveLength(0);
+  });
+});
+
+describe('equipmentList', () => {
+  it('should contain all equipment details', () => {
+    expect(equipmentList).toHaveLength(Object.keys(equipmentRegistry).length);
   });
 });
