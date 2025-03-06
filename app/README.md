@@ -1,6 +1,6 @@
-# sv
+# Workouts App
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A SvelteKit-based personal training application using pnpm for package management.
 
 ## Creating a project
 
@@ -16,13 +16,39 @@ npx sv create my-app
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've cloned the project, install dependencies with pnpm:
 
 ```bash
-npm run dev
+pnpm install
+```
+
+Then start the development server:
+
+```bash
+pnpm dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm dev --open
+```
+
+## Testing
+
+Run unit tests:
+
+```bash
+pnpm test:unit
+```
+
+Generate test coverage reports:
+
+```bash
+pnpm test:coverage
+```
+
+Run end-to-end tests:
+
+```bash
+pnpm test:e2e
 ```
 
 ## Building
@@ -30,9 +56,51 @@ npm run dev -- --open
 To create a production version of your app:
 
 ```bash
-npm run build
+pnpm build
 ```
 
-You can preview the production build with `npm run preview`.
+You can preview the production build with:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```bash
+pnpm preview
+```
+
+## Project Structure
+
+- `src/lib/` - Contains core functionality:
+  - `enums.ts` - Enumeration types
+  - `types.ts` - TypeScript type definitions
+  - `equipmentData.ts` - Available equipment data
+  - `exerciseData.ts` - Exercise definitions
+  - `components/` - Reusable Svelte components
+
+- `src/routes/` - SvelteKit routes:
+  - `/` - Home page
+  - `/exercises/` - Exercise catalog
+  - `/workout/` - Workout planning and tracking
+
+## TypeScript Conventions
+
+When importing types, follow this pattern:
+
+```typescript
+// Import types separately
+import type { EquipmentDetails } from './types';
+
+// Import regular exports
+import { Equipment } from './enums';
+```
+
+## Adding Dependencies
+
+To add a new dependency:
+
+```bash
+pnpm add <package-name>
+```
+
+Example:
+
+```bash
+pnpm add -D @vitest/coverage-v8@3.0.8
+```
