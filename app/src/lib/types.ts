@@ -1,8 +1,10 @@
+import { Muscles, EquipmentType } from './enums';
+
 /**
  * Equipment represents the different types of equipment that can be used in an exercise.
  */
 export interface Equipment {
-  id?: string;
+  id: EquipmentType;
   name: string;
   description?: string;
 }
@@ -15,7 +17,7 @@ export interface Exercise {
   id?: string;
   title: string;
   muscles: Muscles[];
-  equipment?: Equipment[];
+  equipment?: EquipmentType[]; // Simplified to just use enum values
   description?: string;
 }
 

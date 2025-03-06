@@ -19,3 +19,26 @@ export enum Muscles {
   Forearms = 'forearms',
   Neck = 'neck'
 }
+
+/**
+ * EquipmentType is an enum representing the different types of equipment available.
+ * This provides type safety and autocompletion when referring to equipment.
+ */
+export enum EquipmentType {
+  BackExtensionMachine = 'back-extension-machine',
+  AbdominalCrunchMachine = 'abdominal-crunch-machine',
+  HipAbductorMachine = 'hip-abductor-machine',
+  HipAdductorMachine = 'hip-adductor-machine',
+  ShoulderPressMachine = 'shoulder-press-machine',
+  SeatedLegCurlMachine = 'seated-leg-curl-machine',
+  LegExtensionsMachine = 'leg-extensions-machine',
+  RotaryTorsoMachine = 'rotary-torso-machine',
+  Treadmill = 'treadmill',
+  StationaryCycle = 'stationary-cycle',
+  Dumbbells = 'dumbbells',
+  Bench = 'bench',
+  LatPulldownMachine = 'lat-pulldown-machine',
+  CableMachine = 'cable-machine',
+  SeatedRowingMachine = 'seated-rowing-machine',
+  LegPressMachine = 'leg-press-machine'
+}
