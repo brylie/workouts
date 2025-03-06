@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { getRandomExercises, getExercisesByMuscle, getExercisesByEquipment } from './exerciseData';
 import { getEquipmentDetails, getEquipmentDetailsForTypes } from './equipmentData';
 import { Muscles, Equipment } from './enums';
+import * as lib from './index';
+import type { EquipmentDetails, ExerciseDetails, WorkoutItem, Workout } from './types';
 
 // Test getRandomExercises function
 describe('getRandomExercises', () => {
@@ -99,5 +101,235 @@ describe('getEquipmentDetailsForTypes', () => {
   it('should return an empty array when no equipment types are provided', () => {
     const equipment = getEquipmentDetailsForTypes([]);
     expect(equipment).toHaveLength(0);
+  });
+});
+
+// Test index.ts exports
+describe('index.ts', () => {
+  it('should export enums', () => {
+    expect(lib.Muscles).toBeDefined();
+    expect(lib.Equipment).toBeDefined();
+  });
+
+  it('should export exerciseData functions', () => {
+    expect(lib.getRandomExercises).toBeDefined();
+    expect(lib.getExercisesByMuscle).toBeDefined();
+    expect(lib.getExercisesByEquipment).toBeDefined();
+  });
+});
+
+// Test models.ts types and interfaces
+
+describe('models.ts', () => {
+  it('should define Equipment interface', () => {
+    const equipment: EquipmentDetails = {
+      id: Equipment.Dumbbells,
+      name: 'Dumbbells',
+      description: 'A pair of handheld weights used for various exercises.'
+    };
+    expect(equipment).toBeDefined();
+    expect(equipment.id).toBe(Equipment.Dumbbells);
+    expect(equipment.name).toBe('Dumbbells');
+    expect(equipment.description).toBe('A pair of handheld weights used for various exercises.');
+  });
+
+  it('should define Exercise interface', () => {
+    const exercise: ExerciseDetails = {
+      id: 'push-up',
+      title: 'Push-Up',
+      muscles: [Muscles.Chest, Muscles.Triceps],
+      equipment: [],
+      description: 'A bodyweight exercise that targets the chest and triceps.'
+    };
+    expect(exercise).toBeDefined();
+    expect(exercise.id).toBe('push-up');
+    expect(exercise.title).toBe('Push-Up');
+    expect(exercise.muscles).toEqual(['chest', 'triceps']);
+    expect(exercise.equipment).toEqual([]);
+    expect(exercise.description).toBe('A bodyweight exercise that targets the chest and triceps.');
+  });
+
+  it('should define WorkoutItem interface', () => {
+    const workoutItem: WorkoutItem = {
+      exercise: {
+        id: 'push-up',
+        title: 'Push-Up',
+        muscles: [Muscles.Chest, Muscles.Triceps],
+        equipment: [],
+        description: 'A bodyweight exercise that targets the chest and triceps.'
+      },
+      sets: 3,
+      reps: 10,
+      weight: 0,
+      time: '30s',
+      notes: 'Keep your back straight.'
+    };
+    expect(workoutItem).toBeDefined();
+    expect(workoutItem.exercise.id).toBe('push-up');
+    expect(workoutItem.sets).toBe(3);
+    expect(workoutItem.reps).toBe(10);
+    expect(workoutItem.weight).toBe(0);
+    expect(workoutItem.time).toBe('30s');
+    expect(workoutItem.notes).toBe('Keep your back straight.');
+  });
+
+  it('should define Workout interface', () => {
+    const workout: Workout = {
+      title: 'Morning Workout',
+      date: new Date('2023-01-01'),
+      items: [
+        {
+          exercise: {
+            id: 'push-up',
+            title: 'Push-Up',
+            muscles: [Muscles.Chest, Muscles.Triceps],
+            equipment: [],
+            description: 'A bodyweight exercise that targets the chest and triceps.'
+          },
+          sets: 3,
+          reps: 10,
+          weight: 0,
+          time: '30s',
+          notes: 'Keep your back straight.'
+        }
+      ],
+      notes: 'Great workout!'
+    };
+    expect(workout).toBeDefined();
+    expect(workout.title).toBe('Morning Workout');
+    expect(workout.date).toEqual(new Date('2023-01-01'));
+    expect(workout.items).toHaveLength(1);
+    expect(workout.items[0].exercise.id).toBe('push-up');
+    expect(workout.notes).toBe('Great workout!');
+  });
+});
+
+// Test types.ts types and interfaces
+
+describe('types.ts', () => {
+  it('should define EquipmentDetails interface', () => {
+    const equipment: EquipmentDetails = {
+      id: Equipment.Dumbbells,
+      name: 'Dumbbells',
+      description: 'A pair of handheld weights used for various exercises.'
+    };
+    expect(equipment).toBeDefined();
+    expect(equipment.id).toBe('dumbbells');
+    expect(equipment.name).toBe('Dumbbells');
+    expect(equipment.description).toBe('A pair of handheld weights used for various exercises.');
+  });
+
+  it('should define ExerciseDetails interface', () => {
+    const exercise: ExerciseDetails = {
+      id: 'push-up',
+      title: 'Push-Up',
+      muscles: [Muscles.Chest, Muscles.Triceps],
+      equipment: [],
+      description: 'A bodyweight exercise that targets the chest and triceps.'
+    };
+    expect(exercise).toBeDefined();
+    expect(exercise.id).toBe('push-up');
+    expect(exercise.title).toBe('Push-Up');
+    expect(exercise.muscles).toEqual(['chest', 'triceps']);
+    expect(exercise.equipment).toEqual([]);
+    expect(exercise.description).toBe('A bodyweight exercise that targets the chest and triceps.');
+  });
+
+  it('should define WorkoutItem interface', () => {
+    const workoutItem: WorkoutItem = {
+      exercise: {
+        id: 'push-up',
+        title: 'Push-Up',
+        muscles: [Muscles.Chest, Muscles.Triceps],
+        equipment: [],
+        description: 'A bodyweight exercise that targets the chest and triceps.'
+      },
+      sets: 3,
+      reps: 10,
+      weight: 0,
+      time: '30s',
+      notes: 'Keep your back straight.'
+    };
+    expect(workoutItem).toBeDefined();
+    expect(workoutItem.exercise.id).toBe('push-up');
+    expect(workoutItem.sets).toBe(3);
+    expect(workoutItem.reps).toBe(10);
+    expect(workoutItem.weight).toBe(0);
+    expect(workoutItem.time).toBe('30s');
+    expect(workoutItem.notes).toBe('Keep your back straight.');
+  });
+
+  it('should define Workout interface', () => {
+    const workout: Workout = {
+      title: 'Morning Workout',
+      date: new Date('2023-01-01'),
+      items: [
+        {
+          exercise: {
+            id: 'push-up',
+            title: 'Push-Up',
+            muscles: [Muscles.Chest, Muscles.Triceps],
+            equipment: [],
+            description: 'A bodyweight exercise that targets the chest and triceps.'
+          },
+          sets: 3,
+          reps: 10,
+          weight: 0,
+          time: '30s',
+          notes: 'Keep your back straight.'
+        }
+      ],
+      notes: 'Great workout!'
+    };
+    expect(workout).toBeDefined();
+    expect(workout.title).toBe('Morning Workout');
+    expect(workout.date).toEqual(new Date('2023-01-01'));
+    expect(workout.items).toHaveLength(1);
+    expect(workout.items[0].exercise.id).toBe('push-up');
+    expect(workout.notes).toBe('Great workout!');
+  });
+});
+
+// Test enums.ts
+
+describe('Muscles enum', () => {
+  it('should contain the expected muscle groups', () => {
+    expect(Muscles.Abdominals).toBe('abdominals');
+    expect(Muscles.Lats).toBe('lats');
+    expect(Muscles.Biceps).toBe('biceps');
+    expect(Muscles.Chest).toBe('chest');
+    expect(Muscles.Glutes).toBe('glutes');
+    expect(Muscles.Hamstrings).toBe('hamstrings');
+    expect(Muscles.Quadriceps).toBe('quadriceps');
+    expect(Muscles.Shoulders).toBe('shoulders');
+    expect(Muscles.Triceps).toBe('triceps');
+    expect(Muscles.LowerBack).toBe('lower_back');
+    expect(Muscles.Calves).toBe('calves');
+    expect(Muscles.Trapezius).toBe('trapezius');
+    expect(Muscles.Abductors).toBe('abductors');
+    expect(Muscles.Adductors).toBe('adductors');
+    expect(Muscles.Forearms).toBe('forearms');
+    expect(Muscles.Neck).toBe('neck');
+  });
+});
+
+describe('Equipment enum', () => {
+  it('should contain the expected equipment types', () => {
+    expect(Equipment.BackExtensionMachine).toBe('back-extension-machine');
+    expect(Equipment.AbdominalCrunchMachine).toBe('abdominal-crunch-machine');
+    expect(Equipment.HipAbductorMachine).toBe('hip-abductor-machine');
+    expect(Equipment.HipAdductorMachine).toBe('hip-adductor-machine');
+    expect(Equipment.ShoulderPressMachine).toBe('shoulder-press-machine');
+    expect(Equipment.SeatedLegCurlMachine).toBe('seated-leg-curl-machine');
+    expect(Equipment.LegExtensionsMachine).toBe('leg-extensions-machine');
+    expect(Equipment.RotaryTorsoMachine).toBe('rotary-torso-machine');
+    expect(Equipment.Treadmill).toBe('treadmill');
+    expect(Equipment.StationaryCycle).toBe('stationary-cycle');
+    expect(Equipment.Dumbbells).toBe('dumbbells');
+    expect(Equipment.Bench).toBe('bench');
+    expect(Equipment.LatPulldownMachine).toBe('lat-pulldown-machine');
+    expect(Equipment.CableMachine).toBe('cable-machine');
+    expect(Equipment.SeatedRowingMachine).toBe('seated-rowing-machine');
+    expect(Equipment.LegPressMachine).toBe('leg-press-machine');
   });
 });
