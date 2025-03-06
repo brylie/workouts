@@ -1,10 +1,10 @@
-import { Muscles, EquipmentType } from './enums';
+import { Muscles, Equipment } from './enums';
 
 /**
  * Equipment represents the different types of equipment that can be used in an exercise.
  */
-export interface Equipment {
-  id: EquipmentType;
+export interface EquipmentDetails {
+  id: Equipment;
   name: string;
   description?: string;
 }
@@ -13,11 +13,11 @@ export interface Equipment {
  * Exercise represents a template exercise in the exercise library.
  * It contains the basic information about an exercise that doesn't change.
  */
-export interface Exercise {
+export interface ExerciseDetails {
   id?: string;
   title: string;
   muscles: Muscles[];
-  equipment?: EquipmentType[]; // Simplified to just use enum values
+  equipment?: Equipment[]; // Simplified to just use enum values
   description?: string;
 }
 
@@ -26,7 +26,7 @@ export interface Exercise {
  * including the performance parameters like sets, reps, etc.
  */
 export interface WorkoutItem {
-  exercise: Exercise;
+  exercise: ExerciseDetails;
   sets: number;
   reps?: number;
   weight?: number;

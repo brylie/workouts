@@ -1,88 +1,88 @@
-import type { Equipment } from './types';
-import { EquipmentType } from './enums';
+import type { EquipmentDetails } from './types';
+import { Equipment } from './enums';
 
 /**
  * A record of all available equipment, indexed by the EquipmentType enum.
  * This provides a type-safe way to reference equipment.
  */
-export const equipmentRegistry: Record<EquipmentType, Equipment> = {
-  [EquipmentType.BackExtensionMachine]: { 
-    id: EquipmentType.BackExtensionMachine, 
+export const equipmentRegistry: Record<Equipment, EquipmentDetails> = {
+  [Equipment.BackExtensionMachine]: { 
+    id: Equipment.BackExtensionMachine, 
     name: 'Back Extension Machine', 
     description: 'A machine used for performing back extension exercises.' 
   },
-  [EquipmentType.AbdominalCrunchMachine]: { 
-    id: EquipmentType.AbdominalCrunchMachine, 
+  [Equipment.AbdominalCrunchMachine]: { 
+    id: Equipment.AbdominalCrunchMachine, 
     name: 'Abdominal Crunch Machine', 
     description: 'A machine used for performing abdominal crunch exercises.' 
   },
-  [EquipmentType.HipAbductorMachine]: { 
-    id: EquipmentType.HipAbductorMachine, 
+  [Equipment.HipAbductorMachine]: { 
+    id: Equipment.HipAbductorMachine, 
     name: 'Hip Abductor Machine', 
     description: 'A machine used for performing hip abductor exercises.' 
   },
-  [EquipmentType.HipAdductorMachine]: { 
-    id: EquipmentType.HipAdductorMachine, 
+  [Equipment.HipAdductorMachine]: { 
+    id: Equipment.HipAdductorMachine, 
     name: 'Hip Adductor Machine', 
     description: 'A machine used for performing hip adductor exercises.' 
   },
-  [EquipmentType.ShoulderPressMachine]: { 
-    id: EquipmentType.ShoulderPressMachine, 
+  [Equipment.ShoulderPressMachine]: { 
+    id: Equipment.ShoulderPressMachine, 
     name: 'Shoulder Press Machine', 
     description: 'A machine used for performing shoulder press exercises.' 
   },
-  [EquipmentType.SeatedLegCurlMachine]: { 
-    id: EquipmentType.SeatedLegCurlMachine, 
+  [Equipment.SeatedLegCurlMachine]: { 
+    id: Equipment.SeatedLegCurlMachine, 
     name: 'Seated Leg Curl Machine', 
     description: 'A machine used for performing seated leg curl exercises.' 
   },
-  [EquipmentType.LegExtensionsMachine]: { 
-    id: EquipmentType.LegExtensionsMachine, 
+  [Equipment.LegExtensionsMachine]: { 
+    id: Equipment.LegExtensionsMachine, 
     name: 'Leg Extensions Machine', 
     description: 'A machine used for performing leg extension exercises.' 
   },
-  [EquipmentType.RotaryTorsoMachine]: { 
-    id: EquipmentType.RotaryTorsoMachine, 
+  [Equipment.RotaryTorsoMachine]: { 
+    id: Equipment.RotaryTorsoMachine, 
     name: 'Rotary Torso Machine', 
     description: 'A machine used for performing rotary torso exercises.' 
   },
-  [EquipmentType.Treadmill]: { 
-    id: EquipmentType.Treadmill, 
+  [Equipment.Treadmill]: { 
+    id: Equipment.Treadmill, 
     name: 'Treadmill', 
     description: 'A machine for walking or running while staying in one place.' 
   },
-  [EquipmentType.StationaryCycle]: { 
-    id: EquipmentType.StationaryCycle, 
+  [Equipment.StationaryCycle]: { 
+    id: Equipment.StationaryCycle, 
     name: 'Stationary Cycle', 
     description: 'A stationary bike used for cardio workouts.' 
   },
-  [EquipmentType.Dumbbells]: { 
-    id: EquipmentType.Dumbbells, 
+  [Equipment.Dumbbells]: { 
+    id: Equipment.Dumbbells, 
     name: 'Dumbbells', 
     description: 'A pair of handheld weights used for various exercises.' 
   },
-  [EquipmentType.Bench]: { 
-    id: EquipmentType.Bench, 
+  [Equipment.Bench]: { 
+    id: Equipment.Bench, 
     name: 'Bench', 
     description: 'A flat or adjustable bench used for exercises like bench press and dumbbell rows.' 
   },
-  [EquipmentType.LatPulldownMachine]: { 
-    id: EquipmentType.LatPulldownMachine, 
+  [Equipment.LatPulldownMachine]: { 
+    id: Equipment.LatPulldownMachine, 
     name: 'Lat Pulldown Machine', 
     description: 'A machine used for performing lat pulldown exercises.' 
   },
-  [EquipmentType.CableMachine]: { 
-    id: EquipmentType.CableMachine, 
+  [Equipment.CableMachine]: { 
+    id: Equipment.CableMachine, 
     name: 'Cable Machine', 
     description: 'A versatile machine with adjustable pulleys used for various resistance exercises.' 
   },
-  [EquipmentType.SeatedRowingMachine]: { 
-    id: EquipmentType.SeatedRowingMachine, 
+  [Equipment.SeatedRowingMachine]: { 
+    id: Equipment.SeatedRowingMachine, 
     name: 'Seated Rowing Machine', 
     description: 'A machine used for performing seated row exercises.' 
   },
-  [EquipmentType.LegPressMachine]: { 
-    id: EquipmentType.LegPressMachine, 
+  [Equipment.LegPressMachine]: { 
+    id: Equipment.LegPressMachine, 
     name: 'Leg Press Machine', 
     description: 'A machine used for performing leg press exercises.' 
   }
@@ -92,7 +92,7 @@ export const equipmentRegistry: Record<EquipmentType, Equipment> = {
  * Helper function to get equipment by its type.
  * This is completely type-safe and will provide autocompletion for equipment types.
  */
-export function getEquipment(type: EquipmentType): Equipment {
+export function getEquipment(type: Equipment): EquipmentDetails {
   return equipmentRegistry[type];
 }
 
@@ -102,7 +102,7 @@ export function getEquipment(type: EquipmentType): Equipment {
  * @param equipmentType The equipment type to get details for
  * @returns The equipment details including name and description
  */
-export function getEquipmentDetails(equipmentType: EquipmentType): Equipment {
+export function getEquipmentDetails(equipmentType: Equipment): EquipmentDetails {
   return equipmentRegistry[equipmentType];
 }
 
@@ -111,7 +111,7 @@ export function getEquipmentDetails(equipmentType: EquipmentType): Equipment {
  * @param types Array of equipment types
  * @returns Array of equipment details
  */
-export function getEquipmentDetailsForTypes(types: EquipmentType[]): Equipment[] {
+export function getEquipmentDetailsForTypes(types: Equipment[]): EquipmentDetails[] {
   return types.map(type => equipmentRegistry[type]);
 }
 
@@ -119,4 +119,4 @@ export function getEquipmentDetailsForTypes(types: EquipmentType[]): Equipment[]
  * A flat array of all equipment for convenience.
  * Use this when you need a simple array of all equipment.
  */
-export const equipmentList: Equipment[] = Object.values(equipmentRegistry);
+export const equipmentList: EquipmentDetails[] = Object.values(equipmentRegistry);

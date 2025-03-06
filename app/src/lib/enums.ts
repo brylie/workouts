@@ -24,7 +24,7 @@ export enum Muscles {
  * EquipmentType is an enum representing the different types of equipment available.
  * This provides type safety and autocompletion when referring to equipment.
  */
-export enum EquipmentType {
+export enum Equipment {
   BackExtensionMachine = 'back-extension-machine',
   AbdominalCrunchMachine = 'abdominal-crunch-machine',
   HipAbductorMachine = 'hip-abductor-machine',
