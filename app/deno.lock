@@ -5,6 +5,7 @@
     "npm:@eslint/js@^9.18.0": "9.21.0",
     "npm:@playwright/test@^1.49.1": "1.50.1",
     "npm:@sveltejs/adapter-auto@4": "4.0.0_@sveltejs+kit@2.18.0__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.22.5____acorn@8.14.1___vite@6.2.0____lightningcss@1.29.2__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_svelte@5.22.5__acorn@8.14.1_vite@6.2.0__lightningcss@1.29.2",
+    "npm:@sveltejs/adapter-static@^3.0.8": "3.0.8_@sveltejs+kit@2.18.0__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.22.5____acorn@8.14.1___vite@6.2.0____lightningcss@1.29.2__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_svelte@5.22.5__acorn@8.14.1_vite@6.2.0__lightningcss@1.29.2",
     "npm:@sveltejs/kit@^2.16.0": "2.18.0_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_svelte@5.22.5__acorn@8.14.1_vite@6.2.0__lightningcss@1.29.2",
     "npm:@sveltejs/vite-plugin-svelte@5": "5.0.3_svelte@5.22.5__acorn@8.14.1_vite@6.2.0__lightningcss@1.29.2",
     "npm:@tailwindcss/forms@~0.5.9": "0.5.10_tailwindcss@4.0.11",
@@ -400,6 +401,12 @@
       "dependencies": [
         "@sveltejs/kit@2.18.0_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_svelte@5.22.5__acorn@8.14.1_vite@6.2.0__lightningcss@1.29.2_vite@6.2.0",
         "import-meta-resolve"
+      ]
+    },
+    "@sveltejs/adapter-static@3.0.8_@sveltejs+kit@2.18.0__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.22.5____acorn@8.14.1___vite@6.2.0____lightningcss@1.29.2__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_svelte@5.22.5__acorn@8.14.1_vite@6.2.0__lightningcss@1.29.2": {
+      "integrity": "sha512-YaDrquRpZwfcXbnlDsSrBQNCChVOT9MGuSg+dMAyfsAa1SmiAhrA5jUYUiIMC59G92kIbY/AaQOWcBdq+lh+zg==",
+      "dependencies": [
+        "@sveltejs/kit@2.18.0_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_svelte@5.22.5__acorn@8.14.1_vite@6.2.0__lightningcss@1.29.2"
       ]
     },
     "@sveltejs/kit@2.18.0_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.22.5___acorn@8.14.1__vite@6.2.0___lightningcss@1.29.2_svelte@5.22.5__acorn@8.14.1_vite@6.2.0__lightningcss@1.29.2": {
@@ -2278,6 +2285,7 @@
         "npm:@eslint/js@^9.18.0",
         "npm:@playwright/test@^1.49.1",
         "npm:@sveltejs/adapter-auto@4",
+        "npm:@sveltejs/adapter-static@^3.0.8",
         "npm:@sveltejs/kit@^2.16.0",
         "npm:@sveltejs/vite-plugin-svelte@5",
         "npm:@tailwindcss/forms@~0.5.9",
