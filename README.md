@@ -1,2 +1,3 @@
-# workouts
+# Workouts
+
 Personal training app.
