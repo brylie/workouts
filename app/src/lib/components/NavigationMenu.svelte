@@ -22,6 +22,12 @@ $: pathname = $page.url.pathname;
             >
                 Exercises
             </a>
+            <a 
+                href="/workout" 
+                class="text-white hover:text-blue-300 transition-colors {pathname === '/workout' ? 'font-bold' : ''}"
+            >
+                Generate Workout
+            </a>
         </div>
     </div>
 </nav>
