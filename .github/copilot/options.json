@@ -1,0 +1,13 @@
+{
+  "workspacePath": "app/",
+  "workingDirectory": "app/",
+  "packageManager": "pnpm",
+  "importStyle": {
+    "typescript": {
+      "separateTypeImports": true
+    }
+  },
+  "testing": {
+    "preferredCommand": "pnpm test"
+  }
+}

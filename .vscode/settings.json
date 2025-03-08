@@ -1,5 +1,22 @@
 {
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
-  }
+  },
+  "terminal.integrated.cwd": "${workspaceFolder}/app",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "${workspaceFolder}/!(app)/**": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "${workspaceFolder}/!(app)/**": true
+  },
+  "git.ignoredRepositories": ["${workspaceFolder}/app/node_modules"],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.test.ts, ${capture}.spec.ts, ${capture}.d.ts"
+  },
+  "typescript.tsdk": "app/node_modules/typescript/lib"
 }
