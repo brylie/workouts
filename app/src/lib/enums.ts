@@ -1,44 +1,69 @@
 /**
- * Muscles is an enum representing the different muscle groups that can be targeted by an exercise.
+ * Muscle groups that can be targeted by exercises
  */
 export enum Muscles {
-  Abdominals = 'abdominals',
-  Lats = 'lats',
-  Biceps = 'biceps',
+  // Upper body
   Chest = 'chest',
+  Shoulders = 'shoulders', 
+  Triceps = 'triceps',
+  Biceps = 'biceps',
+  Back = 'back',
+  Lats = 'lats',
+  Forearms = 'forearms',
+  
+  // Core
+  Abs = 'abs',
+  Obliques = 'obliques',
+  LowerBack = 'lower_back',
+  
+  // Lower body
   Glutes = 'glutes',
   Hamstrings = 'hamstrings',
   Quadriceps = 'quadriceps',
-  Shoulders = 'shoulders',
-  Triceps = 'triceps',
-  LowerBack = 'lower_back',
-  Calves = 'calves',
-  Trapezius = 'trapezius',
-  Abductors = 'abductors',
-  Adductors = 'adductors',
-  Forearms = 'forearms',
-  Neck = 'neck'
+  Calves = 'calves'
 }
 
 /**
- * EquipmentType is an enum representing the different types of equipment available.
- * This provides type safety and autocompletion when referring to equipment.
+ * Equipment that can be used for exercises
  */
 export enum Equipment {
-  BackExtensionMachine = 'back-extension-machine',
-  AbdominalCrunchMachine = 'abdominal-crunch-machine',
-  HipAbductorMachine = 'hip-abductor-machine',
-  HipAdductorMachine = 'hip-adductor-machine',
-  ShoulderPressMachine = 'shoulder-press-machine',
-  SeatedLegCurlMachine = 'seated-leg-curl-machine',
-  LegExtensionsMachine = 'leg-extensions-machine',
-  RotaryTorsoMachine = 'rotary-torso-machine',
-  Treadmill = 'treadmill',
-  StationaryCycle = 'stationary-cycle',
+  None = 'none',
+  Bodyweight = 'bodyweight',
   Dumbbells = 'dumbbells',
+  Barbell = 'barbell',
+  Kettlebell = 'kettlebell',
+  ResistanceBand = 'resistance_band',
+  Machine = 'machine',
+  Cable = 'cable',
+  PullupBar = 'pullup_bar',
+  DipBars = 'dip_bars',
   Bench = 'bench',
-  LatPulldownMachine = 'lat-pulldown-machine',
-  CableMachine = 'cable-machine',
-  SeatedRowingMachine = 'seated-rowing-machine',
-  LegPressMachine = 'leg-press-machine'
+  Medicine = 'medicine_ball',
+  StabilityBall = 'stability_ball',
+  FoamRoller = 'foam_roller'
+}
+
+/**
+ * Different types of workout routines
+ */
+export enum WorkoutType {
+  Strength = 'strength',
+  Hypertrophy = 'hypertrophy',
+  Endurance = 'endurance',
+  Power = 'power',
+  Circuit = 'circuit',
+  Cardio = 'cardio',
+  Flexibility = 'flexibility',
+  Recovery = 'recovery',
+  HIIT = 'hiit'
+}
+
+/**
+ * Units for measurements
+ */
+export enum Units {
+  Kilograms = 'kg',
+  Pounds = 'lbs',
+  Seconds = 'sec',
+  Minutes = 'min'
 }
