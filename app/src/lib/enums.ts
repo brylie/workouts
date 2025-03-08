@@ -7,40 +7,46 @@ export enum Muscles {
   Shoulders = 'shoulders', 
   Triceps = 'triceps',
   Biceps = 'biceps',
-  Back = 'back',
   Lats = 'lats',
   Forearms = 'forearms',
+  Trapezius = 'trapezius',
+  Neck = 'neck',
   
   // Core
-  Abs = 'abs',
+  Abdominals = 'abdominals',
   Obliques = 'obliques',
   LowerBack = 'lower_back',
   
   // Lower body
+  Abductors = 'abductors',
+  Adductors = 'adductors',
   Glutes = 'glutes',
   Hamstrings = 'hamstrings',
   Quadriceps = 'quadriceps',
-  Calves = 'calves'
+  Calves = 'calves',
 }
 
 /**
- * Equipment that can be used for exercises
+ * EquipmentType is an enum representing the different types of equipment available.
+ * This provides type safety and autocompletion when referring to equipment.
  */
 export enum Equipment {
-  None = 'none',
-  Bodyweight = 'bodyweight',
+  BackExtensionMachine = 'back-extension-machine',
+  AbdominalCrunchMachine = 'abdominal-crunch-machine',
+  HipAbductorMachine = 'hip-abductor-machine',
+  HipAdductorMachine = 'hip-adductor-machine',
+  ShoulderPressMachine = 'shoulder-press-machine',
+  SeatedLegCurlMachine = 'seated-leg-curl-machine',
+  LegExtensionsMachine = 'leg-extensions-machine',
+  RotaryTorsoMachine = 'rotary-torso-machine',
+  Treadmill = 'treadmill',
+  StationaryCycle = 'stationary-cycle',
   Dumbbells = 'dumbbells',
-  Barbell = 'barbell',
-  Kettlebell = 'kettlebell',
-  ResistanceBand = 'resistance_band',
-  Machine = 'machine',
-  Cable = 'cable',
-  PullupBar = 'pullup_bar',
-  DipBars = 'dip_bars',
   Bench = 'bench',
-  Medicine = 'medicine_ball',
-  StabilityBall = 'stability_ball',
-  FoamRoller = 'foam_roller'
+  LatPulldownMachine = 'lat-pulldown-machine',
+  CableMachine = 'cable-machine',
+  SeatedRowingMachine = 'seated-rowing-machine',
+  LegPressMachine = 'leg-press-machine',
 }
 
 /**
@@ -55,7 +61,7 @@ export enum WorkoutType {
   Cardio = 'cardio',
   Flexibility = 'flexibility',
   Recovery = 'recovery',
-  HIIT = 'hiit'
+  HIIT = 'hiit',
 }
 
 /**
@@ -65,5 +71,5 @@ export enum Units {
   Kilograms = 'kg',
   Pounds = 'lbs',
   Seconds = 'sec',
-  Minutes = 'min'
+  Minutes = 'min',
 }
