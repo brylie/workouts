@@ -46,7 +46,6 @@ describe('types.ts', () => {
         reps: 10,
         weight: 0,
         time: '30s',
-        notes: 'Keep your back straight.'
       };
       expect(workoutItem).toBeDefined();
       expect(workoutItem.exercise.id).toBe('push-up');
@@ -54,7 +53,6 @@ describe('types.ts', () => {
       expect(workoutItem.reps).toBe(10);
       expect(workoutItem.weight).toBe(0);
       expect(workoutItem.time).toBe('30s');
-      expect(workoutItem.notes).toBe('Keep your back straight.');
     });
   
     it('should define Workout interface', () => {
@@ -74,7 +72,6 @@ describe('types.ts', () => {
             reps: 10,
             weight: 0,
             time: '30s',
-            notes: 'Keep your back straight.'
           }
         ],
         notes: 'Great workout!'

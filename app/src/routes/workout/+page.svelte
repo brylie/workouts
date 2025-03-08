@@ -1,12 +1,21 @@
 <script lang="ts">
-import { getRandomExercises } from '$lib/exerciseData';
-import type { ExerciseDetails } from '$lib/types';
+import { getRandomWorkoutItems } from '$lib/exerciseData';
+import type { WorkoutItem } from '$lib/types';
 
 let numberOfExercises = 5;
-let generatedWorkout: ExerciseDetails[] = [];
+let generatedWorkout: WorkoutItem[] = [];
 
 function generateWorkout() {
-    generatedWorkout = getRandomExercises(numberOfExercises);
+    generatedWorkout = getRandomWorkoutItems(numberOfExercises);
+}
+
+function markAsComplete(index: number) {
+    generatedWorkout = generatedWorkout.map((item, i) => {
+        if (i === index) {
+            return { ...item, completed: !item.completed };
+        }
+        return item;
+    });
 }
 </script>
 
@@ -44,30 +53,42 @@ function generateWorkout() {
                 <h2 class="text-2xl font-bold mb-4">Your Workout</h2>
                 
                 <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {#each generatedWorkout as exercise}
+                    {#each generatedWorkout as item, index}
                         <div class="bg-gray-800 p-6 rounded-lg">
-                            <h3 class="text-xl font-semibold mb-2">{exercise.title}</h3>
-                            <p class="text-gray-300 mb-4">{exercise.description}</p>
+                            <h3 class="text-xl font-semibold mb-2">{item.exercise.title}</h3>
+                            <p class="text-gray-300 mb-4">{item.exercise.description}</p>
                             
+                            <div class="mb-4">
+                                <h4 class="text-sm font-medium mb-2">Sets & Reps:</h4>
+                                <p class="text-gray-300">{item.sets} sets × {item.reps} reps</p>
+                            </div>
+
                             <div class="mb-4">
                                 <h4 class="text-sm font-medium mb-2">Target Muscles:</h4>
                                 <div class="flex flex-wrap gap-2">
-                                    {#each exercise.muscles as muscle}
+                                    {#each item.exercise.muscles as muscle}
                                         <span class="bg-blue-600 px-2 py-1 rounded text-xs">{muscle}</span>
                                     {/each}
                                 </div>
                             </div>
 
-                            {#if exercise.equipment}
-                                <div>
+                            {#if item.exercise.equipment}
+                                <div class="mb-4">
                                     <h4 class="text-sm font-medium mb-2">Required Equipment:</h4>
                                     <div class="flex flex-wrap gap-2">
-                                        {#each exercise.equipment as equipment}
+                                        {#each item.exercise.equipment as equipment}
                                             <span class="bg-purple-600 px-2 py-1 rounded text-xs">{equipment}</span>
                                         {/each}
                                     </div>
                                 </div>
                             {/if}
+
+                            <button 
+                                on:click={() => markAsComplete(index)}
+                                class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                            >
+                                {item.completed ? 'Completed' : 'Mark as Complete'}
+                            </button>
                         </div>
                     {/each}
                 </div>

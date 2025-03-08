@@ -31,7 +31,7 @@ export interface WorkoutItem {
   reps?: number;
   weight?: number;
   time?: string;
-  notes?: string;
+  completed?: boolean;
 }
 
 /**
