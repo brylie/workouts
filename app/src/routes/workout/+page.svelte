@@ -14,6 +14,12 @@ function generateWorkout() {
     saveError = null;
 }
 
+function updateWorkoutItem(index: number, updates: Partial<WorkoutItem>) {
+    generatedWorkout = generatedWorkout.map((item, i) => 
+        i === index ? { ...item, ...updates } : item
+    );
+}
+
 async function markAsComplete(index: number) {
     const item = generatedWorkout[index];
     
@@ -105,9 +111,56 @@ async function markAsComplete(index: number) {
                             <h3 class="text-xl font-semibold mb-2">{item.exercise.title}</h3>
                             <p class="text-gray-300 mb-4">{item.exercise.description}</p>
                             
-                            <div class="mb-4">
-                                <h4 class="text-sm font-medium mb-2">Sets & Reps:</h4>
-                                <p class="text-gray-300">{item.sets} sets × {item.reps} reps</p>
+                            <div class="space-y-4 mb-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="sets-{index}" class="block text-sm font-medium mb-2">Sets</label>
+                                        <input 
+                                            type="number" 
+                                            id="sets-{index}"
+                                            bind:value={item.sets}
+                                            on:change={() => updateWorkoutItem(index, { sets: item.sets })}
+                                            min="1"
+                                            class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label for="reps-{index}" class="block text-sm font-medium mb-2">Reps</label>
+                                        <input 
+                                            type="number" 
+                                            id="reps-{index}"
+                                            bind:value={item.reps}
+                                            on:change={() => updateWorkoutItem(index, { reps: item.reps })}
+                                            min="1"
+                                            class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="weight-{index}" class="block text-sm font-medium mb-2">Weight (kg)</label>
+                                        <input 
+                                            type="number" 
+                                            id="weight-{index}"
+                                            bind:value={item.weight}
+                                            on:change={() => updateWorkoutItem(index, { weight: item.weight })}
+                                            min="0"
+                                            step="0.5"
+                                            class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label for="time-{index}" class="block text-sm font-medium mb-2">Time</label>
+                                        <input 
+                                            type="text" 
+                                            id="time-{index}"
+                                            bind:value={item.time}
+                                            on:change={() => updateWorkoutItem(index, { time: item.time })}
+                                            placeholder="e.g. 30s"
+                                            class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
+                                        />
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="mb-4">
