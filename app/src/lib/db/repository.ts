@@ -1,5 +1,6 @@
 import { Database } from './index';
 import { DatabaseError, handleDatabaseError } from './index';
+import type { DBErrorType } from './types';
 import type { BaseEntity, QueryOptions, Repository as IRepository, TransactionMode } from './index';
 
 /**
@@ -59,7 +60,7 @@ export abstract class BaseRepository<T extends BaseEntity> implements IRepositor
     try {
       if (entity.id === undefined) {
         throw new DatabaseError(
-          'VALIDATION_ERROR',
+          'VALIDATION_ERROR' as DBErrorType,
           'Cannot update entity without ID',
           new Error('Entity ID is required for update operation')
         );
@@ -69,8 +70,8 @@ export abstract class BaseRepository<T extends BaseEntity> implements IRepositor
       
       if (!existingEntity) {
         throw new DatabaseError(
+          'NOT_FOUND' as DBErrorType,
           'NOT_FOUND',
-          `Entity with ID ${entity.id} not found`,
           new Error(`No entity found with ID ${entity.id}`)
         );
       }
