@@ -1,6 +1,6 @@
-import { Database } from './database';
-import { DatabaseError, handleDatabaseError } from './errors';
-import type { BaseEntity, QueryOptions, Repository as IRepository, TransactionMode } from './types';
+import { Database } from './index';
+import { DatabaseError, handleDatabaseError } from './index';
+import type { BaseEntity, QueryOptions, Repository as IRepository, TransactionMode } from './index';
 
 /**
  * Base repository class implementing common CRUD operations

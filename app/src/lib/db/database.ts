@@ -1,4 +1,4 @@
-// import { handleDatabaseError} from './errors';
+import { handleDatabaseError } from './errors';
 import type { DBMigrationConfig, DBSchema } from './types';
 
 /**

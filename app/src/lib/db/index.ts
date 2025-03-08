@@ -1,7 +1,10 @@
 // Core database implementation
 export * from './database';
-export * from './errors';
 export * from './types';
+
+// Explicitly export error types and functions
+import { DatabaseError, handleDatabaseError } from './errors';
+export { DatabaseError, handleDatabaseError };
 
 // Repositories
 export * from './repositories/exercise-repository';

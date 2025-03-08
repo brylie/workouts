@@ -12,11 +12,6 @@ export class DatabaseError extends Error {
     this.type = type;
     this.name = 'DatabaseError';
     this.originalError = originalError;
-    
-    // Maintains proper stack trace for where our error was thrown
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, DatabaseError);
-    }
   }
 }
 
