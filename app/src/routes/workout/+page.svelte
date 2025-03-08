@@ -1,21 +1,62 @@
 <script lang="ts">
 import { getRandomWorkoutItems } from '$lib/exerciseData';
-import type { WorkoutItem } from '$lib/types';
+import type { WorkoutItem, CompletedExercise } from '$lib/types';
+import { saveCompletedExercise } from '$lib/database';
+import { browser } from '$app/environment';
 
 let numberOfExercises = 5;
 let generatedWorkout: WorkoutItem[] = [];
+let savingIndex: number | null = null;
+let saveError: string | null = null;
 
 function generateWorkout() {
     generatedWorkout = getRandomWorkoutItems(numberOfExercises);
+    saveError = null;
 }
 
-function markAsComplete(index: number) {
+async function markAsComplete(index: number) {
+    const item = generatedWorkout[index];
+    
+    // Toggle the completed state
     generatedWorkout = generatedWorkout.map((item, i) => {
         if (i === index) {
             return { ...item, completed: !item.completed };
         }
         return item;
     });
+
+    if (browser && item && item.exercise.id) {
+        // If the item is now marked as complete, save to database
+        if (!item.completed) {
+            try {
+                savingIndex = index;
+                const completedExercise: CompletedExercise = {
+                    exercise_id: item.exercise.id,
+                    completed_at: new Date(),
+                    sets: item.sets,
+                    reps: item.reps,
+                    weight: item.weight,
+                    time: item.time
+                };
+                
+                await saveCompletedExercise(completedExercise);
+                saveError = null;
+            } catch (error) {
+                console.error('Failed to save completed exercise:', error);
+                saveError = 'Failed to save exercise record';
+                
+                // Revert the UI state if saving failed
+                generatedWorkout = generatedWorkout.map((item, i) => {
+                    if (i === index) {
+                        return { ...item, completed: false };
+                    }
+                    return item;
+                });
+            } finally {
+                savingIndex = null;
+            }
+        }
+    }
 }
 </script>
 
@@ -48,6 +89,12 @@ function markAsComplete(index: number) {
             </form>
         </div>
 
+        {#if saveError}
+            <div class="max-w-md mx-auto mb-6 bg-red-800 text-white p-4 rounded-lg">
+                <p>{saveError}</p>
+            </div>
+        {/if}
+        
         {#if generatedWorkout.length > 0}
             <div class="space-y-6">
                 <h2 class="text-2xl font-bold mb-4">Your Workout</h2>
@@ -85,9 +132,16 @@ function markAsComplete(index: number) {
 
                             <button 
                                 on:click={() => markAsComplete(index)}
-                                class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                                disabled={savingIndex === index}
+                                class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed"
                             >
-                                {item.completed ? 'Completed' : 'Mark as Complete'}
+                                {#if savingIndex === index}
+                                    Saving...
+                                {:else if item.completed}
+                                    Completed
+                                {:else}
+                                    Mark as Complete
+                                {/if}
                             </button>
                         </div>
                     {/each}
