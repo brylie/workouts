@@ -2,7 +2,8 @@
 	import '../app.css';
 	import NavigationMenu from '$lib/components/NavigationMenu.svelte';
 	let { children } = $props();
-	export const prerender = true;
+	// This may be necessary in order for GitHub pages deployment to work
+	// export const prerender = true;
 </script>
 
 <NavigationMenu />
