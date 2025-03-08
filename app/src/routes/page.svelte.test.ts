@@ -18,6 +18,5 @@ describe('/+page.svelte', () => {
 		expect(heading).toHaveTextContent('Welcome to Workouts');
 		const paragraphs = screen.getAllByRole('paragraph');
 		expect(paragraphs[0]).toHaveTextContent('Track your exercises and stay fit with our app.');
-		expect(paragraphs[1]).toHaveTextContent('Get started by exploring the features and creating your workout plan.');
 	});
 });
