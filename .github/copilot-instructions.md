@@ -1,6 +1,6 @@
-This project uses Deno for package management. For example:
+This project uses pnpm for package management.
 
-deno install npm:@vitest/coverage-v8@3.0.8
+The project code is in the app/ directory, so make sure to run commands like installation and tests from within that directory.
 
 TypeScript requires types to be imported explictly, and separately from other imports. For example:
 

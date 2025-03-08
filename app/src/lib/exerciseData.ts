@@ -1,4 +1,4 @@
-import type { ExerciseDetails } from './types';
+import type { ExerciseDetails, WorkoutItem } from './types';
 import { Muscles, Equipment } from './enums';
 
 /**
@@ -107,6 +107,21 @@ export const exercises: ExerciseDetails[] = [
 export function getRandomExercises(count: number = 5): ExerciseDetails[] {
   const shuffled = [...exercises].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
+}
+
+/**
+ * Get a list of random workout items for workout generation
+ * @param count The number of exercises to include (defaults to 5)
+ * @returns An array of randomly selected WorkoutItems
+ */
+export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
+    const exercises = getRandomExercises(count);
+    return exercises.map(exercise => ({
+        exercise,
+        sets: 3, // These default values will be overridden by the UI
+        reps: 12,
+        completed: false
+    }));
 }
 
 /**

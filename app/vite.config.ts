@@ -16,9 +16,12 @@ export default defineConfig({
 					name: 'client',
 					environment: 'jsdom',
 					clearMocks: true,
-					include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
+					include: [
+						'src/**/*.svelte.{test,spec}.{js,ts}', 
+						'src/**/database.{test,spec}.{js,ts}' // Include database tests in client env
+					],
 					exclude: ['src/lib/server/**'],
-					setupFiles: ['./vitest-setup-client.ts']
+					setupFiles: ['./vitest-setup-client.ts', './vitest-setup-indexeddb.ts']
 				}
 			},
 			{
@@ -28,7 +31,10 @@ export default defineConfig({
 					name: 'server',
 					environment: 'node',
 					include: ['src/**/*.{test,spec}.{js,ts}'],
-					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
+					exclude: [
+						'src/**/*.svelte.{test,spec}.{js,ts}',
+						'src/**/database.{test,spec}.{js,ts}' // Exclude database tests from server env
+					]
 				}
 			}
 		]

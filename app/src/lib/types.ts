@@ -31,7 +31,7 @@ export interface WorkoutItem {
   reps?: number;
   weight?: number;
   time?: string;
-  notes?: string;
+  completed?: boolean;
 }
 
 /**
@@ -42,4 +42,18 @@ export interface Workout {
   date: Date;
   items: WorkoutItem[];
   notes?: string;
+}
+
+/**
+ * CompletedExercise represents a record of a completed exercise.
+ * It stores metadata about the exercise without duplicating exercise data.
+ */
+export interface CompletedExercise {
+  id?: number; // Database auto-increment ID
+  exercise_id: string; // Reference to the exercise
+  completed_at: Date; // When the exercise was completed
+  sets: number; // Number of sets completed
+  reps?: number; // Number of reps per set (optional)
+  weight?: number; // Weight used (optional)
+  time?: string; // Duration (optional, for timed exercises)
 }

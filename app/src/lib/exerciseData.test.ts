@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { getRandomExercises, getExercisesByMuscle, getExercisesByEquipment } from './exerciseData';
+import { getRandomExercises, getExercisesByMuscle, getExercisesByEquipment, getRandomWorkoutItems } from './exerciseData';
 import { Muscles, Equipment } from './enums';
 
 // Test getRandomExercises function
@@ -58,3 +58,36 @@ describe('getRandomExercises', () => {
       expect(exercises).toHaveLength(0);
     });
   });
+
+  // Test getRandomWorkoutItems function
+  describe('getRandomWorkoutItems', () => {
+    it('should return the specified number of workout items', () => {
+        const workoutItems = getRandomWorkoutItems(3);
+        expect(workoutItems).toHaveLength(3);
+    });
+
+    it('should return workout items with default values', () => {
+        const workoutItems = getRandomWorkoutItems(1);
+        const item = workoutItems[0];
+        
+        expect(item).toHaveProperty('exercise');
+        expect(item).toHaveProperty('sets', 3);
+        expect(item).toHaveProperty('reps', 12);
+        expect(item).toHaveProperty('completed', false);
+    });
+
+    it('should return different workout items on subsequent calls', () => {
+        const workoutItems1 = getRandomWorkoutItems(3);
+        const workoutItems2 = getRandomWorkoutItems(3);
+        
+        // Compare the exercise IDs to check if they're different
+        const ids1 = workoutItems1.map(item => item.exercise.id);
+        const ids2 = workoutItems2.map(item => item.exercise.id);
+        expect(ids1).not.toEqual(ids2);
+    });
+
+    it('should return an empty array when count is 0', () => {
+        const workoutItems = getRandomWorkoutItems(0);
+        expect(workoutItems).toHaveLength(0);
+    });
+});
