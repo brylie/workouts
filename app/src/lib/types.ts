@@ -64,7 +64,7 @@ export interface CompletedExerciseMetrics {
  */
 export interface WorkoutItem {
   exercise: ExerciseDetails;
-  sets: number;
+  sets?: number;
   reps?: number;
   weight?: number;
   time?: string;
