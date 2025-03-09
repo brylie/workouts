@@ -113,7 +113,7 @@ async function markAsComplete(index: number) {
                 
                 <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {#each generatedWorkout as item, index}
-                        <div class="bg-gray-800 p-6 rounded-lg">
+                        <div class="workout-item bg-gray-800 p-6 rounded-lg">
                             <h3 class="text-xl font-semibold mb-2">{item.exercise.title}</h3>
                             <p class="text-gray-300 mb-4">{item.exercise.description}</p>
                             
