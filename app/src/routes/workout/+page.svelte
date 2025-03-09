@@ -1,6 +1,6 @@
 <script lang="ts">
 import { getRandomWorkoutItems } from '$lib/exerciseData';
-import type { WorkoutItem, CompletedExercise } from '$lib/types';
+import type { WorkoutItem, CompletedExercise, CompletedExerciseMetrics } from '$lib/types';
 import { saveCompletedExercise } from '$lib/database';
 import { browser } from '$app/environment';
 
@@ -36,13 +36,19 @@ async function markAsComplete(index: number) {
         if (!item.completed) {
             try {
                 savingIndex = index;
-                const completedExercise: CompletedExercise = {
-                    exercise_id: item.exercise.id,
-                    completed_at: new Date(),
+                
+                // Convert WorkoutItem metrics to CompletedExerciseMetrics
+                const metrics: CompletedExerciseMetrics = {
                     sets: item.sets,
                     reps: item.reps,
                     weight: item.weight,
                     time: item.time
+                };
+
+                const completedExercise: CompletedExercise = {
+                    exercise_id: item.exercise.id,
+                    completed_at: new Date(),
+                    metrics
                 };
                 
                 await saveCompletedExercise(completedExercise);

@@ -1,44 +1,34 @@
 <script lang="ts">
-import { onMount } from 'svelte';
-import { db, getCompletedExercisesByDateRange } from '$lib/database';
+import { getCompletedExercisesByDateRange, deleteCompletedExercise } from '$lib/database';
 import type { CompletedExercise } from '$lib/types';
-import { browser } from '$app/environment';
+import { onMount } from 'svelte';
 
-let completedExercises: CompletedExercise[] = [];
-let isLoading = true;
-let errorMessage = '';
 let startDate: string;
 let endDate: string;
+let isLoading = false;
+let error: string | null = null;
+let completedExercises: CompletedExercise[] = [];
 
-// Set default date range to the past 30 days
-const today = new Date();
-const thirtyDaysAgo = new Date();
-thirtyDaysAgo.setDate(today.getDate() - 30);
-startDate = thirtyDaysAgo.toISOString().split('T')[0]; // YYYY-MM-DD format
-endDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
-
-// Function to format a date for display
+// Format date for display
 function formatDate(date: Date): string {
     return new Date(date).toLocaleDateString();
 }
 
-// Load completed exercises from the database
-async function loadExercises() {
-    if (!browser) return;
-    
+// Load exercise history for the selected date range
+async function loadHistory() {
     isLoading = true;
-    errorMessage = '';
-    
+    error = '';
+
     try {
         const start = new Date(startDate);
         const end = new Date(endDate);
-        // Set end date to end of day
+        // Set end date to end of day for inclusive range
         end.setHours(23, 59, 59, 999);
         
         completedExercises = await getCompletedExercisesByDateRange(start, end);
-    } catch (error) {
-        console.error('Failed to load exercise history', error);
-        errorMessage = 'Failed to load exercise history. Please try again later.';
+    } catch (err) {
+        console.error('Failed to load exercise history', err);
+        error = 'Failed to load exercise history. Please try again later.';
         completedExercises = [];
     } finally {
         isLoading = false;
@@ -46,22 +36,26 @@ async function loadExercises() {
 }
 
 onMount(() => {
-    loadExercises();
+    // Set default date range to last 7 days
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - 7);
+    
+    endDate = end.toISOString().split('T')[0];
+    startDate = start.toISOString().split('T')[0];
+    
+    loadHistory();
 });
 </script>
 
 <div class="min-h-screen bg-gray-900 text-white">
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-8">Exercise History</h1>
-        
-        <div class="bg-gray-800 p-6 rounded-lg mb-8">
-            <h2 class="text-2xl font-semibold mb-4">Filter History</h2>
-            
-            <form on:submit|preventDefault={loadExercises} class="flex flex-col md:flex-row gap-4">
-                <div class="flex-1">
-                    <label for="startDate" class="block text-sm font-medium mb-2">
-                        Start Date
-                    </label>
+
+        <div class="max-w-4xl mx-auto bg-gray-800 p-6 rounded-lg mb-8">
+            <form on:submit|preventDefault={loadHistory} class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                <div>
+                    <label for="startDate" class="block text-sm font-medium mb-2">Start Date</label>
                     <input 
                         type="date" 
                         id="startDate"
@@ -69,11 +63,8 @@ onMount(() => {
                         class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
                     />
                 </div>
-                
-                <div class="flex-1">
-                    <label for="endDate" class="block text-sm font-medium mb-2">
-                        End Date
-                    </label>
+                <div>
+                    <label for="endDate" class="block text-sm font-medium mb-2">End Date</label>
                     <input 
                         type="date" 
                         id="endDate"
@@ -81,37 +72,34 @@ onMount(() => {
                         class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
                     />
                 </div>
-                
-                <div class="flex items-end">
-                    <button 
-                        type="submit"
-                        class="w-full md:w-auto px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded transition-colors"
-                    >
-                        Filter
-                    </button>
-                </div>
+                <button 
+                    type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Loading...' : 'Filter'}
+                </button>
             </form>
         </div>
-        
-        {#if errorMessage}
-            <div class="bg-red-800 p-4 rounded-lg mb-4">
-                <p>{errorMessage}</p>
+
+        {#if error}
+            <div class="max-w-4xl mx-auto mb-6 bg-red-800 text-white p-4 rounded-lg">
+                <p>{error}</p>
             </div>
         {/if}
         
         {#if isLoading}
-            <div class="text-center py-8">
-                <p class="text-lg">Loading exercise history...</p>
+            <div class="max-w-4xl mx-auto text-center">
+                <p>Loading exercise history...</p>
             </div>
         {:else}
             {#if completedExercises.length === 0}
-                <div class="bg-gray-800 p-6 rounded-lg text-center">
-                    <p class="text-xl">No exercise history found for the selected date range.</p>
-                    <p class="text-gray-400 mt-2">Complete some exercises to see them here!</p>
+                <div class="max-w-4xl mx-auto text-center">
+                    <p>No exercise history found for the selected date range.</p>
                 </div>
             {:else}
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+                <div class="max-w-4xl mx-auto overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-700">
                         <thead class="border-b border-gray-700">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
@@ -129,6 +117,9 @@ onMount(() => {
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                                     Weight
                                 </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Time
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-700">
@@ -141,13 +132,16 @@ onMount(() => {
                                         {exercise.exercise_id}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        {exercise.sets}
+                                        {exercise.metrics.sets ?? '-'}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        {exercise.reps ?? '-'}
+                                        {exercise.metrics.reps ?? '-'}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        {exercise.weight ? `${exercise.weight}kg` : '-'}
+                                        {exercise.metrics.weight ? `${exercise.metrics.weight}kg` : '-'}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        {exercise.metrics.time ?? '-'}
                                     </td>
                                 </tr>
                             {/each}

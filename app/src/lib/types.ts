@@ -41,6 +41,24 @@ export interface ExerciseDetails {
 }
 
 /**
+ * Metrics values recorded for a completed exercise
+ */
+export interface CompletedExerciseMetrics {
+  sets?: number;
+  reps?: number;
+  weight?: number;
+  time?: string;
+  distance?: number;
+  resistance?: number;
+  speed?: number;
+  incline?: number;
+  resistanceType?: string;
+  calories?: number;
+  heartRate?: number;
+  rpe?: number;
+}
+
+/**
  * WorkoutItem represents a specific instance of an exercise within a workout,
  * including the performance parameters like sets, reps, etc.
  */
@@ -71,8 +89,5 @@ export interface CompletedExercise {
   id?: number; // Database auto-increment ID
   exercise_id: string; // Reference to the exercise
   completed_at: Date; // When the exercise was completed
-  sets: number; // Number of sets completed
-  reps?: number; // Number of reps per set (optional)
-  weight?: number; // Weight used (optional)
-  time?: string; // Duration (optional, for timed exercises)
+  metrics: CompletedExerciseMetrics;
 }

@@ -6,21 +6,25 @@ import type { CompletedExercise } from './types';
 // No need for manual mocking here
 
 describe('Workout Database', () => {
-  // Sample test data
+  // Sample test data with nested metrics
   const testCompletedExercise: CompletedExercise = {
     exercise_id: 'push-up',
     completed_at: new Date('2023-01-01T12:00:00Z'),
-    sets: 3,
-    reps: 10,
-    weight: 0
+    metrics: {
+      sets: 3,
+      reps: 10,
+      weight: 0
+    }
   };
 
   const testCompletedExercise2: CompletedExercise = {
     exercise_id: 'squat',
     completed_at: new Date('2023-01-02T12:00:00Z'),
-    sets: 4,
-    reps: 12,
-    weight: 60
+    metrics: {
+      sets: 4,
+      reps: 12,
+      weight: 60
+    }
   };
 
   beforeEach(async () => {
@@ -43,9 +47,11 @@ describe('Workout Database', () => {
     // Verify it's been saved correctly
     expect(savedExercise).toMatchObject({
       exercise_id: testCompletedExercise.exercise_id,
-      sets: testCompletedExercise.sets,
-      reps: testCompletedExercise.reps,
-      weight: testCompletedExercise.weight
+      metrics: {
+        sets: testCompletedExercise.metrics.sets,
+        reps: testCompletedExercise.metrics.reps,
+        weight: testCompletedExercise.metrics.weight
+      }
     });
     
     // Check that the date is correctly stored
@@ -65,7 +71,7 @@ describe('Workout Database', () => {
     // Verify we got the correct exercise
     expect(exercises.length).toBe(1);
     expect(exercises[0].exercise_id).toBe('push-up');
-    expect(exercises[0].sets).toBe(3);
+    expect(exercises[0].metrics.sets).toBe(3);
   });
 
   it('should retrieve exercises by date range', async () => {
@@ -91,5 +97,48 @@ describe('Workout Database', () => {
     
     // Verify we got both exercises
     expect(allExercises.length).toBe(2);
+  });
+
+  it('should handle additional metric fields', async () => {
+    const exercise: CompletedExercise = {
+      exercise_id: 'test-exercise',
+      completed_at: new Date(),
+      metrics: {
+        sets: 3,
+        reps: 12,
+        weight: 50,
+        time: '30',
+        distance: 1000,
+        resistance: 8,
+        speed: 10,
+        incline: 2,
+        resistanceType: 'magnetic',
+        calories: 150,
+        heartRate: 140,
+        rpe: 7
+      }
+    };
+
+    const id = await saveCompletedExercise(exercise);
+    const savedExercise = await db.completedExercises.get(id);
+    expect(savedExercise?.metrics).toEqual(exercise.metrics);
+  });
+
+  it('should handle optional metric fields', async () => {
+    const exercise: CompletedExercise = {
+      exercise_id: 'test-exercise',
+      completed_at: new Date(),
+      metrics: {
+        sets: 3,
+        // Omitting other fields to test optional properties
+      }
+    };
+
+    const id = await saveCompletedExercise(exercise);
+    const savedExercise = await db.completedExercises.get(id);
+    expect(savedExercise?.metrics.sets).toBe(3);
+    expect(savedExercise?.metrics.reps).toBeUndefined();
+    expect(savedExercise?.metrics.weight).toBeUndefined();
+    expect(savedExercise?.metrics.time).toBeUndefined();
   });
 });

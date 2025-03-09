@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import type { CompletedExercise } from './types';
+import type { CompletedExercise, CompletedExerciseMetrics } from './types';
 
 /**
  * Dexie database class for workout data.
@@ -12,13 +12,44 @@ class WorkoutDatabase extends Dexie {
   constructor() {
     super('WorkoutApp');
     
-    // Define the database schema
+    // Define database versions - schema upgrades must use increasing version numbers
+    
+    // Version 1 - original schema with flat fields
     this.version(1).stores({
-      // Store completed exercise data with indexes on exercise_id and completed_at
-      // ++id = auto-incrementing primary key
-      // & = unique index
-      // * = multi-entry index
       completedExercises: '++id, exercise_id, completed_at'
+    });
+    
+    // Version 2 - migrating to nested metrics structure
+    this.version(2).stores({
+      // Schema stays the same, but we'll transform the data
+      completedExercises: '++id, exercise_id, completed_at'
+    }).upgrade(tx => {
+      // This function runs when upgrading from version 1 to 2
+      return tx.table('completedExercises').toCollection().modify(exercise => {
+        // If this is an old record with flat fields, migrate to the new format
+        if (exercise.sets !== undefined || 
+            exercise.reps !== undefined || 
+            exercise.weight !== undefined || 
+            exercise.time !== undefined) {
+          
+          // Create metrics object from flat fields
+          const metrics: CompletedExerciseMetrics = {
+            sets: exercise.sets,
+            reps: exercise.reps,
+            weight: exercise.weight,
+            time: exercise.time
+          };
+          
+          // Add the metrics object
+          exercise.metrics = metrics;
+          
+          // Delete old flat properties
+          delete exercise.sets;
+          delete exercise.reps;
+          delete exercise.weight;
+          delete exercise.time;
+        }
+      });
     });
   }
 }
