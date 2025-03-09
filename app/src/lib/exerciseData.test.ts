@@ -66,13 +66,11 @@ describe('getRandomExercises', () => {
         expect(workoutItems).toHaveLength(3);
     });
 
-    it('should return workout items with default values', () => {
+    it('should return workout items with default not completed value', () => {
         const workoutItems = getRandomWorkoutItems(1);
         const item = workoutItems[0];
         
         expect(item).toHaveProperty('exercise');
-        expect(item).toHaveProperty('sets', 3);
-        expect(item).toHaveProperty('reps', 12);
         expect(item).toHaveProperty('completed', false);
     });
 

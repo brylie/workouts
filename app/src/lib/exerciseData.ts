@@ -118,8 +118,6 @@ export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
     const exercises = getRandomExercises(count);
     return exercises.map(exercise => ({
         exercise,
-        sets: 3, // These default values will be overridden by the UI
-        reps: 12,
         completed: false
     }));
 }
