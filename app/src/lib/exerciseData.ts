@@ -12,10 +12,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.LowerBack, Muscles.Glutes],
     equipment: [Equipment.BackExtensionMachine],
     description: 'Exercise targeting the lower back muscles and glutes by extending the back from a bent position.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: false
+    }
   },
   {
     id: 'abdominal-crunch',
@@ -23,10 +25,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Abdominals],
     equipment: [Equipment.AbdominalCrunchMachine],
     description: 'A classic core exercise that targets the abdominal muscles through controlled flexion of the spine.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: false
+    }
   },
   {
     id: 'hip-abductor',
@@ -34,10 +38,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Abductors, Muscles.Glutes],
     equipment: [Equipment.HipAbductorMachine],
     description: 'Exercise that works the outer thigh muscles by moving the leg away from the midline of the body.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   {
     id: 'hip-adductor',
@@ -45,10 +51,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Adductors],
     equipment: [Equipment.HipAdductorMachine],
     description: 'Exercise that strengthens the inner thigh muscles by bringing the legs toward the midline of the body.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   {
     id: 'shoulder-press',
@@ -56,10 +64,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Shoulders, Muscles.Triceps],
     equipment: [Equipment.ShoulderPressMachine],
     description: 'Overhead pressing movement that primarily targets the deltoid muscles with secondary activation of the triceps.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   {
     id: 'seated-leg-curl',
@@ -67,10 +77,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Hamstrings],
     equipment: [Equipment.SeatedLegCurlMachine],
     description: 'Exercise performed on a machine that targets the hamstrings through leg flexion.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   {
     id: 'leg-extensions',
@@ -78,10 +90,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Quadriceps],
     equipment: [Equipment.LegExtensionsMachine],
     description: 'Isolation exercise that targets the quadriceps by extending the knee joint against resistance.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   {
     id: 'rotary-torso',
@@ -89,10 +103,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Abdominals, Muscles.LowerBack],
     equipment: [Equipment.RotaryTorsoMachine],
     description: 'Core exercise that focuses on rotational strength and targets the obliques and lower back muscles.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   {
     id: 'treadmill',
@@ -100,10 +116,17 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes, Muscles.Calves],
     equipment: [Equipment.Treadmill],
     description: 'Cardio exercise that primarily works the lower body muscles and cardiovascular system.',
-    hasSets: false,
-    hasReps: false,
-    hasWeight: false,
-    hasTime: true
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true,
+      hasDistance: true,
+      hasSpeed: true,
+      hasIncline: true,
+      hasCalories: true,
+      hasHeartRate: true
+    }
   },
   {
     id: 'cycle',
@@ -111,10 +134,17 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Calves],
     equipment: [Equipment.StationaryCycle],
     description: 'Low-impact cardio exercise that primarily targets the leg muscles.',
-    hasSets: false,
-    hasReps: false,
-    hasWeight: false,
-    hasTime: true
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true,
+      hasDistance: true,
+      hasResistance: true,
+      hasSpeed: true,
+      hasCalories: true,
+      hasHeartRate: true
+    }
   },
   {
     id: 'lat-pulldown',
@@ -122,10 +152,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Lats, Muscles.Biceps, Muscles.Shoulders],
     equipment: [Equipment.LatPulldownMachine],
     description: 'Pulling exercise that targets the latissimus dorsi muscles of the back with secondary activation of the biceps.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   {
     id: 'seated-row',
@@ -133,10 +165,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Lats, Muscles.Trapezius, Muscles.Biceps],
     equipment: [Equipment.SeatedRowingMachine],
     description: 'Compound pulling exercise that works the middle back, lats, and arms by rowing a weight toward the torso.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   {
     id: 'leg-press',
@@ -144,10 +178,12 @@ export const exercises: ExerciseDetails[] = [
     muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes],
     equipment: [Equipment.LegPressMachine],
     description: 'Compound lower body exercise performed on a machine where weight is pushed away from the body using the legs.',
-    hasSets: true,
-    hasReps: true,
-    hasWeight: true,
-    hasTime: false
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   }
 ];
 

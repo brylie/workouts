@@ -10,6 +10,24 @@ export interface EquipmentDetails {
 }
 
 /**
+ * Defines what metrics can be tracked for an exercise
+ */
+export interface ExerciseMetrics {
+  hasSets: boolean;
+  hasReps: boolean;
+  hasWeight: boolean;
+  hasTime: boolean;
+  hasDistance?: boolean;
+  hasResistance?: boolean;
+  hasSpeed?: boolean;
+  hasIncline?: boolean;
+  hasResistanceType?: boolean;
+  hasCalories?: boolean;
+  hasHeartRate?: boolean;
+  hasRPE?: boolean;
+}
+
+/**
  * Exercise represents a template exercise in the exercise library.
  * It contains the basic information about an exercise that doesn't change.
  */
@@ -19,10 +37,7 @@ export interface ExerciseDetails {
   muscles: Muscles[];
   equipment?: Equipment[]; // Simplified to just use enum values
   description?: string;
-  hasSets: boolean;
-  hasReps: boolean;
-  hasWeight: boolean;
-  hasTime: boolean;
+  metrics: ExerciseMetrics;
 }
 
 /**

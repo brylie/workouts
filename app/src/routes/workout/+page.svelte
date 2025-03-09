@@ -112,7 +112,7 @@ async function markAsComplete(index: number) {
                             <p class="text-gray-300 mb-4">{item.exercise.description}</p>
                             
                             <div class="space-y-4 mb-4">
-                                {#if item.exercise.hasSets}
+                                {#if item.exercise.metrics.hasSets}
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="sets-{index}" class="block text-sm font-medium mb-2">Sets</label>
@@ -125,7 +125,7 @@ async function markAsComplete(index: number) {
                                             class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
                                         />
                                     </div>
-                                    {#if item.exercise.hasReps}
+                                    {#if item.exercise.metrics.hasReps}
                                     <div>
                                         <label for="reps-{index}" class="block text-sm font-medium mb-2">Reps</label>
                                         <input 
@@ -140,7 +140,7 @@ async function markAsComplete(index: number) {
                                     {/if}
                                 </div>
                                 {/if}
-                                {#if item.exercise.hasWeight}
+                                {#if item.exercise.metrics.hasWeight}
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="weight-{index}" class="block text-sm font-medium mb-2">Weight (kg)</label>
@@ -156,7 +156,7 @@ async function markAsComplete(index: number) {
                                     </div>
                                 </div>
                                 {/if}
-                                {#if item.exercise.hasTime}
+                                {#if item.exercise.metrics.hasTime}
                                     <div>
                                         <label for="time-{index}" class="block text-sm font-medium mb-2">Time (minutes)</label>
                                         <input 
