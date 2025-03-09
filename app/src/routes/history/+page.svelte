@@ -1,13 +1,13 @@
 <script lang="ts">
 import { getCompletedExercisesByDateRange, deleteCompletedExercise } from '$lib/database';
-import type { CompletedExercise } from '$lib/types';
+import type { CompletedExerciseV2 } from '$lib/types';
 import { onMount } from 'svelte';
 
 let startDate: string;
 let endDate: string;
 let isLoading = false;
 let error: string | null = null;
-let completedExercises: CompletedExercise[] = [];
+let completedExercises: CompletedExerciseV2[] = [];
 
 // Format date for display
 function formatDate(date: Date): string {

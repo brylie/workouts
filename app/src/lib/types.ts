@@ -82,10 +82,24 @@ export interface Workout {
 }
 
 /**
+ * DEPRECATED: CompletedExercise represents a record of a completed exercise.
+ * It stores metadata about the exercise without duplicating exercise data.
+ */
+export interface CompletedExerciseV1 {
+  id?: number; // Database auto-increment ID
+  exercise_id: string; // Reference to the exercise
+  completed_at: Date; // When the exercise was completed
+  sets?: number; // Number of sets performed
+  reps?: number; // Number of reps per set
+  weight?: number; // Weight lifted in kg
+  time?: string; // Time taken to complete the exercise
+}
+
+/**
  * CompletedExercise represents a record of a completed exercise.
  * It stores metadata about the exercise without duplicating exercise data.
  */
-export interface CompletedExercise {
+export interface CompletedExerciseV2 {
   id?: number; // Database auto-increment ID
   exercise_id: string; // Reference to the exercise
   completed_at: Date; // When the exercise was completed

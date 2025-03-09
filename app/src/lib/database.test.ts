@@ -1,13 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { db, saveCompletedExercise, getCompletedExercisesByExerciseId, getCompletedExercisesByDateRange } from './database';
-import type { CompletedExercise } from './types';
+import type { CompletedExerciseV2 } from './types';
 
 // fake-indexeddb is now loaded via vitest-setup-indexeddb.ts setup file
 // No need for manual mocking here
 
 describe('Workout Database', () => {
   // Sample test data with nested metrics
-  const testCompletedExercise: CompletedExercise = {
+  const testCompletedExercise: CompletedExerciseV2 = {
     exercise_id: 'push-up',
     completed_at: new Date('2023-01-01T12:00:00Z'),
     metrics: {
@@ -17,7 +17,7 @@ describe('Workout Database', () => {
     }
   };
 
-  const testCompletedExercise2: CompletedExercise = {
+  const testCompletedExercise2: CompletedExerciseV2 = {
     exercise_id: 'squat',
     completed_at: new Date('2023-01-02T12:00:00Z'),
     metrics: {
@@ -100,7 +100,7 @@ describe('Workout Database', () => {
   });
 
   it('should handle additional metric fields', async () => {
-    const exercise: CompletedExercise = {
+    const exercise: CompletedExerciseV2 = {
       exercise_id: 'test-exercise',
       completed_at: new Date(),
       metrics: {
@@ -125,7 +125,7 @@ describe('Workout Database', () => {
   });
 
   it('should handle optional metric fields', async () => {
-    const exercise: CompletedExercise = {
+    const exercise: CompletedExerciseV2 = {
       exercise_id: 'test-exercise',
       completed_at: new Date(),
       metrics: {
