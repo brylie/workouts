@@ -112,6 +112,7 @@ async function markAsComplete(index: number) {
                             <p class="text-gray-300 mb-4">{item.exercise.description}</p>
                             
                             <div class="space-y-4 mb-4">
+                                {#if item.exercise.hasSets}
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="sets-{index}" class="block text-sm font-medium mb-2">Sets</label>
@@ -124,6 +125,7 @@ async function markAsComplete(index: number) {
                                             class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
                                         />
                                     </div>
+                                    {#if item.exercise.hasReps}
                                     <div>
                                         <label for="reps-{index}" class="block text-sm font-medium mb-2">Reps</label>
                                         <input 
@@ -135,7 +137,10 @@ async function markAsComplete(index: number) {
                                             class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
                                         />
                                     </div>
+                                    {/if}
                                 </div>
+                                {/if}
+                                {#if item.exercise.hasWeight}
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="weight-{index}" class="block text-sm font-medium mb-2">Weight (kg)</label>
@@ -149,18 +154,21 @@ async function markAsComplete(index: number) {
                                             class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
                                         />
                                     </div>
+                                </div>
+                                {/if}
+                                {#if item.exercise.hasTime}
                                     <div>
-                                        <label for="time-{index}" class="block text-sm font-medium mb-2">Time</label>
+                                        <label for="time-{index}" class="block text-sm font-medium mb-2">Time (minutes)</label>
                                         <input 
-                                            type="text" 
+                                            type="numeric" 
                                             id="time-{index}"
                                             bind:value={item.time}
                                             on:change={() => updateWorkoutItem(index, { time: item.time })}
-                                            placeholder="e.g. 30s"
+                                            placeholder="e.g. 30"
                                             class="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white"
                                         />
                                     </div>
-                                </div>
+                                {/if}
                             </div>
 
                             <div class="mb-4">

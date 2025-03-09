@@ -19,6 +19,10 @@ export interface ExerciseDetails {
   muscles: Muscles[];
   equipment?: Equipment[]; // Simplified to just use enum values
   description?: string;
+  hasSets: boolean;
+  hasReps: boolean;
+  hasWeight: boolean;
+  hasTime: boolean;
 }
 
 /**
