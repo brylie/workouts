@@ -1,5 +1,5 @@
-import type { ExerciseDetails } from './types';
-import { Muscles, Equipment } from './enums';
+import type { ExerciseDetails } from '../types';
+import { Muscles, Equipment } from '../enums';
 
 /**
  * A collection of dumbbell exercises that can be used to generate workouts.

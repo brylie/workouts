@@ -1,5 +1,5 @@
-import type { ExerciseDetails } from './types';
-import { Muscles } from './enums';
+import type { ExerciseDetails } from '../types';
+import { Muscles } from '../enums';
 
 /**
  * A collection of calisthenics exercises that can be used to generate workouts.
