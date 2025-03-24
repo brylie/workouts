@@ -136,6 +136,38 @@ export const dumbbellExercises: ExerciseDetails[] = [
       hasReps: true,
       hasWeight: true,
       hasTime: false
+    },
+    tips: [
+      'Keep your elbows close to your body.',
+      'Control the weight on the way down.',
+      'Avoid swinging the weights.'
+    ]
+  },
+  // wrist curls
+  {
+    id: 'dumbbell-wrist-curl',
+    title: 'Dumbbell Wrist Curl',
+    muscles: [Muscles.Forearms],
+    equipment: [Equipment.Dumbbells],
+    description: 'Wrist flexion exercise targeting the forearm muscles.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
+    id: 'dumbbell-wrist-extension',
+    title: 'Dumbbell Wrist Extension',
+    muscles: [Muscles.Forearms],
+    equipment: [Equipment.Dumbbells],
+    description: 'Wrist extension exercise targeting the forearm extensors.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
     }
   },
   {
