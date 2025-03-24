@@ -1,5 +1,6 @@
 import type { ExerciseDetails, WorkoutItem } from './types';
 import { Muscles, Equipment } from './enums';
+import { calisthenicsExercises } from './exerciseData-calisthenics';
 
 /**
  * A collection of predefined exercises that can be used to generate workouts.
@@ -187,13 +188,16 @@ export const exercises: ExerciseDetails[] = [
   }
 ];
 
+// Combine machine and calisthenics exercises
+export const allExercises: ExerciseDetails[] = [...exercises, ...calisthenicsExercises];
+
 /**
  * Get a random selection of exercises for workout generation
  * @param count The number of exercises to include (defaults to 5)
  * @returns An array of randomly selected exercises
  */
 export function getRandomExercises(count: number = 5): ExerciseDetails[] {
-  const shuffled = [...exercises].sort(() => 0.5 - Math.random());
+  const shuffled = [...allExercises].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
 
@@ -216,7 +220,7 @@ export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
  * @returns An array of exercises that target the specified muscle
  */
 export function getExercisesByMuscle(muscle: Muscles): ExerciseDetails[] {
-  return exercises.filter(exercise => exercise.muscles.includes(muscle));
+  return allExercises.filter(exercise => exercise.muscles.includes(muscle));
 }
 
 /**
@@ -225,7 +229,7 @@ export function getExercisesByMuscle(muscle: Muscles): ExerciseDetails[] {
  * @returns An array of exercises that use the specified equipment
  */
 export function getExercisesByEquipment(equipmentType: Equipment): ExerciseDetails[] {
-  return exercises.filter(exercise => 
+  return allExercises.filter(exercise => 
     exercise.equipment?.includes(equipmentType)
   );
 }
