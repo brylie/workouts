@@ -3,6 +3,7 @@
  */
 export enum Muscles {
   Abdominals = 'abdominals',
+  Obliques = 'obliques',
   Lats = 'lats',
   Biceps = 'biceps',
   Chest = 'chest',
