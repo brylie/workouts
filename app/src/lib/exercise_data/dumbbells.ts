@@ -139,6 +139,19 @@ export const dumbbellExercises: ExerciseDetails[] = [
     }
   },
   {
+    id: 'dumbbell-skull-crusher',
+    title: 'Dumbbell Skull Crusher',
+    muscles: [Muscles.Triceps],
+    equipment: [Equipment.Dumbbells, Equipment.Bench],
+    description: 'Lying tricep extension with dumbbells to target the triceps.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
     id: 'dumbbell-overhead-tricep-extension',
     title: 'Dumbbell Tricep Extension',
     muscles: [Muscles.Triceps],
