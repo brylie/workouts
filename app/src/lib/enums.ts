@@ -18,7 +18,8 @@ export enum Muscles {
   Abductors = 'abductors',
   Adductors = 'adductors',
   Forearms = 'forearms',
-  Neck = 'neck'
+  Neck = 'neck',
+  UpperBack = 'upper_back',
 }
 
 /**
@@ -41,5 +42,6 @@ export enum Equipment {
   LatPulldownMachine = 'lat-pulldown-machine',
   CableMachine = 'cable-machine',
   SeatedRowingMachine = 'seated-rowing-machine',
-  LegPressMachine = 'leg-press-machine'
+  LegPressMachine = 'leg-press-machine',
+  Kettlebell = 'kettlebell',
 }

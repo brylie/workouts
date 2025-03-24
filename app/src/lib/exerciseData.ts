@@ -3,11 +3,10 @@ import { Muscles, Equipment } from './enums';
 import { calisthenicsExercises } from './exercise_data/calisthenics';
 import { dumbbellExercises } from './exercise_data/dumbbells';
 import { machineExercises } from './exercise_data/machines';
+import { kettlebellExercises } from './exercise_data/kettlebell';
 
-
-
-// Combine machine, calisthenics, and dumbbell exercises
-export const allExercises: ExerciseDetails[] = [...machineExercises, ...calisthenicsExercises, ...dumbbellExercises];
+// Combine machine, calisthenics, dumbbell, and kettlebell exercises
+export const allExercises: ExerciseDetails[] = [...machineExercises, ...calisthenicsExercises, ...dumbbellExercises, ...kettlebellExercises];
 
 /**
  * Get a random selection of exercises for workout generation
