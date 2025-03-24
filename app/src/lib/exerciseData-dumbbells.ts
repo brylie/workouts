@@ -20,12 +20,104 @@ export const dumbbellExercises: ExerciseDetails[] = [
       hasTime: false
     }
   },
+  // outward curl
+  {
+    id: 'dumbbell-outward-curl',
+    title: 'Dumbbell Outward Curl',
+    muscles: [Muscles.Biceps, Muscles.Forearms],
+    equipment: [Equipment.Dumbbells],
+    description: 'Bicep curl with arms at 45 degrees to target the biceps brachii and forearms.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
   {
     id: 'dumbbell-hammer-curl',
     title: 'Dumbbell Hammer Curl',
     muscles: [Muscles.Biceps, Muscles.Forearms],
     equipment: [Equipment.Dumbbells],
     description: 'Bicep curl variation with palms facing each other, emphasizing the brachialis and forearms.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
+    id: 'dumbbell-isometric-hold',
+    title: 'Dumbbell Isometric Hold',
+    muscles: [Muscles.Biceps],
+    equipment: [Equipment.Dumbbells],
+    description: 'Holding a dumbbell in a fixed position in front of you to engage the biceps.',
+    metrics: {
+      hasSets: true,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'dumbbell-around-the-world',
+    title: 'Dumbbell Around the World',
+    muscles: [Muscles.Biceps, Muscles.Shoulders],
+    equipment: [Equipment.Dumbbells],
+    description: 'Circular motion with dumbbells to engage the biceps and shoulders.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
+    id: 'dumbbell-preacher-curl',
+    title: 'Dumbbell Preacher Curl',
+    muscles: [Muscles.Biceps],
+    equipment: [Equipment.Dumbbells],
+    description: 'Bicep curl performed on a preacher bench to isolate the biceps.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
+    id: 'dumbbell-concentration-curl',
+    title: 'Dumbbell Concentration Curl',
+    muscles: [Muscles.Biceps],
+    equipment: [Equipment.Dumbbells],
+    description: 'Isolation exercise focusing on the biceps by curling with one arm at a time.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
+    id: 'dumbbell-supinating-curl',
+    title: 'Dumbbell Supinating Curl',
+    muscles: [Muscles.Biceps, Muscles.Forearms],
+    equipment: [Equipment.Dumbbells],
+    description: 'Bicep curl with a twist at the top to engage the biceps fully.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
+    id: 'dumbbell-cross-curl',
+    title: 'Dumbbell Cross Curl',
+    muscles: [Muscles.Biceps, Muscles.Forearms],
+    equipment: [Equipment.Dumbbells],
+    description: 'Bicep curl with a cross-body motion to target the biceps brachii.',
     metrics: {
       hasSets: true,
       hasReps: true,
@@ -71,6 +163,32 @@ export const dumbbellExercises: ExerciseDetails[] = [
       hasWeight: true,
       hasTime: false
       }
+  },
+  {
+    id: 'dumbbell-waiter-curl',
+    title: 'Dumbbell Waiter Curl',
+    muscles: [Muscles.Biceps, Muscles.Triceps],
+    equipment: [Equipment.Dumbbells],
+    description: 'Curl with both hands holding a dumbbell in a waiter position, engaging both biceps and triceps.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
+    id: 'dumbbell-zottman-curl',
+    title: 'Dumbbell Zottman Curl',
+    muscles: [Muscles.Biceps, Muscles.Triceps, Muscles.Forearms],
+    equipment: [Equipment.Dumbbells],
+    description: 'Bicep curl with a twist to target both biceps and forearms.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
   },
   // Shoulder exercises
   {
