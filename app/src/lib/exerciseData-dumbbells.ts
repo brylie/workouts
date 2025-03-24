@@ -181,6 +181,19 @@ export const dumbbellExercises: ExerciseDetails[] = [
     }
   },
   {
+    id: 'dumbbell-goblet-squat',
+    title: 'Dumbbell Goblet Squat',
+    muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes],
+    equipment: [Equipment.Dumbbells],
+    description: 'Squat variation holding a dumbbell close to the chest.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false
+    }
+  },
+  {
     id: 'dumbbell-lunge',
     title: 'Dumbbell Lunge',
     muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes],
