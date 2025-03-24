@@ -35,6 +35,12 @@ $: pathname = $page.url.pathname;
             >
                 History
             </a>
+            <a 
+                href="{base}/guidelines" 
+                class="text-white hover:text-blue-300 transition-colors {pathname === base + '/guidelines' ? 'font-bold' : ''}"
+            >
+                Guidelines
+            </a>
         </div>
     </div>
 </nav>
