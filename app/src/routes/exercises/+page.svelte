@@ -1,9 +1,8 @@
 <script lang="ts">
-import { exercises } from '$lib/exerciseData';
-import type { ExerciseDetails } from '$lib/types';
+import { allExercises } from '$lib/exerciseData';
 
 // We can sort exercises by title for easier browsing
-const sortedExercises = [...exercises].sort((a, b) => a.title.localeCompare(b.title));
+const sortedExercises = [...allExercises].sort((a, b) => a.title.localeCompare(b.title));
 </script>
 
 <div class="min-h-screen bg-gray-900 text-white">
