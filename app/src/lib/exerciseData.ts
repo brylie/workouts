@@ -1,6 +1,7 @@
 import type { ExerciseDetails, WorkoutItem } from './types';
 import { Muscles, Equipment } from './enums';
 import { calisthenicsExercises } from './exerciseData-calisthenics';
+import { dumbbellExercises } from './exerciseData-dumbbells';
 
 /**
  * A collection of predefined exercises that can be used to generate workouts.
@@ -188,8 +189,8 @@ export const exercises: ExerciseDetails[] = [
   }
 ];
 
-// Combine machine and calisthenics exercises
-export const allExercises: ExerciseDetails[] = [...exercises, ...calisthenicsExercises];
+// Combine machine, calisthenics, and dumbbell exercises
+export const allExercises: ExerciseDetails[] = [...exercises, ...calisthenicsExercises, ...dumbbellExercises];
 
 /**
  * Get a random selection of exercises for workout generation
