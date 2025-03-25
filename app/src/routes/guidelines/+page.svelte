@@ -17,6 +17,22 @@
                 </div>
             </div>
             
+            <!-- Muscle Recovery Guideline -->
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-400">Muscle Recovery</h2>
+                <p class="mb-3">Muscle doesn't grow during the workout—it breaks down. The actual muscle growth happens during recovery periods. Give your body adequate time to recover between workouts to avoid chronic inflammation while maximizing muscle gains.</p>
+                <div class="bg-gray-700 p-4 rounded-lg mt-4">
+                    <h3 class="font-medium text-blue-300 mb-2">Why it matters</h3>
+                    <p>During exercise, muscle tissue experiences micro-damage. The repair process during recovery is what leads to stronger, larger muscles. Without proper recovery, you risk:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li>Decreased performance</li>
+                        <li>Increased risk of injury</li>
+                        <li>Chronic inflammation</li>
+                        <li>Stunted muscle growth</li>
+                    </ul>
+                </div>
+            </div>
+            
             <!-- 8 - 12 Rep Range Guideline -->
             <div class="bg-gray-800 rounded-lg p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-blue-400">8 - 12 Rep Range</h2>
