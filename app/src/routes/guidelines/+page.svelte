@@ -17,6 +17,16 @@
                 </div>
             </div>
             
+            <!-- 8 - 12 Rep Range Guideline -->
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-400">8 - 12 Rep Range</h2>
+                <p class="mb-3">When using weights, start with a weight level that you can only do around 8 reps before maxing out. Continue at that weight level across workouts until you can do 12 reps before maxing out. Then increase the weight level the next time you do that exercise.</p>
+                <div class="bg-gray-700 p-4 rounded-lg mt-4">
+                    <h3 class="font-medium text-blue-300 mb-2">Why it matters</h3>
+                    <p>The 8 - 12 rep range is widely regarded as the optimal range for hypertrophy (muscle growth). It provides a balance between mechanical tension, metabolic stress, and muscle fatigue, which are key factors for muscle development.</p>
+                </div>
+            </div>
+            
             <!-- Bicep Growth Guideline -->
             <div class="bg-gray-800 rounded-lg p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-blue-400">Bicep Development</h2>
