@@ -100,12 +100,7 @@ describe('Exercise ID uniqueness', () => {
     expect(ids.every(id => id !== undefined && id !== null), 
       'Some exercises are missing IDs').toBe(true);
     
-    // Check if the number of unique IDs matches the total number of exercises
-    expect(uniqueIds.size, 
-      `Duplicate IDs found. Total exercises: ${allExercises.length}, Unique IDs: ${uniqueIds.size}`
-    ).toBe(allExercises.length);
-    
-    // If there are duplicates, find and report them for easier debugging
+    // Find and report duplicates before the assertion
     if (uniqueIds.size !== allExercises.length) {
       const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
       const uniqueDuplicates = [...new Set(duplicates)];
@@ -118,5 +113,10 @@ describe('Exercise ID uniqueness', () => {
           exercisesWithDupId.map(ex => ex.title));
       });
     }
+    
+    // Then check if the number of unique IDs matches the total number of exercises
+    expect(uniqueIds.size, 
+      `Duplicate IDs found. Total exercises: ${allExercises.length}, Unique IDs: ${uniqueIds.size}`
+    ).toBe(allExercises.length);
   });
 });
