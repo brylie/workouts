@@ -132,3 +132,5 @@ dist
 # Vite
 .vite/
 *.snap
+
+.DS_Store
