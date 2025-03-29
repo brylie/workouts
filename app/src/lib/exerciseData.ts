@@ -4,9 +4,18 @@ import { calisthenicsExercises } from './exercise_data/calisthenics';
 import { dumbbellExercises } from './exercise_data/dumbbells';
 import { machineExercises } from './exercise_data/machines';
 import { kettlebellExercises } from './exercise_data/kettlebell';
+import { bodyweightExercises } from './exercise_data/bodyweight';
+import { pilatesExercises } from './exercise_data/pilates';
 
 // Combine machine, calisthenics, dumbbell, and kettlebell exercises
-export const allExercises: ExerciseDetails[] = [...machineExercises, ...calisthenicsExercises, ...dumbbellExercises, ...kettlebellExercises];
+export const allExercises: ExerciseDetails[] = [
+	...machineExercises,
+	...calisthenicsExercises,
+	...dumbbellExercises,
+	...kettlebellExercises,
+	...bodyweightExercises,
+	...pilatesExercises,
+];
 
 /**
  * Get a random selection of exercises for workout generation
@@ -14,8 +23,8 @@ export const allExercises: ExerciseDetails[] = [...machineExercises, ...calisthe
  * @returns An array of randomly selected exercises
  */
 export function getRandomExercises(count: number = 5): ExerciseDetails[] {
-  const shuffled = [...allExercises].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
+	const shuffled = [...allExercises].sort(() => 0.5 - Math.random());
+	return shuffled.slice(0, count);
 }
 
 /**
@@ -24,11 +33,11 @@ export function getRandomExercises(count: number = 5): ExerciseDetails[] {
  * @returns An array of randomly selected WorkoutItems
  */
 export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
-    const exercises = getRandomExercises(count);
-    return exercises.map(exercise => ({
-        exercise,
-        completed: false
-    }));
+	const exercises = getRandomExercises(count);
+	return exercises.map((exercise) => ({
+		exercise,
+		completed: false
+	}));
 }
 
 /**
@@ -37,7 +46,7 @@ export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
  * @returns An array of exercises that target the specified muscle
  */
 export function getExercisesByMuscle(muscle: Muscles): ExerciseDetails[] {
-  return allExercises.filter(exercise => exercise.muscles.includes(muscle));
+	return allExercises.filter((exercise) => exercise.muscles.includes(muscle));
 }
 
 /**
@@ -46,7 +55,5 @@ export function getExercisesByMuscle(muscle: Muscles): ExerciseDetails[] {
  * @returns An array of exercises that use the specified equipment
  */
 export function getExercisesByEquipment(equipmentType: Equipment): ExerciseDetails[] {
-  return allExercises.filter(exercise => 
-    exercise.equipment?.includes(equipmentType)
-  );
+	return allExercises.filter((exercise) => exercise.equipment?.includes(equipmentType));
 }
