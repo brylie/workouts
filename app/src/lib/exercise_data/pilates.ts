@@ -139,7 +139,7 @@ export const pilatesExercises: ExerciseDetails[] = [
     }
   },
   {
-    id: 'bridge-pose',
+    id: 'pilates-bridge-pose',
     title: 'Bridge Pose',
     muscles: [Muscles.Glutes, Muscles.Hamstrings, Muscles.LowerBack],
     description: 'Lying on your back, lift your hips toward the ceiling to create a straight line from shoulders to knees, strengthening the posterior chain.',
