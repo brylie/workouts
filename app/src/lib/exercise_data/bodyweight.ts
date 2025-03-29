@@ -1,5 +1,5 @@
 import type { ExerciseDetails } from '../types';
-import { Muscles } from '../enums';
+import { Muscles, Joints } from '../enums';
 
 /**
  * A collection of common bodyweight exercises that can be used to generate workouts.
@@ -203,6 +203,32 @@ export const bodyweightExercises: ExerciseDetails[] = [
     title: 'Donkey Kick',
     muscles: [Muscles.Glutes, Muscles.Hamstrings, Muscles.LowerBack],
     description: 'A quadruped exercise where you lift one leg behind you with the knee bent, focusing on glute activation and hip extension.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: false
+    }
+  },
+  {
+    id: 'declined-pushup',
+    title: 'Declined Push-Up',
+    muscles: [Muscles.Chest, Muscles.Shoulders, Muscles.Triceps],
+    joints: [Joints.Shoulder, Joints.Elbow, Joints.Wrist],
+    description: 'A push-up variation with feet elevated on a bench or step, emphasizing the upper chest and shoulders.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: false
+    }
+  },
+  {
+    id: 'inclined-pushup',
+    title: 'Inclined Push-Up',
+    muscles: [Muscles.Chest, Muscles.Shoulders, Muscles.Triceps],
+    joints: [Joints.Shoulder, Joints.Elbow, Joints.Wrist],
+    description: 'A push-up variation with hands elevated on a bench or step, making it easier and focusing more on the lower chest.',
     metrics: {
       hasSets: true,
       hasReps: true,
