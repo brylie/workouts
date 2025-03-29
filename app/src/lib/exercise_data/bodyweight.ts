@@ -235,5 +235,44 @@ export const bodyweightExercises: ExerciseDetails[] = [
       hasWeight: false,
       hasTime: false
     }
+  },
+  {
+    id: 'plank-jack',
+    title: 'Plank Jack',
+    muscles: [Muscles.Abdominals, Muscles.Shoulders, Muscles.Quadriceps, Muscles.Glutes],
+    joints: [Joints.Shoulder, Joints.Hip],
+    description: 'A dynamic plank variation where you jump your feet out and in like a jumping jack while maintaining a plank position.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'knee-crunches',
+    title: 'Knee Crunches (Knee to Elbow)',
+    muscles: [Muscles.Abdominals, Muscles.Obliques],
+    joints: [Joints.Hip, Joints.Spine],
+    description: 'A core exercise performed lying on your back, bringing knees and elbows together to engage the abdominals and obliques.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: false
+    }
+  },
+  {
+    id: 'plank-knee-to-elbow',
+    title: 'Plank Knee to Elbow',
+    muscles: [Muscles.Abdominals, Muscles.Obliques, Muscles.Shoulders],
+    joints: [Joints.Hip, Joints.Knee, Joints.Shoulder],
+    description: 'A dynamic plank exercise where you bring your knee to the elbow on the same side or opposite side while maintaining a plank position.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: false
+    }
   }
 ];
