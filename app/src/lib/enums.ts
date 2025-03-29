@@ -23,6 +23,22 @@ export enum Muscles {
 }
 
 /**
+ * Joints is an enum representing the common joints that are typically targeted in stretches, 
+ * yoga poses, and mobility exercises. This simplified list focuses on joints that casual 
+ * fitness enthusiasts would recognize and consciously work on.
+ */
+export enum Joints {
+  Ankle = 'ankle',
+  Elbow = 'elbow',
+  Hip = 'hip',
+  Knee = 'knee',
+  Neck = 'neck',
+  Shoulder = 'shoulder',
+  Spine = 'spine',
+  Wrist = 'wrist',
+}
+
+/**
  * EquipmentType is an enum representing the different types of equipment available.
  * This provides type safety and autocompletion when referring to equipment.
  */

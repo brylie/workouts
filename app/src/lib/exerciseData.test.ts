@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { getRandomExercises, getExercisesByMuscle, getExercisesByEquipment, getRandomWorkoutItems } from './exerciseData';
+import { getRandomExercises, getExercisesByMuscle, getExercisesByEquipment, getRandomWorkoutItems, allExercises } from './exerciseData';
 import { Muscles, Equipment } from './enums';
 
 // Test getRandomExercises function
@@ -88,4 +88,35 @@ describe('getRandomExercises', () => {
         const workoutItems = getRandomWorkoutItems(0);
         expect(workoutItems).toHaveLength(0);
     });
+});
+
+// Test for unique exercise IDs
+describe('Exercise ID uniqueness', () => {
+  it('should have unique IDs for all exercises across all collections', () => {
+    const ids = allExercises.map(exercise => exercise.id);
+    const uniqueIds = new Set(ids);
+    
+    // Check if any IDs are undefined or null
+    expect(ids.every(id => id !== undefined && id !== null), 
+      'Some exercises are missing IDs').toBe(true);
+    
+    // Find and report duplicates before the assertion
+    if (uniqueIds.size !== allExercises.length) {
+      const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
+      const uniqueDuplicates = [...new Set(duplicates)];
+      console.error('Duplicate IDs:', uniqueDuplicates);
+      
+      // For each duplicate ID, find the exercises that use it
+      uniqueDuplicates.forEach(dupId => {
+        const exercisesWithDupId = allExercises.filter(ex => ex.id === dupId);
+        console.error(`Exercises with ID "${dupId}":`, 
+          exercisesWithDupId.map(ex => ex.title));
+      });
+    }
+    
+    // Then check if the number of unique IDs matches the total number of exercises
+    expect(uniqueIds.size, 
+      `Duplicate IDs found. Total exercises: ${allExercises.length}, Unique IDs: ${uniqueIds.size}`
+    ).toBe(allExercises.length);
+  });
 });
