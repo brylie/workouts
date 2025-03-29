@@ -178,4 +178,264 @@ export const yogaPoses: ExerciseDetails[] = [
     id: 'pigeon-pose',
     title: 'Pigeon Pose (Eka Pada Rajakapotasana)',
     muscles: [Muscles.Glutes, Muscles.Abductors, Muscles.LowerBack, Muscles.Quadriceps],
-    description: 'A hip opener that stretches the thighs, groins, psoas, and
+    description: 'A deep hip opener that stretches the glutes, hip flexors, and lower back.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'childs-pose',
+    title: 'Child\'s Pose (Balasana)',
+    muscles: [Muscles.LowerBack, Muscles.Hips, Muscles.Shoulders],
+    description: 'A resting pose that gently stretches the hips, thighs, and back while calming the mind.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'cat-cow-pose',
+    title: 'Cat-Cow Pose (Marjaryasana-Bitilasana)',
+    muscles: [Muscles.LowerBack, Muscles.Abdominals, Muscles.Shoulders],
+    description: 'A gentle flow between two poses that warms the spine and relieves tension in the back and neck.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'downward-facing-dog',
+    title: 'Downward Facing Dog (Adho Mukha Svanasana)',
+    muscles: [Muscles.Shoulders, Muscles.Hamstrings, Muscles.Calves, Muscles.LowerBack],
+    description: 'An inversion that stretches the entire body while strengthening the arms, legs, and core.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'cobra-pose',
+    title: 'Cobra Pose (Bhujangasana)',
+    muscles: [Muscles.LowerBack, Muscles.Shoulders, Muscles.Chest, Muscles.Triceps],
+    description: 'A gentle backbend that stretches the chest and shoulders while strengthening the spine.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'seated-forward-bend',
+    title: 'Seated Forward Bend (Paschimottanasana)',
+    muscles: [Muscles.Hamstrings, Muscles.Abdominals, Muscles.LowerBack],
+    description: 'A seated pose that stretches the spine, hamstrings, and lower back while calming the mind.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'happy-baby-pose',
+    title: 'Happy Baby Pose (Ananda Balasana)',
+    muscles: [Muscles.Hips, Muscles.Abdominals, Muscles.LowerBack],
+    description: 'A gentle hip opener that stretches the inner thighs and lower back while promoting relaxation.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'corpse-pose',
+    title: 'Corpse Pose (Savasana)',
+    muscles: [Muscles.WholeBody],
+    description: 'A restorative pose that promotes relaxation and mindfulness, allowing the body to absorb the benefits of the practice.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'fish-pose',
+    title: 'Fish Pose (Matsyasana)',
+    muscles: [Muscles.Shoulders, Muscles.Chest, Muscles.LowerBack],
+    description: 'A backbend that opens the chest and throat while stretching the spine and improving posture.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'shoulder-bridge-pose',
+    title: 'Shoulder Bridge Pose (Setu Bandhasana)',
+    muscles: [Muscles.Glutes, Muscles.Hamstrings, Muscles.LowerBack],
+    description: 'A backbend that strengthens the back, glutes, and hamstrings while stretching the chest and shoulders.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'supine-spinal-twist',
+    title: 'Supine Spinal Twist (Supta Matsyendrasana)',
+    muscles: [Muscles.LowerBack, Muscles.Abdominals, Muscles.Hips],
+    description: 'A gentle twist that stretches the spine, hips, and shoulders while promoting relaxation.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'reclining-bound-angle-pose',
+    title: 'Reclining Bound Angle Pose (Supta Baddha Konasana)',
+    muscles: [Muscles.Hips, Muscles.Adductors, Muscles.LowerBack],
+    description: 'A restorative pose that opens the hips and groin while promoting relaxation and mindfulness.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'legs-up-the-wall-pose',
+    title: 'Legs Up the Wall Pose (Viparita Karani)',
+    muscles: [Muscles.LowerBack, Muscles.Hips],
+    description: 'A restorative pose that promotes relaxation and reduces fatigue by elevating the legs against a wall.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'sitting-forward-bend',
+    title: 'Sitting Forward Bend (Paschimottanasana)',
+    muscles: [Muscles.Hamstrings, Muscles.Abdominals, Muscles.LowerBack],
+    description: 'A seated pose that stretches the spine, hamstrings, and lower back while calming the mind.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'eagle-pose',
+    title: 'Eagle Pose (Garudasana)',
+    muscles: [Muscles.Shoulders, Muscles.Hips, Muscles.Abdominals],
+    description: 'A balancing pose that strengthens the legs and core while improving focus and concentration.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'crow-pose',
+    title: 'Crow Pose (Bakasana)',
+    muscles: [Muscles.Shoulders, Muscles.Abdominals, Muscles.Wrists],
+    description: 'An arm balance that strengthens the arms, wrists, and core while improving focus and concentration.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'handstand',
+    title: 'Handstand (Adho Mukha Vrksasana)',
+    muscles: [Muscles.Shoulders, Muscles.Abdominals, Muscles.Wrists],
+    description: 'An inversion that strengthens the shoulders, arms, and core while improving balance and focus.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'forearm-stand',
+    title: 'Forearm Stand (Pincha Mayurasana)',
+    muscles: [Muscles.Shoulders, Muscles.Abdominals, Muscles.Wrists],
+    description: 'An inversion that strengthens the shoulders, arms, and core while improving balance and focus.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'headstand',
+    title: 'Headstand (Sirsasana)',
+    muscles: [Muscles.Shoulders, Muscles.Abdominals, Muscles.Wrists],
+    description: 'An inversion that strengthens the shoulders, arms, and core while improving balance and focus.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'plow-pose',
+    title: 'Plow Pose (Halasana)',
+    muscles: [Muscles.Shoulders, Muscles.LowerBack, Muscles.Hamstrings],
+    description: 'An inversion that stretches the shoulders, spine, and hamstrings while calming the mind.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'shoulder-stand',
+    title: 'Shoulder Stand (Sarvangasana)',
+    muscles: [Muscles.Shoulders, Muscles.LowerBack, Muscles.Abdominals],
+    description: 'An inversion that strengthens the shoulders, arms, and core while improving balance and focus.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+  {
+    id: 'reclining-spinal-twist',
+    title: 'Reclining Spinal Twist (Supta Matsyendrasana)',
+    muscles: [Muscles.LowerBack, Muscles.Abdominals, Muscles.Hips],
+    description: 'A gentle twist that stretches the spine, hips, and shoulders while promoting relaxation.',
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true
+    }
+  },
+]
