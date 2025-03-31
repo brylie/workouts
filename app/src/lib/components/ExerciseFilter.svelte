@@ -3,15 +3,14 @@ import type { ExerciseFilters } from '../types';
 import { Equipment, equipmentList } from '../equipment';
 import { Muscles, musclesList } from '../muscles';
 
-export let filters: ExerciseFilters;
-export let onFilterChange: (filters: ExerciseFilters) => void;
+const { filters, onFilterChange }: { filters: ExerciseFilters; onFilterChange: (filters: ExerciseFilters) => void } = $props();
 
 const muscleOptions = musclesList;
 const equipmentOptions = equipmentList;
 
-$: activeMuscleCount = filters.muscles?.length || 0;
-$: activeEquipmentCount = filters.equipment?.length || 0;
-$: muscleLabelText = activeMuscleCount === 1 ? 'muscle' : 'muscles';
+const activeMuscleCount = $derived(filters.muscles?.length || 0);
+const activeEquipmentCount = $derived(filters.equipment?.length || 0);
+const muscleLabelText = $derived(activeMuscleCount === 1 ? 'muscle' : 'muscles');
 
 function handleMuscleChange(muscleId: Muscles, checked: boolean) {
     const updatedMuscles = checked
@@ -62,7 +61,7 @@ function handleEquipmentChange(equipment: Equipment, checked: boolean) {
                             class="hidden"
                             id="muscle-filter-{muscle.id}"
                             checked={filters.muscles?.includes(muscle.id)}
-                            on:change={(e) => handleMuscleChange(muscle.id, e.currentTarget.checked)}
+                            onchange={(e) => handleMuscleChange(muscle.id, e.currentTarget.checked)}
                         />
                         <span 
                             id="muscle-filter-{muscle.id}-text"
@@ -85,7 +84,7 @@ function handleEquipmentChange(equipment: Equipment, checked: boolean) {
                             class="hidden"
                             id="equipment-filter-{equipment.id}"
                             checked={filters.equipment?.includes(equipment.id)}
-                            on:change={(e) => handleEquipmentChange(equipment.id, e.currentTarget.checked)}
+                            onchange={(e) => handleEquipmentChange(equipment.id, e.currentTarget.checked)}
                         />
                         <span 
                             id="equipment-filter-{equipment.id}-text"
