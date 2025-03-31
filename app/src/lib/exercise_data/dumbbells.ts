@@ -1,6 +1,6 @@
 import { Equipment } from '$lib/equipment';
 import { Muscles } from '$lib/muscles';
-import type { ExerciseDetails } from '../types';
+import type { ExerciseDetails } from '$lib/types';
 
 /**
  * A collection of dumbbell exercises that can be used to generate workouts.

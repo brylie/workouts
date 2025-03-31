@@ -1,5 +1,5 @@
-import type { ExerciseDetails } from '../types';
-import { Joints } from '../joints';
+import type { ExerciseDetails } from '$lib/types';
+import { Joints } from '$lib/joints';
 import { Muscles } from '$lib/muscles';
 
 /**
