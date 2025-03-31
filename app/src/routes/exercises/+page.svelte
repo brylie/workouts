@@ -1,13 +1,46 @@
 <script lang="ts">
 import { allExercises } from '$lib/exerciseData';
+import type { ExerciseFilters } from '$lib/types';
+import ExerciseFilter from '$lib/components/ExerciseFilter.svelte';
 
-// We can sort exercises by title for easier browsing
-const sortedExercises = [...allExercises].sort((a, b) => a.title.localeCompare(b.title));
+let filters: ExerciseFilters = {
+    muscles: [],
+    equipment: []
+};
+
+$: filteredExercises = allExercises.filter(exercise => {
+    // Apply muscle filter
+    if (filters.muscles?.length) {
+        if (!filters.muscles.some(muscle => exercise.muscles.includes(muscle))) {
+            return false;
+        }
+    }
+    
+    // Apply equipment filter
+    if (filters.equipment?.length) {
+        if (!exercise.equipment?.some(eq => filters.equipment!.includes(eq))) {
+            return false;
+        }
+    }
+    
+    return true;
+});
+
+// Sort filtered exercises by title
+$: sortedExercises = [...filteredExercises].sort((a, b) => a.title.localeCompare(b.title));
+
+function handleFilterChange(newFilters: ExerciseFilters) {
+    filters = newFilters;
+}
 </script>
 
 <div class="min-h-screen bg-gray-900 text-white">
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-8">Exercise Library</h1>
+        
+        <div class="mb-8">
+            <ExerciseFilter {filters} onFilterChange={handleFilterChange} />
+        </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {#each sortedExercises as exercise}

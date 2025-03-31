@@ -1,18 +1,31 @@
 <script lang="ts">
-import { getRandomWorkoutItems } from '$lib/exerciseData';
-import type { WorkoutItem, CompletedExerciseV2, CompletedExerciseMetrics } from '$lib/types';
+import { getFilteredRandomExercises } from '$lib/exerciseData';
+import type { WorkoutItem, CompletedExerciseV2, CompletedExerciseMetrics, ExerciseFilters } from '$lib/types';
 import { saveCompletedExercise } from '$lib/database';
 import { browser } from '$app/environment';
 import WorkoutItemComponent from '$lib/components/WorkoutItem.svelte';
+import ExerciseFilter from '$lib/components/ExerciseFilter.svelte';
 
 let numberOfExercises = 5;
 let generatedWorkout: WorkoutItem[] = [];
 let savingIndex: number | null = null;
 let saveError: string | null = null;
+let filters: ExerciseFilters = {
+    muscles: [],
+    equipment: []
+};
 
 function generateWorkout() {
-    generatedWorkout = getRandomWorkoutItems(numberOfExercises);
+    const exercises = getFilteredRandomExercises(filters, numberOfExercises);
+    generatedWorkout = exercises.map(exercise => ({
+        exercise,
+        completed: false
+    }));
     saveError = null;
+}
+
+function handleFilterChange(newFilters: ExerciseFilters) {
+    filters = newFilters;
 }
 
 function updateWorkoutItem(index: number, updates: Partial<WorkoutItem>) {
@@ -78,6 +91,10 @@ async function markAsComplete(index: number) {
         <h1 class="text-4xl font-bold mb-8">Workout Generator</h1>
         
         <div class="max-w-md mx-auto bg-gray-800 p-6 rounded-lg mb-8">
+            <div class="mb-6">
+                <ExerciseFilter filters={filters} onFilterChange={handleFilterChange} />
+            </div>
+
             <form on:submit|preventDefault={generateWorkout} class="space-y-4">
                 <div>
                     <label for="exerciseCount" class="block text-sm font-medium mb-2">
