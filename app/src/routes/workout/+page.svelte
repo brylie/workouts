@@ -87,11 +87,11 @@ async function markAsComplete(index: number) {
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-8">Workout Generator</h1>
         
-        <div class="max-w-md mx-auto bg-gray-800 p-6 rounded-lg mb-8">
-            <div class="mb-6">
-                <ExerciseFilter filters={filters} onFilterChange={handleFilterChange} />
-            </div>
+        <div class="mb-8 bg-gray-800 rounded-lg">
+            <ExerciseFilter filters={filters} onFilterChange={handleFilterChange} />
+        </div>
 
+        <div class="bg-gray-800 p-6 rounded-lg mb-8">
             <form 
                 onsubmit={(e) => {
                     e.preventDefault();
@@ -132,7 +132,7 @@ async function markAsComplete(index: number) {
         </div>
 
         {#if saveError}
-            <div class="max-w-md mx-auto mb-6 bg-red-800 text-white p-4 rounded-lg">
+            <div class="mb-6 bg-red-800 text-white p-4 rounded-lg">
                 <p>{saveError}</p>
             </div>
         {/if}
