@@ -7,9 +7,9 @@ import { equipmentList, getEquipment, getEquipmentDetails, getEquipmentDetailsFo
 // Test getEquipmentDetails function
 describe('getEquipmentDetails', () => {
     it('should return the correct equipment details for the specified type', () => {
-      const equipment = getEquipmentDetails(Equipment.Treadmill);
+      const equipment = getEquipmentDetails(Equipment.TREADMILL);
       expect(equipment).toEqual({
-        id: Equipment.Treadmill,
+        id: Equipment.TREADMILL,
         name: 'Treadmill',
         description: 'A machine for walking or running while staying in one place.'
       });
@@ -25,15 +25,15 @@ describe('getEquipmentDetails', () => {
   // Test getEquipmentDetailsForTypes function
   describe('getEquipmentDetailsForTypes', () => {
     it('should return the correct equipment details for multiple types', () => {
-      const equipment = getEquipmentDetailsForTypes([Equipment.Treadmill, Equipment.Dumbbells]);
+      const equipment = getEquipmentDetailsForTypes([Equipment.TREADMILL, Equipment.DUMBBELLS]);
       expect(equipment).toEqual([
         {
-          id: Equipment.Treadmill,
+          id: Equipment.TREADMILL,
           name: 'Treadmill',
           description: 'A machine for walking or running while staying in one place.'
         },
         {
-          id: Equipment.Dumbbells,
+          id: Equipment.DUMBBELLS,
           name: 'Dumbbells',
           description: 'A pair of handheld weights used for various exercises.'
         }
@@ -51,9 +51,9 @@ describe('getEquipmentDetails', () => {
 
 describe('getEquipment', () => {
     it('should return the correct equipment details for the specified type', () => {
-      const equipment = getEquipment(Equipment.Treadmill);
+      const equipment = getEquipment(Equipment.TREADMILL);
       expect(equipment).toEqual({
-        id: Equipment.Treadmill,
+        id: Equipment.TREADMILL,
         name: 'Treadmill',
         description: 'A machine for walking or running while staying in one place.'
       });
@@ -68,9 +68,9 @@ describe('getEquipment', () => {
 
   describe('getEquipmentDetails', () => {
     it('should return the correct equipment details for the specified type', () => {
-      const equipment = getEquipmentDetails(Equipment.Treadmill);
+      const equipment = getEquipmentDetails(Equipment.TREADMILL);
       expect(equipment).toEqual({
-        id: Equipment.Treadmill,
+        id: Equipment.TREADMILL,
         name: 'Treadmill',
         description: 'A machine for walking or running while staying in one place.'
       });
@@ -84,15 +84,15 @@ describe('getEquipment', () => {
   
   describe('getEquipmentDetailsForTypes', () => {
     it('should return the correct equipment details for multiple types', () => {
-      const equipment = getEquipmentDetailsForTypes([Equipment.Treadmill, Equipment.Dumbbells]);
+      const equipment = getEquipmentDetailsForTypes([Equipment.TREADMILL, Equipment.DUMBBELLS]);
       expect(equipment).toEqual([
         {
-          id: Equipment.Treadmill,
+          id: Equipment.TREADMILL,
           name: 'Treadmill',
           description: 'A machine for walking or running while staying in one place.'
         },
         {
-          id: Equipment.Dumbbells,
+          id: Equipment.DUMBBELLS,
           name: 'Dumbbells',
           description: 'A pair of handheld weights used for various exercises.'
         }

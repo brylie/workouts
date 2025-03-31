@@ -6,88 +6,88 @@ import { Equipment } from './enums';
  * This provides a type-safe way to reference equipment.
  */
 export const equipmentRegistry: Record<Equipment, EquipmentDetails> = {
-  [Equipment.BackExtensionMachine]: { 
-    id: Equipment.BackExtensionMachine, 
+  [Equipment.BACK_EXTENSION_MACHINE]: { 
+    id: Equipment.BACK_EXTENSION_MACHINE, 
     name: 'Back Extension Machine', 
     description: 'A machine used for performing back extension exercises.' 
   },
-  [Equipment.AbdominalCrunchMachine]: { 
-    id: Equipment.AbdominalCrunchMachine, 
+  [Equipment.ABDOMINAL_CRUNCH_MACHINE]: { 
+    id: Equipment.ABDOMINAL_CRUNCH_MACHINE, 
     name: 'Abdominal Crunch Machine', 
     description: 'A machine used for performing abdominal crunch exercises.' 
   },
-  [Equipment.HipAbductorMachine]: { 
-    id: Equipment.HipAbductorMachine, 
+  [Equipment.HIP_ABDUCTOR_MACHINE]: { 
+    id: Equipment.HIP_ABDUCTOR_MACHINE, 
     name: 'Hip Abductor Machine', 
     description: 'A machine used for performing hip abductor exercises.' 
   },
-  [Equipment.HipAdductorMachine]: { 
-    id: Equipment.HipAdductorMachine, 
+  [Equipment.HIP_ADDUCTOR_MACHINE]: { 
+    id: Equipment.HIP_ADDUCTOR_MACHINE, 
     name: 'Hip Adductor Machine', 
     description: 'A machine used for performing hip adductor exercises.' 
   },
-  [Equipment.ShoulderPressMachine]: { 
-    id: Equipment.ShoulderPressMachine, 
+  [Equipment.SHOULDER_PRESS_MACHINE]: { 
+    id: Equipment.SHOULDER_PRESS_MACHINE, 
     name: 'Shoulder Press Machine', 
     description: 'A machine used for performing shoulder press exercises.' 
   },
-  [Equipment.SeatedLegCurlMachine]: { 
-    id: Equipment.SeatedLegCurlMachine, 
+  [Equipment.SEATED_LEG_CURL_MACHINE]: { 
+    id: Equipment.SEATED_LEG_CURL_MACHINE, 
     name: 'Seated Leg Curl Machine', 
     description: 'A machine used for performing seated leg curl exercises.' 
   },
-  [Equipment.LegExtensionsMachine]: { 
-    id: Equipment.LegExtensionsMachine, 
+  [Equipment.LEG_EXTENSIONS_MACHINE]: { 
+    id: Equipment.LEG_EXTENSIONS_MACHINE, 
     name: 'Leg Extensions Machine', 
     description: 'A machine used for performing leg extension exercises.' 
   },
-  [Equipment.RotaryTorsoMachine]: { 
-    id: Equipment.RotaryTorsoMachine, 
+  [Equipment.ROTARY_TORSO_MACHINE]: { 
+    id: Equipment.ROTARY_TORSO_MACHINE, 
     name: 'Rotary Torso Machine', 
     description: 'A machine used for performing rotary torso exercises.' 
   },
-  [Equipment.Treadmill]: { 
-    id: Equipment.Treadmill, 
+  [Equipment.TREADMILL]: { 
+    id: Equipment.TREADMILL, 
     name: 'Treadmill', 
     description: 'A machine for walking or running while staying in one place.' 
   },
-  [Equipment.StationaryCycle]: { 
-    id: Equipment.StationaryCycle, 
+  [Equipment.STATIONARY_CYCLE]: { 
+    id: Equipment.STATIONARY_CYCLE, 
     name: 'Stationary Cycle', 
     description: 'A stationary bike used for cardio workouts.' 
   },
-  [Equipment.Dumbbells]: { 
-    id: Equipment.Dumbbells, 
+  [Equipment.DUMBBELLS]: { 
+    id: Equipment.DUMBBELLS, 
     name: 'Dumbbells', 
     description: 'A pair of handheld weights used for various exercises.' 
   },
-  [Equipment.Bench]: { 
-    id: Equipment.Bench, 
+  [Equipment.BENCH]: { 
+    id: Equipment.BENCH, 
     name: 'Bench', 
     description: 'A flat or adjustable bench used for exercises like bench press and dumbbell rows.' 
   },
-  [Equipment.LatPulldownMachine]: { 
-    id: Equipment.LatPulldownMachine, 
+  [Equipment.LAT_PULLDOWN_MACHINE]: { 
+    id: Equipment.LAT_PULLDOWN_MACHINE, 
     name: 'Lat Pulldown Machine', 
     description: 'A machine used for performing lat pulldown exercises.' 
   },
-  [Equipment.CableMachine]: { 
-    id: Equipment.CableMachine, 
+  [Equipment.CABLE_MACHINE]: { 
+    id: Equipment.CABLE_MACHINE, 
     name: 'Cable Machine', 
     description: 'A versatile machine with adjustable pulleys used for various resistance exercises.' 
   },
-  [Equipment.SeatedRowingMachine]: { 
-    id: Equipment.SeatedRowingMachine, 
+  [Equipment.SEATED_ROWING_MACHINE]: { 
+    id: Equipment.SEATED_ROWING_MACHINE, 
     name: 'Seated Rowing Machine', 
     description: 'A machine used for performing seated row exercises.' 
   },
-  [Equipment.LegPressMachine]: { 
-    id: Equipment.LegPressMachine, 
+  [Equipment.LEG_PRESS_MACHINE]: { 
+    id: Equipment.LEG_PRESS_MACHINE, 
     name: 'Leg Press Machine', 
     description: 'A machine used for performing leg press exercises.' 
   },
-  [Equipment.Kettlebell]: { 
-    id: Equipment.Kettlebell, 
+  [Equipment.KETTLEBELL]: { 
+    id: Equipment.KETTLEBELL, 
     name: 'Kettlebell', 
     description: 'A cast-iron or cast-steel weight used for ballistic exercises that combine strength, cardio, and flexibility training.' 
   }

@@ -38,14 +38,18 @@ function handleEquipmentChange(equipment: Equipment, checked: boolean) {
         <h3 class="text-lg font-medium mb-3">Target Muscles</h3>
         <div class="flex flex-wrap gap-2">
             {#each muscleOptions as muscle}
-                <label class="inline-flex items-center">
+                <label class="inline-flex items-center" id="muscle-filter-{muscle}-label">
                     <input
                         type="checkbox"
                         class="hidden"
+                        id="muscle-filter-{muscle}"
                         checked={filters.muscles?.includes(muscle)}
                         on:change={(e) => handleMuscleChange(muscle, e.currentTarget.checked)}
                     />
-                    <span class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.muscles?.includes(muscle) ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'}">
+                    <span 
+                        id="muscle-filter-{muscle}-text"
+                        class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.muscles?.includes(muscle) ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'}"
+                    >
                         {muscle}
                     </span>
                 </label>
@@ -57,14 +61,19 @@ function handleEquipmentChange(equipment: Equipment, checked: boolean) {
         <h3 class="text-lg font-medium mb-3">Equipment</h3>
         <div class="flex flex-wrap gap-2">
             {#each equipmentOptions as equipment}
-                <label class="inline-flex items-center">
+                <label class="inline-flex items-center" id="equipment-filter-{equipment.id}-label">
                     <input
                         type="checkbox"
                         class="hidden"
+                        id="equipment-filter-{equipment.id}"
                         checked={filters.equipment?.includes(equipment.id)}
                         on:change={(e) => handleEquipmentChange(equipment.id, e.currentTarget.checked)}
                     />
-                    <span class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.equipment?.includes(equipment.id) ? 'bg-purple-600' : 'bg-gray-700 hover:bg-gray-600'}" title={equipment.description || undefined}>
+                    <span 
+                        id="equipment-filter-{equipment.id}-text"
+                        class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.equipment?.includes(equipment.id) ? 'bg-purple-600' : 'bg-gray-700 hover:bg-gray-600'}"
+                        title={equipment.description || undefined}
+                    >
                         {equipment.name}
                     </span>
                 </label>

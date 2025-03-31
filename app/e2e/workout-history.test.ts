@@ -3,11 +3,6 @@ import { expect, test } from '@playwright/test';
 test.describe('Workout Generator and History Flow', () => {
   // Increasing timeout for navigation and page load actions
   const navigationTimeout = 5000;
-  
-  // test.beforeEach(async () => {
-  //   // Set a longer timeout for the whole test
-  //   test.setTimeout(120000);
-  // });
 
   test('should generate workout and save completed exercise to history', async ({ page }) => {
     // Navigate to workout page with full URL and wait for page to load
@@ -25,10 +20,7 @@ test.describe('Workout Generator and History Flow', () => {
     await expect(page.getByText('Your Workout')).toBeVisible({ timeout: navigationTimeout });
     
     // Wait for exercise cards to appear
-    // Fix: Use the correct CSS class selector with . prefix
     const exerciseCards = page.locator('.workout-item');
-    // this screenshot shows two workout items rendred on the page
-    // This step was timing out waiting for the assertion to pass
     await expect(exerciseCards).toHaveCount(2, { timeout: navigationTimeout });
     
     // Get the first exercise card

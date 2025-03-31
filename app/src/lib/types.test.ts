@@ -7,7 +7,7 @@ import type { EquipmentDetails, ExerciseDetails, Workout, WorkoutItem } from "./
 describe('types.ts', () => {
     it('should define EquipmentDetails interface', () => {
       const equipment: EquipmentDetails = {
-        id: Equipment.Dumbbells,
+        id: Equipment.DUMBBELLS,
         name: 'Dumbbells',
         description: 'A pair of handheld weights used for various exercises.'
       };
@@ -21,14 +21,22 @@ describe('types.ts', () => {
       const exercise: ExerciseDetails = {
         id: 'push-up',
         title: 'Push-Up',
-        muscles: [Muscles.Chest, Muscles.Triceps],
+        muscles: [Muscles.CHEST, Muscles.TRICEPS],
         equipment: [],
-        description: 'A bodyweight exercise that targets the chest and triceps.'
+        description: 'A bodyweight exercise that targets the chest and triceps.',
+        metrics: {
+          hasSets: true,
+          hasReps: true,
+          hasWeight: false,
+          hasTime: true,
+          hasDistance: false,
+          hasResistance: false,
+        },
       };
       expect(exercise).toBeDefined();
       expect(exercise.id).toBe('push-up');
       expect(exercise.title).toBe('Push-Up');
-      expect(exercise.muscles).toEqual(['chest', 'triceps']);
+      expect(exercise.muscles).toEqual([Muscles.CHEST, Muscles.TRICEPS]);
       expect(exercise.equipment).toEqual([]);
       expect(exercise.description).toBe('A bodyweight exercise that targets the chest and triceps.');
     });
@@ -38,7 +46,7 @@ describe('types.ts', () => {
         exercise: {
           id: 'push-up',
           title: 'Push-Up',
-          muscles: [Muscles.Chest, Muscles.Triceps],
+          muscles: [Muscles.CHEST, Muscles.TRICEPS],
           equipment: [],
           description: 'A bodyweight exercise that targets the chest and triceps.'
         },
@@ -64,7 +72,7 @@ describe('types.ts', () => {
             exercise: {
               id: 'push-up',
               title: 'Push-Up',
-              muscles: [Muscles.Chest, Muscles.Triceps],
+              muscles: [Muscles.CHEST, Muscles.TRICEPS],
               equipment: [],
               description: 'A bodyweight exercise that targets the chest and triceps.'
             },
