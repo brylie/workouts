@@ -195,4 +195,38 @@ describe('ExerciseFilter', () => {
             equipment: [Equipment.DUMBBELLS]
         });
     });
+
+    test('shows singular "muscle" text when one muscle filter is active', () => {
+        const singleMuscleFilter: ExerciseFilters = {
+            muscles: [Muscles.CHEST],
+            equipment: []
+        };
+
+        const { container } = render(ExerciseFilter, {
+            props: {
+                filters: singleMuscleFilter,
+                onFilterChange: vi.fn()
+            }
+        });
+
+        const muscleBadge = container.querySelector('.badge.bg-blue-600');
+        expect(muscleBadge?.textContent?.trim()).toBe('1 muscle');
+    });
+
+    test("shows plural 'muscles' text when multiple muscle filters are active", () => {
+        const multipleMuscleFilters: ExerciseFilters = {
+            muscles: [Muscles.CHEST, Muscles.LOWER_BACK],
+            equipment: []
+        };
+        const { container } = render(ExerciseFilter, {
+            props: {
+                filters: multipleMuscleFilters,
+                onFilterChange: vi.fn()
+            }
+
+        });
+
+        const muscleBadge = container.querySelector('.badge.bg-blue-600');
+        expect(muscleBadge?.textContent?.trim()).toBe('2 muscles');
+    });
 });

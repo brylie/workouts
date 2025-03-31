@@ -11,6 +11,7 @@ const equipmentOptions = equipmentList;
 
 $: activeMuscleCount = filters.muscles?.length || 0;
 $: activeEquipmentCount = filters.equipment?.length || 0;
+$: muscleLabelText = activeMuscleCount === 1 ? 'muscle' : 'muscles';
 
 function handleMuscleChange(muscleId: Muscles, checked: boolean) {
     const updatedMuscles = checked
@@ -41,7 +42,7 @@ function handleEquipmentChange(equipment: Equipment, checked: boolean) {
         Filters
         {#if activeMuscleCount > 0}
             <div class="badge badge-md bg-blue-600 border-blue-600">
-                {activeMuscleCount} muscles
+                {activeMuscleCount} {muscleLabelText}
             </div>
         {/if}
         {#if activeEquipmentCount > 0}
