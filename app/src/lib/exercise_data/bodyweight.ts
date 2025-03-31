@@ -274,5 +274,29 @@ export const bodyweightExercises: ExerciseDetails[] = [
       hasWeight: false,
       hasTime: false
     }
+  },
+  {
+    id: 'dead-bug',
+    title: 'Dead Bug',
+    muscles: [Muscles.Abdominals, Muscles.Obliques],
+    description: 'A core exercise performed lying on your back, moving opposite arm and leg simultaneously to engage the core.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: false
+    }
+  },
+  {
+    id: 'cross-crunch',
+    title: 'Cross Crunch',
+    muscles: [Muscles.Abdominals, Muscles.Obliques],
+    description: 'A variation of the crunch where you bring one elbow to the opposite knee, targeting the obliques.',
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: false,
+      hasTime: false
+    }
   }
 ];
