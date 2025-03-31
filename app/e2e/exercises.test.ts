@@ -94,14 +94,14 @@ test.describe('Exercise Library Page', () => {
     const firstExercise = page.locator('.bg-gray-800.p-6.rounded-lg').first();
     
     // Check for biceps
-    const muscleLabels = await firstExercise.locator('.bg-blue-600.px-2.py-1.rounded.text-sm').allInnerTexts();
+    const muscleLabels = await firstExercise.locator('.exercise-muscle').allInnerTexts();
     const hasBiceps = muscleLabels.some(label => label.includes('biceps'));
     expect(hasBiceps).toBeTruthy();
     
     // Check for Dumbbells
     const hasEquipmentSection = await firstExercise.locator('h3:has-text("Required Equipment:")').isVisible();
     if (hasEquipmentSection) {
-      const equipmentLabels = await firstExercise.locator('.bg-purple-600.px-2.py-1.rounded.text-sm').allInnerTexts();
+      const equipmentLabels = await firstExercise.locator('.exercise-equipment').allInnerTexts();
       const hasDumbbells = equipmentLabels.some(label => label.includes('Dumbbells'));
       expect(hasDumbbells).toBeTruthy();
     }
