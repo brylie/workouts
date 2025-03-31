@@ -17,7 +17,7 @@ test.describe('Exercise Library Page', () => {
     expect(initialExerciseCount).toBeGreaterThan(0);
     
     // Click on a muscle filter (Chest)
-    await page.locator(`#muscle-filter-${Muscles.CHEST}`).click();
+    await page.locator(`#muscle-filter-${Muscles.CHEST}-text`).click();
     
     // Wait for filtered results
     await page.waitForTimeout(300); // Small delay for filter to apply
@@ -42,7 +42,7 @@ test.describe('Exercise Library Page', () => {
     await expect(page.getByRole('heading', { name: 'Exercise Library' })).toBeVisible({ timeout: navigationTimeout });
     
     // Click on an equipment filter (Dumbbells)
-    await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}`).click();
+    await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}-text`).click();
     
     // Wait for filtered results
     await page.waitForTimeout(300); // Small delay for filter to apply
@@ -59,7 +59,7 @@ test.describe('Exercise Library Page', () => {
       
       if (hasEquipmentSection) {
         const equipmentLabels = await exerciseCard.locator('.bg-purple-600.px-2.py-1.rounded.text-sm').allInnerTexts();
-        const hasDumbbells = equipmentLabels.some(label => label.includes('Dumbbells'));
+        const hasDumbbells = equipmentLabels.some(label => label.includes('dumbbells'));
         expect(hasDumbbells).toBeTruthy();
       }
     }
@@ -76,10 +76,10 @@ test.describe('Exercise Library Page', () => {
     const initialCount = await page.locator('.bg-gray-800.p-6.rounded-lg').count();
     
     // Apply muscle filter (Biceps)
-    await page.locator(`#muscle-filter-${Muscles.BICEPS}`).click();
+    await page.locator(`#muscle-filter-${Muscles.BICEPS}-text`).click();
     
     // Apply equipment filter (Dumbbells)
-    await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}`).click();
+    await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}-text`).click();
     
     // Wait for filtered results
     await page.waitForTimeout(300); // Small delay for filters to apply
