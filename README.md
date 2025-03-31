@@ -5,10 +5,11 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Testing with Vitest](https://img.shields.io/badge/Testing-Vitest-729B1B?style=for-the-badge&logo=vitest)](https://vitest.dev/)
 [![End-to-End Tests with Playwright](https://img.shields.io/badge/E2E_Tests-Playwright-45ba4b?style=for-the-badge&logo=playwright)](https://playwright.dev/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
 [![PNPM](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)](https://pnpm.io/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](https://makeapullrequest.com)
 [![All Contributors Welcome](https://img.shields.io/badge/all_contributors-welcome-orange.svg?style=for-the-badge)](CONTRIBUTING.md)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
 
 A comprehensive personal training and workout tracking application that helps users create custom workouts, track their progress, and maintain a consistent fitness routine.
 
