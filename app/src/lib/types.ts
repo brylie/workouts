@@ -108,3 +108,11 @@ export interface CompletedExerciseV2 {
   completed_at: Date; // When the exercise was completed
   metrics: CompletedExerciseMetrics;
 }
+
+/**
+ * Filter criteria for exercises
+ */
+export interface ExerciseFilters {
+  muscles?: Muscles[];
+  equipment?: Equipment[];
+}

@@ -1,4 +1,4 @@
-import type { ExerciseDetails, WorkoutItem } from './types';
+import type { ExerciseDetails, WorkoutItem, ExerciseFilters } from './types';
 import { Muscles, Equipment } from './enums';
 import { calisthenicsExercises } from './exercise_data/calisthenics';
 import { dumbbellExercises } from './exercise_data/dumbbells';
@@ -62,13 +62,10 @@ export function getExercisesByEquipment(equipmentType: Equipment): ExerciseDetai
 
 /**
  * Filter exercises by multiple criteria
- * @param filters Object containing filter criteria
+ * @param filters Filter criteria
  * @returns Filtered array of exercises
  */
-export function filterExercises(filters: {
-  muscles?: Muscles[];
-  equipment?: Equipment[];
-}): ExerciseDetails[] {
+export function filterExercises(filters: ExerciseFilters): ExerciseDetails[] {
   return allExercises.filter(exercise => {
     // Check muscle filter if provided
     if (filters.muscles?.length) {
@@ -95,10 +92,7 @@ export function filterExercises(filters: {
  * @returns An array of randomly selected exercises
  */
 export function getFilteredRandomExercises(
-  filters: {
-    muscles?: Muscles[];
-    equipment?: Equipment[];
-  },
+  filters: ExerciseFilters,
   count: number = 5
 ): ExerciseDetails[] {
   const filteredExercises = filterExercises(filters);
