@@ -10,8 +10,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'back-extension',
       title: 'Back Extension',
-      muscles: [Muscles.LowerBack, Muscles.Glutes],
-      equipment: [Equipment.BackExtensionMachine],
+      muscles: [Muscles.LOWER_BACK, Muscles.GLUTES],
+      equipment: [Equipment.BACK_EXTENSION_MACHINE],
       description: 'Exercise targeting the lower back muscles and glutes by extending the back from a bent position.',
       metrics: {
         hasSets: true,
@@ -23,8 +23,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'abdominal-crunch',
       title: 'Abdominal Crunch',
-      muscles: [Muscles.Abdominals],
-      equipment: [Equipment.AbdominalCrunchMachine],
+      muscles: [Muscles.ABDOMINALS],
+      equipment: [Equipment.ABDOMINAL_CRUNCH_MACHINE],
       description: 'A classic core exercise that targets the abdominal muscles through controlled flexion of the spine.',
       metrics: {
         hasSets: true,
@@ -36,8 +36,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'hip-abductor',
       title: 'Hip Abductor',
-      muscles: [Muscles.Abductors, Muscles.Glutes],
-      equipment: [Equipment.HipAbductorMachine],
+      muscles: [Muscles.ABDUCTORS, Muscles.GLUTES],
+      equipment: [Equipment.HIP_ABDUCTOR_MACHINE],
       description: 'Exercise that works the outer thigh muscles by moving the leg away from the midline of the body.',
       metrics: {
         hasSets: true,
@@ -49,8 +49,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'hip-adductor',
       title: 'Hip Adductor',
-      muscles: [Muscles.Adductors],
-      equipment: [Equipment.HipAdductorMachine],
+      muscles: [Muscles.ADDUCTORS],
+      equipment: [Equipment.HIP_ADDUCTOR_MACHINE],
       description: 'Exercise that strengthens the inner thigh muscles by bringing the legs toward the midline of the body.',
       metrics: {
         hasSets: true,
@@ -62,8 +62,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'shoulder-press',
       title: 'Shoulder Press',
-      muscles: [Muscles.Shoulders, Muscles.Triceps],
-      equipment: [Equipment.ShoulderPressMachine],
+      muscles: [Muscles.SHOULDERS, Muscles.TRICEPS],
+      equipment: [Equipment.SHOULDER_PRESS_MACHINE],
       description: 'Overhead pressing movement that primarily targets the deltoid muscles with secondary activation of the triceps.',
       metrics: {
         hasSets: true,
@@ -75,8 +75,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'seated-leg-curl',
       title: 'Seated Leg Curl',
-      muscles: [Muscles.Hamstrings],
-      equipment: [Equipment.SeatedLegCurlMachine],
+      muscles: [Muscles.HAMSTRINGS],
+      equipment: [Equipment.SEATED_LEG_CURL_MACHINE],
       description: 'Exercise performed on a machine that targets the hamstrings through leg flexion.',
       metrics: {
         hasSets: true,
@@ -88,8 +88,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'leg-extensions',
       title: 'Leg Extensions',
-      muscles: [Muscles.Quadriceps],
-      equipment: [Equipment.LegExtensionsMachine],
+      muscles: [Muscles.QUADRICEPS],
+      equipment: [Equipment.LEG_EXTENSIONS_MACHINE],
       description: 'Isolation exercise that targets the quadriceps by extending the knee joint against resistance.',
       metrics: {
         hasSets: true,
@@ -101,8 +101,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'rotary-torso',
       title: 'Rotary Torso',
-      muscles: [Muscles.Abdominals, Muscles.LowerBack],
-      equipment: [Equipment.RotaryTorsoMachine],
+      muscles: [Muscles.ABDOMINALS, Muscles.LOWER_BACK],
+      equipment: [Equipment.ROTARY_TORSO_MACHINE],
       description: 'Core exercise that focuses on rotational strength and targets the obliques and lower back muscles.',
       metrics: {
         hasSets: true,
@@ -114,8 +114,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'treadmill',
       title: 'Treadmill',
-      muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes, Muscles.Calves],
-      equipment: [Equipment.Treadmill],
+      muscles: [Muscles.QUADRICEPS, Muscles.HAMSTRINGS, Muscles.GLUTES, Muscles.CALVES],
+      equipment: [Equipment.TREADMILL],
       description: 'Cardio exercise that primarily works the lower body muscles and cardiovascular system.',
       metrics: {
         hasSets: false,
@@ -132,8 +132,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'cycle',
       title: 'Cycle',
-      muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Calves],
-      equipment: [Equipment.StationaryCycle],
+      muscles: [Muscles.QUADRICEPS, Muscles.HAMSTRINGS, Muscles.CALVES],
+      equipment: [Equipment.STATIONARY_CYCLE],
       description: 'Low-impact cardio exercise that primarily targets the leg muscles.',
       metrics: {
         hasSets: false,
@@ -150,8 +150,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'lat-pulldown',
       title: 'Lat Pulldown',
-      muscles: [Muscles.Lats, Muscles.Biceps, Muscles.Shoulders],
-      equipment: [Equipment.LatPulldownMachine],
+      muscles: [Muscles.LATS, Muscles.BICEPS, Muscles.SHOULDERS],
+      equipment: [Equipment.LAT_PULLDOWN_MACHINE],
       description: 'Pulling exercise that targets the latissimus dorsi muscles of the back with secondary activation of the biceps.',
       metrics: {
         hasSets: true,
@@ -163,8 +163,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'seated-row',
       title: 'Seated Row',
-      muscles: [Muscles.Lats, Muscles.Trapezius, Muscles.Biceps],
-      equipment: [Equipment.SeatedRowingMachine],
+      muscles: [Muscles.LATS, Muscles.TRAPEZIUS, Muscles.BICEPS],
+      equipment: [Equipment.SEATED_ROWING_MACHINE],
       description: 'Compound pulling exercise that works the middle back, lats, and arms by rowing a weight toward the torso.',
       metrics: {
         hasSets: true,
@@ -176,8 +176,8 @@ export const machineExercises: ExerciseDetails[] = [
     {
       id: 'leg-press',
       title: 'Leg Press',
-      muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes],
-      equipment: [Equipment.LegPressMachine],
+      muscles: [Muscles.QUADRICEPS, Muscles.HAMSTRINGS, Muscles.GLUTES],
+      equipment: [Equipment.LEG_PRESS_MACHINE],
       description: 'Compound lower body exercise performed on a machine where weight is pushed away from the body using the legs.',
       metrics: {
         hasSets: true,

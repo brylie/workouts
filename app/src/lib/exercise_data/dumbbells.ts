@@ -10,8 +10,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-bicep-curl',
     title: 'Dumbbell Bicep Curl',
-    muscles: [Muscles.Biceps, Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Standard bicep curl performed with dumbbells, targeting the biceps brachii.',
     metrics: {
       hasSets: true,
@@ -20,12 +20,11 @@ export const dumbbellExercises: ExerciseDetails[] = [
       hasTime: false
     }
   },
-  // outward curl
   {
     id: 'dumbbell-outward-curl',
     title: 'Dumbbell Outward Curl',
-    muscles: [Muscles.Biceps, Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Bicep curl with arms at 45 degrees to target the biceps brachii and forearms.',
     metrics: {
       hasSets: true,
@@ -37,8 +36,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-hammer-curl',
     title: 'Dumbbell Hammer Curl',
-    muscles: [Muscles.Biceps, Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Bicep curl variation with palms facing each other, emphasizing the brachialis and forearms.',
     metrics: {
       hasSets: true,
@@ -50,8 +49,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-isometric-hold',
     title: 'Dumbbell Isometric Hold',
-    muscles: [Muscles.Biceps],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Holding a dumbbell in a fixed position in front of you to engage the biceps.',
     metrics: {
       hasSets: true,
@@ -63,8 +62,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-around-the-world',
     title: 'Dumbbell Around the World',
-    muscles: [Muscles.Biceps, Muscles.Shoulders],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.SHOULDERS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Circular motion with dumbbells to engage the biceps and shoulders.',
     metrics: {
       hasSets: true,
@@ -76,8 +75,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-preacher-curl',
     title: 'Dumbbell Preacher Curl',
-    muscles: [Muscles.Biceps],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Bicep curl performed on a preacher bench to isolate the biceps.',
     metrics: {
       hasSets: true,
@@ -89,8 +88,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-concentration-curl',
     title: 'Dumbbell Concentration Curl',
-    muscles: [Muscles.Biceps],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Isolation exercise focusing on the biceps by curling with one arm at a time.',
     metrics: {
       hasSets: true,
@@ -102,8 +101,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-supinating-curl',
     title: 'Dumbbell Supinating Curl',
-    muscles: [Muscles.Biceps, Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Bicep curl with a twist at the top to engage the biceps fully.',
     metrics: {
       hasSets: true,
@@ -115,8 +114,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-cross-curl',
     title: 'Dumbbell Cross Curl',
-    muscles: [Muscles.Biceps, Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Bicep curl with a cross-body motion to target the biceps brachii.',
     metrics: {
       hasSets: true,
@@ -128,8 +127,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-reverse-curl',
     title: 'Dumbbell Reverse Curl',
-    muscles: [Muscles.Biceps, Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Curl performed with palms facing down, emphasizing forearm development.',
     metrics: {
       hasSets: true,
@@ -143,12 +142,11 @@ export const dumbbellExercises: ExerciseDetails[] = [
       'Avoid swinging the weights.'
     ]
   },
-  // wrist curls
   {
     id: 'dumbbell-wrist-curl',
     title: 'Dumbbell Wrist Curl',
-    muscles: [Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Wrist flexion exercise targeting the forearm muscles.',
     metrics: {
       hasSets: true,
@@ -160,8 +158,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-wrist-extension',
     title: 'Dumbbell Wrist Extension',
-    muscles: [Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Wrist extension exercise targeting the forearm extensors.',
     metrics: {
       hasSets: true,
@@ -173,8 +171,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-skull-crusher',
     title: 'Dumbbell Skull Crusher',
-    muscles: [Muscles.Triceps],
-    equipment: [Equipment.Dumbbells, Equipment.Bench],
+    muscles: [Muscles.TRICEPS],
+    equipment: [Equipment.DUMBBELLS, Equipment.BENCH],
     description: 'Lying tricep extension with dumbbells to target the triceps.',
     metrics: {
       hasSets: true,
@@ -186,8 +184,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-overhead-tricep-extension',
     title: 'Dumbbell Tricep Extension',
-    muscles: [Muscles.Triceps],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.TRICEPS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Overhead extension targeting all three heads of the triceps.',
     metrics: {
       hasSets: true,
@@ -199,8 +197,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
       id: 'dumbbell-kickback',
       title: 'Dumbbell Kickback',
-      muscles: [Muscles.Triceps],
-      equipment: [Equipment.Dumbbells],
+      muscles: [Muscles.TRICEPS],
+      equipment: [Equipment.DUMBBELLS],
       description: 'Tricep isolation exercise performed in a bent-over position.',
       metrics: {
       hasSets: true,
@@ -212,8 +210,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-waiter-curl',
     title: 'Dumbbell Waiter Curl',
-    muscles: [Muscles.Biceps, Muscles.Triceps],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.TRICEPS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Curl with both hands holding a dumbbell in a waiter position, engaging both biceps and triceps.',
     metrics: {
       hasSets: true,
@@ -225,8 +223,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-zottman-curl',
     title: 'Dumbbell Zottman Curl',
-    muscles: [Muscles.Biceps, Muscles.Triceps, Muscles.Forearms],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.BICEPS, Muscles.TRICEPS, Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Bicep curl with a twist to target both biceps and forearms.',
     metrics: {
       hasSets: true,
@@ -239,8 +237,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-shoulder-press',
     title: 'Dumbbell Shoulder Press',
-    muscles: [Muscles.Shoulders, Muscles.Triceps],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.SHOULDERS, Muscles.TRICEPS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Overhead pressing movement targeting the deltoids and triceps.',
     metrics: {
       hasSets: true,
@@ -252,8 +250,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-lateral-raise',
     title: 'Dumbbell Lateral Raise',
-    muscles: [Muscles.Shoulders],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.SHOULDERS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Isolation exercise targeting the lateral deltoids through sideways arm raises.',
     metrics: {
       hasSets: true,
@@ -265,8 +263,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-front-raise',
     title: 'Dumbbell Front Raise',
-    muscles: [Muscles.Shoulders],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.SHOULDERS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Isolation exercise targeting the front deltoids through forward arm raises.',
     metrics: {
       hasSets: true,
@@ -279,8 +277,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-bench-press',
     title: 'Dumbbell Bench Press',
-    muscles: [Muscles.Chest, Muscles.Shoulders, Muscles.Triceps],
-    equipment: [Equipment.Dumbbells, Equipment.Bench],
+    muscles: [Muscles.CHEST, Muscles.SHOULDERS, Muscles.TRICEPS],
+    equipment: [Equipment.DUMBBELLS, Equipment.BENCH],
     description: 'Compound pressing movement targeting the chest, front deltoids, and triceps.',
     metrics: {
       hasSets: true,
@@ -292,8 +290,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-fly',
     title: 'Dumbbell Fly',
-    muscles: [Muscles.Chest],
-    equipment: [Equipment.Dumbbells, Equipment.Bench],
+    muscles: [Muscles.CHEST],
+    equipment: [Equipment.DUMBBELLS, Equipment.BENCH],
     description: 'Isolation exercise targeting chest through a wide arc movement.',
     metrics: {
       hasSets: true,
@@ -306,8 +304,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-row',
     title: 'Dumbbell Row',
-    muscles: [Muscles.Lats, Muscles.Trapezius, Muscles.Biceps],
-    equipment: [Equipment.Dumbbells, Equipment.Bench],
+    muscles: [Muscles.LATS, Muscles.TRAPEZIUS, Muscles.BICEPS],
+    equipment: [Equipment.DUMBBELLS, Equipment.BENCH],
     description: 'Single-arm rowing movement targeting the back muscles.',
     metrics: {
       hasSets: true,
@@ -319,8 +317,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-pullover',
     title: 'Dumbbell Pullover',
-    muscles: [Muscles.Lats, Muscles.Chest],
-    equipment: [Equipment.Dumbbells, Equipment.Bench],
+    muscles: [Muscles.LATS, Muscles.CHEST],
+    equipment: [Equipment.DUMBBELLS, Equipment.BENCH],
     description: 'Exercise targeting both back and chest through an arc movement over the head.',
     metrics: {
       hasSets: true,
@@ -333,8 +331,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-squat',
     title: 'Dumbbell Squat',
-    muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.QUADRICEPS, Muscles.HAMSTRINGS, Muscles.GLUTES],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Compound lower body exercise holding dumbbells at sides.',
     metrics: {
       hasSets: true,
@@ -346,8 +344,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-goblet-squat',
     title: 'Dumbbell Goblet Squat',
-    muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.QUADRICEPS, Muscles.HAMSTRINGS, Muscles.GLUTES],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Squat variation holding a dumbbell close to the chest.',
     metrics: {
       hasSets: true,
@@ -359,8 +357,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-lunge',
     title: 'Dumbbell Lunge',
-    muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Glutes],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.QUADRICEPS, Muscles.HAMSTRINGS, Muscles.GLUTES],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Unilateral lower body exercise stepping forward with dumbbells.',
     metrics: {
       hasSets: true,
@@ -372,8 +370,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-romanian-deadlift',
     title: 'Dumbbell Romanian Deadlift',
-    muscles: [Muscles.Hamstrings, Muscles.Glutes, Muscles.LowerBack],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.HAMSTRINGS, Muscles.GLUTES, Muscles.LOWER_BACK],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Hip-hinge movement targeting posterior chain muscles.',
     metrics: {
       hasSets: true,
@@ -385,8 +383,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-calf-raise',
     title: 'Dumbbell Calf Raise',
-    muscles: [Muscles.Calves],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.CALVES],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Standing calf raise while holding dumbbells for added resistance.',
     metrics: {
       hasSets: true,
@@ -399,8 +397,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-side-bend',
     title: 'Dumbbell Side Bend',
-    muscles: [Muscles.Obliques],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.OBLIQUES],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Core exercise targeting the obliques through lateral bending.',
     metrics: {
       hasSets: true,
@@ -412,8 +410,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-woodchopper',
     title: 'Dumbbell Woodchopper',
-    muscles: [Muscles.Obliques, Muscles.Lats],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.OBLIQUES, Muscles.LATS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Rotational core exercise mimicking a chopping motion.',
     metrics: {
       hasSets: true,
@@ -425,8 +423,8 @@ export const dumbbellExercises: ExerciseDetails[] = [
   {
     id: 'dumbbell-russian-twist',
     title: 'Dumbbell Russian Twist',
-    muscles: [Muscles.Obliques, Muscles.Abdominals],
-    equipment: [Equipment.Dumbbells],
+    muscles: [Muscles.OBLIQUES, Muscles.ABDOMINALS],
+    equipment: [Equipment.DUMBBELLS],
     description: 'Core exercise targeting the obliques through rotational movement.',
     metrics: {
       hasSets: true,

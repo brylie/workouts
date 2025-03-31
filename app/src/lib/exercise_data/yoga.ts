@@ -9,8 +9,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'mountain-pose',
     title: 'Mountain Pose (Tadasana)',
-    muscles: [Muscles.Quadriceps, Muscles.Abdominals, Muscles.Glutes],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.QUADRICEPS, Muscles.ABDOMINALS, Muscles.GLUTES],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'A foundational standing pose that improves posture, balance, and body awareness.',
     metrics: {
       hasSets: false,
@@ -22,8 +22,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'warrior-i',
     title: 'Warrior I (Virabhadrasana I)',
-    muscles: [Muscles.Quadriceps, Muscles.Shoulders, Muscles.Glutes, Muscles.Abdominals],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Shoulder],
+    muscles: [Muscles.QUADRICEPS, Muscles.SHOULDERS, Muscles.GLUTES, Muscles.ABDOMINALS],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SHOULDER],
     description: 'A standing pose that strengthens the legs and opens the hips and chest.',
     metrics: {
       hasSets: false,
@@ -35,8 +35,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'warrior-ii',
     title: 'Warrior II (Virabhadrasana II)',
-    muscles: [Muscles.Quadriceps, Muscles.Shoulders, Muscles.Abductors, Muscles.Abdominals],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Shoulder],
+    muscles: [Muscles.QUADRICEPS, Muscles.SHOULDERS, Muscles.ABDUCTORS, Muscles.ABDOMINALS],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SHOULDER],
     description: 'A standing pose that builds stamina and leg strength while opening the hips and shoulders.',
     metrics: {
       hasSets: false,
@@ -48,8 +48,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'warrior-iii',
     title: 'Warrior III (Virabhadrasana III)',
-    muscles: [Muscles.Hamstrings, Muscles.Glutes, Muscles.Abdominals, Muscles.UpperBack],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.HAMSTRINGS, Muscles.GLUTES, Muscles.ABDOMINALS, Muscles.UPPER_BACK],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'A standing balancing pose that strengthens the legs and core while improving focus and concentration.',
     metrics: {
       hasSets: false,
@@ -61,8 +61,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'extended-side-angle',
     title: 'Extended Side Angle (Utthita Parsvakonasana)',
-    muscles: [Muscles.Quadriceps, Muscles.Obliques, Muscles.Abductors, Muscles.Hamstrings],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.QUADRICEPS, Muscles.OBLIQUES, Muscles.ABDUCTORS, Muscles.HAMSTRINGS],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'A standing pose that stretches the sides of the torso, strengthens the legs, and opens the hips.',
     metrics: {
       hasSets: false,
@@ -74,8 +74,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'triangle-pose',
     title: 'Triangle Pose (Trikonasana)',
-    muscles: [Muscles.Hamstrings, Muscles.Obliques, Muscles.Shoulders, Muscles.Adductors],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.HAMSTRINGS, Muscles.OBLIQUES, Muscles.SHOULDERS, Muscles.ADDUCTORS],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'A standing pose that stretches and strengthens the thighs, hips, and spine while relieving stress.',
     metrics: {
       hasSets: false,
@@ -87,8 +87,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'half-moon-pose',
     title: 'Half Moon Pose (Ardha Chandrasana)',
-    muscles: [Muscles.Hamstrings, Muscles.Abdominals, Muscles.Glutes, Muscles.Obliques],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.HAMSTRINGS, Muscles.ABDOMINALS, Muscles.GLUTES, Muscles.OBLIQUES],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'A balancing pose that strengthens the legs and core while improving coordination and focus.',
     metrics: {
       hasSets: false,
@@ -100,8 +100,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'chair-pose',
     title: 'Chair Pose (Utkatasana)',
-    muscles: [Muscles.Quadriceps, Muscles.Glutes, Muscles.Shoulders, Muscles.Abdominals],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.QUADRICEPS, Muscles.GLUTES, Muscles.SHOULDERS, Muscles.ABDOMINALS],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'A standing pose that strengthens the thighs, ankles, and spine while stimulating the heart and diaphragm.',
     metrics: {
       hasSets: false,
@@ -113,8 +113,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'boat-pose',
     title: 'Boat Pose (Navasana)',
-    muscles: [Muscles.Abdominals, Muscles.Quadriceps, Muscles.LowerBack, Muscles.Hamstrings],
-    joints: [Joints.Hip, Joints.Spine],
+    muscles: [Muscles.ABDOMINALS, Muscles.QUADRICEPS, Muscles.LOWER_BACK, Muscles.HAMSTRINGS],
+    joints: [Joints.HIP, Joints.SPINE],
     description: 'A seated balancing pose that strengthens the abdominal and hip flexor muscles.',
     metrics: {
       hasSets: false,
@@ -126,8 +126,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'upward-facing-dog',
     title: 'Upward Facing Dog (Urdhva Mukha Svanasana)',
-    muscles: [Muscles.Shoulders, Muscles.UpperBack, Muscles.LowerBack, Muscles.Triceps],
-    joints: [Joints.Spine, Joints.Shoulder],
+    muscles: [Muscles.SHOULDERS, Muscles.UPPER_BACK, Muscles.LOWER_BACK, Muscles.TRICEPS],
+    joints: [Joints.SPINE, Joints.SHOULDER],
     description: 'A backbend that strengthens the spine, arms, and shoulders while stretching the chest and abdomen.',
     metrics: {
       hasSets: false,
@@ -139,8 +139,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'bow-pose',
     title: 'Bow Pose (Dhanurasana)',
-    muscles: [Muscles.LowerBack, Muscles.Shoulders, Muscles.Chest, Muscles.Quadriceps],
-    joints: [Joints.Spine, Joints.Hip],
+    muscles: [Muscles.LOWER_BACK, Muscles.SHOULDERS, Muscles.CHEST, Muscles.QUADRICEPS],
+    joints: [Joints.SPINE, Joints.HIP],
     description: 'A prone backbend that stretches the entire front of the body while strengthening the back muscles.',
     metrics: {
       hasSets: false,
@@ -152,8 +152,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'yoga-bridge-pose',
     title: 'Bridge Pose (Setu Bandha Sarvangasana)',
-    muscles: [Muscles.Glutes, Muscles.Hamstrings, Muscles.LowerBack, Muscles.Shoulders],
-    joints: [Joints.Spine, Joints.Hip],
+    muscles: [Muscles.GLUTES, Muscles.HAMSTRINGS, Muscles.LOWER_BACK, Muscles.SHOULDERS],
+    joints: [Joints.SPINE, Joints.HIP],
     description: 'A supine backbend that strengthens the spine, glutes, and hamstrings while stretching the chest and shoulders.',
     metrics: {
       hasSets: false,
@@ -165,8 +165,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'lizard-pose',
     title: 'Lizard Pose (Utthan Pristhasana)',
-    muscles: [Muscles.Hamstrings, Muscles.Quadriceps, Muscles.Glutes, Muscles.Shoulders],
-    joints: [Joints.Hip, Joints.Knee, Joints.Spine],
+    muscles: [Muscles.HAMSTRINGS, Muscles.QUADRICEPS, Muscles.GLUTES, Muscles.SHOULDERS],
+    joints: [Joints.HIP, Joints.KNEE, Joints.SPINE],
     description: 'A deep hip opener that stretches the hip flexors, hamstrings, and quadriceps.',
     metrics: {
       hasSets: false,
@@ -178,8 +178,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'bound-angle-pose',
     title: 'Bound Angle Pose (Baddha Konasana)',
-    muscles: [Muscles.Adductors, Muscles.Hamstrings, Muscles.LowerBack],
-    joints: [Joints.Hip, Joints.Knee],
+    muscles: [Muscles.ADDUCTORS, Muscles.HAMSTRINGS, Muscles.LOWER_BACK],
+    joints: [Joints.HIP, Joints.KNEE],
     description: 'A seated pose that opens the hips and stretches the inner thighs, groins, and knees.',
     metrics: {
       hasSets: false,
@@ -191,8 +191,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'pigeon-pose',
     title: 'Pigeon Pose (Eka Pada Rajakapotasana)',
-    muscles: [Muscles.Glutes, Muscles.Abductors, Muscles.LowerBack, Muscles.Quadriceps],
-    joints: [Joints.Hip, Joints.Knee, Joints.Spine],
+    muscles: [Muscles.GLUTES, Muscles.ABDUCTORS, Muscles.LOWER_BACK, Muscles.QUADRICEPS],
+    joints: [Joints.HIP, Joints.KNEE, Joints.SPINE],
     description: 'A deep hip opener that stretches the glutes, hip flexors, and lower back.',
     metrics: {
       hasSets: false,
@@ -204,8 +204,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'childs-pose',
     title: 'Child\'s Pose (Balasana)',
-    muscles: [Muscles.LowerBack, Muscles.Shoulders],
-    joints: [Joints.Hip, Joints.Knee, Joints.Spine, Joints.Shoulder],
+    muscles: [Muscles.LOWER_BACK, Muscles.SHOULDERS],
+    joints: [Joints.HIP, Joints.KNEE, Joints.SPINE, Joints.SHOULDER],
     description: 'A resting pose that gently stretches the hips, thighs, and back while calming the mind.',
     metrics: {
       hasSets: false,
@@ -217,8 +217,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'cat-cow-pose',
     title: 'Cat-Cow Pose (Marjaryasana-Bitilasana)',
-    muscles: [Muscles.LowerBack, Muscles.Abdominals],
-    joints: [Joints.Spine, Joints.Neck, Joints.Shoulder],
+    muscles: [Muscles.LOWER_BACK, Muscles.ABDOMINALS],
+    joints: [Joints.SPINE, Joints.NECK, Joints.SHOULDER],
     description: 'A gentle flow between two poses that warms the spine and relieves tension in the back and neck.',
     metrics: {
       hasSets: false,
@@ -230,8 +230,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'downward-facing-dog',
     title: 'Downward Facing Dog (Adho Mukha Svanasana)',
-    muscles: [Muscles.Shoulders, Muscles.Hamstrings, Muscles.Calves, Muscles.LowerBack],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.SHOULDERS, Muscles.HAMSTRINGS, Muscles.CALVES, Muscles.LOWER_BACK],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'An inversion that stretches the entire body while strengthening the arms, legs, and core.',
     metrics: {
       hasSets: false,
@@ -243,8 +243,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'cobra-pose',
     title: 'Cobra Pose (Bhujangasana)',
-    muscles: [Muscles.LowerBack, Muscles.Shoulders, Muscles.Chest, Muscles.Triceps],
-    joints: [Joints.Spine, Joints.Shoulder],
+    muscles: [Muscles.LOWER_BACK, Muscles.SHOULDERS, Muscles.CHEST, Muscles.TRICEPS],
+    joints: [Joints.SPINE, Joints.SHOULDER],
     description: 'A gentle backbend that stretches the chest and shoulders while strengthening the spine.',
     metrics: {
       hasSets: false,
@@ -256,8 +256,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'seated-forward-bend',
     title: 'Seated Forward Bend (Paschimottanasana)',
-    muscles: [Muscles.Hamstrings, Muscles.Abdominals, Muscles.LowerBack],
-    joints: [Joints.Hip, Joints.Spine],
+    muscles: [Muscles.HAMSTRINGS, Muscles.ABDOMINALS, Muscles.LOWER_BACK],
+    joints: [Joints.HIP, Joints.SPINE],
     description: 'A seated pose that stretches the spine, hamstrings, and lower back while calming the mind.',
     metrics: {
       hasSets: false,
@@ -269,8 +269,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'happy-baby-pose',
     title: 'Happy Baby Pose (Ananda Balasana)',
-    muscles: [Muscles.Abdominals, Muscles.LowerBack],
-    joints: [Joints.Hip, Joints.Spine],
+    muscles: [Muscles.ABDOMINALS, Muscles.LOWER_BACK],
+    joints: [Joints.HIP, Joints.SPINE],
     description: 'A gentle hip opener that stretches the inner thighs and lower back while promoting relaxation.',
     metrics: {
       hasSets: false,
@@ -283,7 +283,7 @@ export const yogaPoses: ExerciseDetails[] = [
     id: 'corpse-pose',
     title: 'Corpse Pose (Savasana)',
     muscles: [],
-    joints: [Joints.Spine, Joints.Hip, Joints.Shoulder],
+    joints: [Joints.SPINE, Joints.HIP, Joints.SHOULDER],
     description: 'A restorative pose that promotes relaxation and mindfulness, allowing the body to absorb the benefits of the practice.',
     metrics: {
       hasSets: false,
@@ -295,8 +295,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'fish-pose',
     title: 'Fish Pose (Matsyasana)',
-    muscles: [Muscles.Shoulders, Muscles.Chest, Muscles.LowerBack],
-    joints: [Joints.Spine, Joints.Shoulder],
+    muscles: [Muscles.SHOULDERS, Muscles.CHEST, Muscles.LOWER_BACK],
+    joints: [Joints.SPINE, Joints.SHOULDER],
     description: 'A backbend that opens the chest and throat while stretching the spine and improving posture.',
     metrics: {
       hasSets: false,
@@ -308,8 +308,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'shoulder-bridge-pose',
     title: 'Shoulder Bridge Pose (Setu Bandhasana)',
-    muscles: [Muscles.Glutes, Muscles.Hamstrings, Muscles.LowerBack],
-    joints: [Joints.Spine, Joints.Hip],
+    muscles: [Muscles.GLUTES, Muscles.HAMSTRINGS, Muscles.LOWER_BACK],
+    joints: [Joints.SPINE, Joints.HIP],
     description: 'A backbend that strengthens the back, glutes, and hamstrings while stretching the chest and shoulders.',
     metrics: {
       hasSets: false,
@@ -321,8 +321,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'supine-spinal-twist',
     title: 'Supine Spinal Twist (Supta Matsyendrasana)',
-    muscles: [Muscles.LowerBack, Muscles.Abdominals],
-    joints: [Joints.Spine, Joints.Hip],
+    muscles: [Muscles.LOWER_BACK, Muscles.ABDOMINALS],
+    joints: [Joints.SPINE, Joints.HIP],
     description: 'A supine twist that stretches the spine and relieves tension in the back and hips.',
     metrics: {
       hasSets: false,
@@ -334,8 +334,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'reclining-bound-angle-pose',
     title: 'Reclining Bound Angle Pose (Supta Baddha Konasana)',
-    muscles: [Muscles.Adductors, Muscles.LowerBack],
-    joints: [Joints.Hip, Joints.Knee, Joints.Spine],
+    muscles: [Muscles.ADDUCTORS, Muscles.LOWER_BACK],
+    joints: [Joints.HIP, Joints.KNEE, Joints.SPINE],
     description: 'A restorative pose that opens the hips and groin while promoting relaxation and mindfulness.',
     metrics: {
       hasSets: false,
@@ -347,8 +347,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'legs-up-the-wall-pose',
     title: 'Legs Up the Wall Pose (Viparita Karani)',
-    muscles: [Muscles.LowerBack],
-    joints: [Joints.Hip, Joints.Spine],
+    muscles: [Muscles.LOWER_BACK],
+    joints: [Joints.HIP, Joints.SPINE],
     description: 'A restorative pose that promotes relaxation and reduces fatigue by elevating the legs against a wall.',
     metrics: {
       hasSets: false,
@@ -360,8 +360,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'sitting-forward-bend',
     title: 'Sitting Forward Bend (Paschimottanasana)',
-    muscles: [Muscles.Hamstrings, Muscles.Abdominals, Muscles.LowerBack],
-    joints: [Joints.Hip, Joints.Spine],
+    muscles: [Muscles.HAMSTRINGS, Muscles.ABDOMINALS, Muscles.LOWER_BACK],
+    joints: [Joints.HIP, Joints.SPINE],
     description: 'A seated pose that stretches the spine, hamstrings, and lower back while calming the mind.',
     metrics: {
       hasSets: false,
@@ -373,8 +373,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'eagle-pose',
     title: 'Eagle Pose (Garudasana)',
-    muscles: [Muscles.Shoulders, Muscles.Abdominals],
-    joints: [Joints.Shoulder, Joints.Hip, Joints.Knee, Joints.Ankle],
+    muscles: [Muscles.SHOULDERS, Muscles.ABDOMINALS],
+    joints: [Joints.SHOULDER, Joints.HIP, Joints.KNEE, Joints.ANKLE],
     description: 'A balancing pose that strengthens the legs and core while improving focus and concentration.',
     metrics: {
       hasSets: false,
@@ -386,8 +386,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'crow-pose',
     title: 'Crow Pose (Bakasana)',
-    muscles: [Muscles.Shoulders, Muscles.Abdominals],
-    joints: [Joints.Wrist, Joints.Elbow, Joints.Shoulder],
+    muscles: [Muscles.SHOULDERS, Muscles.ABDOMINALS],
+    joints: [Joints.WRIST, Joints.ELBOW, Joints.SHOULDER],
     description: 'An arm balance that strengthens the arms, wrists, and core while improving focus and concentration.',
     metrics: {
       hasSets: false,
@@ -399,8 +399,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'handstand',
     title: 'Handstand (Adho Mukha Vrksasana)',
-    muscles: [Muscles.Shoulders, Muscles.Abdominals],
-    joints: [Joints.Wrist, Joints.Elbow, Joints.Shoulder],
+    muscles: [Muscles.SHOULDERS, Muscles.ABDOMINALS],
+    joints: [Joints.WRIST, Joints.ELBOW, Joints.SHOULDER],
     description: 'An inversion that strengthens the shoulders, arms, and core while improving balance and focus.',
     metrics: {
       hasSets: false,
@@ -412,8 +412,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'forearm-stand',
     title: 'Forearm Stand (Pincha Mayurasana)',
-    muscles: [Muscles.Shoulders, Muscles.Abdominals],
-    joints: [Joints.Elbow, Joints.Shoulder],
+    muscles: [Muscles.SHOULDERS, Muscles.ABDOMINALS],
+    joints: [Joints.ELBOW, Joints.SHOULDER],
     description: 'An inversion that strengthens the shoulders, arms, and core while improving balance and focus.',
     metrics: {
       hasSets: false,
@@ -425,8 +425,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'headstand',
     title: 'Headstand (Sirsasana)',
-    muscles: [Muscles.Shoulders, Muscles.Abdominals],
-    joints: [Joints.Neck, Joints.Shoulder],
+    muscles: [Muscles.SHOULDERS, Muscles.ABDOMINALS],
+    joints: [Joints.NECK, Joints.SHOULDER],
     description: 'An inversion that strengthens the shoulders, arms, and core while improving balance and focus.',
     metrics: {
       hasSets: false,
@@ -438,8 +438,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'plow-pose',
     title: 'Plow Pose (Halasana)',
-    muscles: [Muscles.Shoulders, Muscles.LowerBack, Muscles.Hamstrings],
-    joints: [Joints.Neck, Joints.Spine],
+    muscles: [Muscles.SHOULDERS, Muscles.LOWER_BACK, Muscles.HAMSTRINGS],
+    joints: [Joints.NECK, Joints.SPINE],
     description: 'An inversion that stretches the shoulders, spine, and hamstrings while calming the mind.',
     metrics: {
       hasSets: false,
@@ -451,8 +451,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'shoulder-stand',
     title: 'Shoulder Stand (Sarvangasana)',
-    muscles: [Muscles.Shoulders, Muscles.LowerBack, Muscles.Abdominals],
-    joints: [Joints.Neck, Joints.Shoulder, Joints.Spine],
+    muscles: [Muscles.SHOULDERS, Muscles.LOWER_BACK, Muscles.ABDOMINALS],
+    joints: [Joints.NECK, Joints.SHOULDER, Joints.SPINE],
     description: 'An inversion that strengthens the shoulders, arms, and core while improving balance and focus.',
     metrics: {
       hasSets: false,
@@ -464,8 +464,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'plank-pose',
     title: 'Plank Pose (Phalakasana)',
-    muscles: [Muscles.Abdominals, Muscles.Shoulders, Muscles.Triceps, Muscles.UpperBack],
-    joints: [Joints.Wrist, Joints.Elbow, Joints.Shoulder, Joints.Spine],
+    muscles: [Muscles.ABDOMINALS, Muscles.SHOULDERS, Muscles.TRICEPS, Muscles.UPPER_BACK],
+    joints: [Joints.WRIST, Joints.ELBOW, Joints.SHOULDER, Joints.SPINE],
     description: 'An arm-strengthening pose that tones the core and builds stability throughout the entire body.',
     metrics: {
       hasSets: false,
@@ -477,8 +477,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'side-plank-pose',
     title: 'Side Plank Pose (Vasisthasana)',
-    muscles: [Muscles.Obliques, Muscles.Shoulders, Muscles.Abductors, Muscles.Abdominals],
-    joints: [Joints.Wrist, Joints.Elbow, Joints.Shoulder],
+    muscles: [Muscles.OBLIQUES, Muscles.SHOULDERS, Muscles.ABDUCTORS, Muscles.ABDOMINALS],
+    joints: [Joints.WRIST, Joints.ELBOW, Joints.SHOULDER],
     description: 'A challenging balancing pose that strengthens the wrists, arms, shoulders, and legs while toning the abdominal muscles.',
     metrics: {
       hasSets: false,
@@ -490,8 +490,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'tree-pose',
     title: 'Tree Pose (Vrksasana)',
-    muscles: [Muscles.Quadriceps, Muscles.Calves, Muscles.Abdominals, Muscles.Glutes],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip],
+    muscles: [Muscles.QUADRICEPS, Muscles.CALVES, Muscles.ABDOMINALS, Muscles.GLUTES],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP],
     description: 'A standing balance pose that improves focus, balance, and posture while strengthening the legs and ankles.',
     metrics: {
       hasSets: false,
@@ -503,8 +503,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'dancers-pose',
     title: 'Dancer\'s Pose (Natarajasana)',
-    muscles: [Muscles.Quadriceps, Muscles.Hamstrings, Muscles.Shoulders, Muscles.Chest],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Shoulder, Joints.Spine],
+    muscles: [Muscles.QUADRICEPS, Muscles.HAMSTRINGS, Muscles.SHOULDERS, Muscles.CHEST],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SHOULDER, Joints.SPINE],
     description: 'A standing balancing pose that strengthens the legs and improves focus while stretching the shoulders, chest, and thighs.',
     metrics: {
       hasSets: false,
@@ -516,8 +516,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'standing-forward-bend',
     title: 'Standing Forward Bend (Uttanasana)',
-    muscles: [Muscles.Hamstrings, Muscles.LowerBack, Muscles.Calves],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.HAMSTRINGS, Muscles.LOWER_BACK, Muscles.CALVES],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'A forward fold that stretches the hamstrings and back muscles while calming the mind and relieving stress.',
     metrics: {
       hasSets: false,
@@ -529,8 +529,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'revolved-triangle-pose',
     title: 'Revolved Triangle Pose (Parivrtta Trikonasana)',
-    muscles: [Muscles.Hamstrings, Muscles.Obliques, Muscles.Shoulders, Muscles.Abdominals],
-    joints: [Joints.Ankle, Joints.Knee, Joints.Hip, Joints.Spine],
+    muscles: [Muscles.HAMSTRINGS, Muscles.OBLIQUES, Muscles.SHOULDERS, Muscles.ABDOMINALS],
+    joints: [Joints.ANKLE, Joints.KNEE, Joints.HIP, Joints.SPINE],
     description: 'A standing twist that strengthens the legs while stretching the hamstrings and opening the chest.',
     metrics: {
       hasSets: false,
@@ -542,8 +542,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'thread-the-needle-pose',
     title: 'Thread the Needle Pose (Parsva Balasana)',
-    muscles: [Muscles.Shoulders, Muscles.UpperBack],
-    joints: [Joints.Shoulder, Joints.Spine, Joints.Neck],
+    muscles: [Muscles.SHOULDERS, Muscles.UPPER_BACK],
+    joints: [Joints.SHOULDER, Joints.SPINE, Joints.NECK],
     description: 'A gentle twist that stretches the shoulders, upper back, and neck while releasing tension in the upper body.',
     metrics: {
       hasSets: false,
@@ -555,8 +555,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'pyramid-pose',
     title: 'Pyramid Pose (Parsvottanasana)',
-    muscles: [Muscles.Hamstrings, Muscles.LowerBack],
-    joints: [Joints.Hip, Joints.Spine, Joints.Shoulder],
+    muscles: [Muscles.HAMSTRINGS, Muscles.LOWER_BACK],
+    joints: [Joints.HIP, Joints.SPINE, Joints.SHOULDER],
     description: 'A standing forward bend that stretches the spine, shoulders, wrists, hamstrings, and hips.',
     metrics: {
       hasSets: false,
@@ -568,8 +568,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'locust-pose',
     title: 'Locust Pose (Salabhasana)',
-    muscles: [Muscles.LowerBack, Muscles.Glutes, Muscles.Hamstrings, Muscles.UpperBack],
-    joints: [Joints.Hip, Joints.Spine, Joints.Shoulder],
+    muscles: [Muscles.LOWER_BACK, Muscles.GLUTES, Muscles.HAMSTRINGS, Muscles.UPPER_BACK],
+    joints: [Joints.HIP, Joints.SPINE, Joints.SHOULDER],
     description: 'A prone backbend that strengthens the back muscles, glutes, and hamstrings.',
     metrics: {
       hasSets: false,
@@ -581,8 +581,8 @@ export const yogaPoses: ExerciseDetails[] = [
   {
     id: 'camel-pose',
     title: 'Camel Pose (Ustrasana)',
-    muscles: [Muscles.Quadriceps, Muscles.Shoulders, Muscles.Chest, Muscles.Abdominals],
-    joints: [Joints.Knee, Joints.Hip, Joints.Spine, Joints.Shoulder],
+    muscles: [Muscles.QUADRICEPS, Muscles.SHOULDERS, Muscles.CHEST, Muscles.ABDOMINALS],
+    joints: [Joints.KNEE, Joints.HIP, Joints.SPINE, Joints.SHOULDER],
     description: 'A kneeling backbend that stretches the entire front of the body from the thighs to the throat.',
     metrics: {
       hasSets: false,
