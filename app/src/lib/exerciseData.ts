@@ -59,3 +59,49 @@ export function getExercisesByMuscle(muscle: Muscles): ExerciseDetails[] {
 export function getExercisesByEquipment(equipmentType: Equipment): ExerciseDetails[] {
 	return allExercises.filter((exercise) => exercise.equipment?.includes(equipmentType));
 }
+
+/**
+ * Filter exercises by multiple criteria
+ * @param filters Object containing filter criteria
+ * @returns Filtered array of exercises
+ */
+export function filterExercises(filters: {
+  muscles?: Muscles[];
+  equipment?: Equipment[];
+}): ExerciseDetails[] {
+  return allExercises.filter(exercise => {
+    // Check muscle filter if provided
+    if (filters.muscles?.length) {
+      if (!filters.muscles.some(muscle => exercise.muscles.includes(muscle))) {
+        return false;
+      }
+    }
+    
+    // Check equipment filter if provided
+    if (filters.equipment?.length) {
+      if (!exercise.equipment?.some(eq => filters.equipment!.includes(eq))) {
+        return false;
+      }
+    }
+    
+    return true;
+  });
+}
+
+/**
+ * Get a random selection of filtered exercises for workout generation
+ * @param filters Filter criteria
+ * @param count The number of exercises to include (defaults to 5)
+ * @returns An array of randomly selected exercises
+ */
+export function getFilteredRandomExercises(
+  filters: {
+    muscles?: Muscles[];
+    equipment?: Equipment[];
+  },
+  count: number = 5
+): ExerciseDetails[] {
+  const filteredExercises = filterExercises(filters);
+  const shuffled = [...filteredExercises].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}

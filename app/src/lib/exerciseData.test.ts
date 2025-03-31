@@ -1,6 +1,14 @@
 import { describe, it, expect } from 'vitest';
 
-import { getRandomExercises, getExercisesByMuscle, getExercisesByEquipment, getRandomWorkoutItems, allExercises } from './exerciseData';
+import { 
+  getRandomExercises, 
+  getExercisesByMuscle, 
+  getExercisesByEquipment, 
+  getRandomWorkoutItems, 
+  allExercises,
+  filterExercises,
+  getFilteredRandomExercises 
+} from './exerciseData';
 import { Muscles, Equipment } from './enums';
 
 // Test getRandomExercises function
@@ -118,5 +126,98 @@ describe('Exercise ID uniqueness', () => {
     expect(uniqueIds.size, 
       `Duplicate IDs found. Total exercises: ${allExercises.length}, Unique IDs: ${uniqueIds.size}`
     ).toBe(allExercises.length);
+  });
+});
+
+// Test filterExercises function
+describe('filterExercises', () => {
+  it('should filter exercises by muscle group', () => {
+    const filters = {
+      muscles: [Muscles.Chest]
+    };
+    const exercises = filterExercises(filters);
+    expect(exercises.length).toBeGreaterThan(0);
+    expect(exercises.every(exercise => exercise.muscles.includes(Muscles.Chest))).toBe(true);
+  });
+
+  it('should filter exercises by equipment', () => {
+    const filters = {
+      equipment: [Equipment.Dumbbells]
+    };
+    const exercises = filterExercises(filters);
+    expect(exercises.length).toBeGreaterThan(0);
+    expect(exercises.every(exercise => exercise.equipment?.includes(Equipment.Dumbbells))).toBe(true);
+  });
+
+  it('should filter exercises by both muscle and equipment', () => {
+    const filters = {
+      muscles: [Muscles.Chest],
+      equipment: [Equipment.Dumbbells]
+    };
+    const exercises = filterExercises(filters);
+    expect(exercises.length).toBeGreaterThan(0);
+    expect(exercises.every(exercise => 
+      exercise.muscles.includes(Muscles.Chest) && 
+      exercise.equipment?.includes(Equipment.Dumbbells)
+    )).toBe(true);
+  });
+
+  it('should return all exercises when no filters are provided', () => {
+    const filters = {};
+    const exercises = filterExercises(filters);
+    expect(exercises).toEqual(allExercises);
+  });
+
+  it('should return empty array when no exercises match filters', () => {
+    const filters = {
+      muscles: [Muscles.Chest],
+      equipment: ['invalid' as Equipment]
+    };
+    const exercises = filterExercises(filters);
+    expect(exercises).toHaveLength(0);
+  });
+});
+
+// Test getFilteredRandomExercises function
+describe('getFilteredRandomExercises', () => {
+  it('should return the specified number of filtered exercises', () => {
+    const filters = {
+      muscles: [Muscles.Chest]
+    };
+    const exercises = getFilteredRandomExercises(filters, 3);
+    expect(exercises).toHaveLength(3);
+    expect(exercises.every(exercise => exercise.muscles.includes(Muscles.Chest))).toBe(true);
+  });
+
+  it('should return different exercises on subsequent calls', () => {
+    const filters = {
+      muscles: [Muscles.Chest]
+    };
+    const exercises1 = getFilteredRandomExercises(filters, 3);
+    const exercises2 = getFilteredRandomExercises(filters, 3);
+    
+    // Convert to IDs for comparison
+    const ids1 = exercises1.map(ex => ex.id);
+    const ids2 = exercises2.map(ex => ex.id);
+    expect(ids1).not.toEqual(ids2);
+  });
+
+  it('should return all matching exercises when count exceeds available exercises', () => {
+    const filters = {
+      muscles: [Muscles.Chest],
+      equipment: [Equipment.Dumbbells]
+    };
+    const exercises = getFilteredRandomExercises(filters, 100);
+    const allMatchingExercises = filterExercises(filters);
+    expect(exercises).toHaveLength(allMatchingExercises.length);
+  });
+
+  it('should return empty array when no exercises match filters', () => {
+    const filters = {
+      muscles: [Muscles.Chest],
+      equipment: ['invalid' as Equipment]
+    };
+    const exercises = getFilteredRandomExercises(filters, 3);
+    expect(exercises).toHaveLength(0);
   });
 });
