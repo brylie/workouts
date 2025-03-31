@@ -1,5 +1,6 @@
 import type { ExerciseDetails } from '../types';
-import { Muscles, Joints } from '../enums';
+import { Joints } from '../joints';
+import { Muscles } from '$lib/muscles';
 
 /**
  * A collection of common yoga poses (asanas) that can be used to generate yoga workouts.

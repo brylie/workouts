@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Equipment, Muscles } from "./enums";
+import { Equipment, Muscles } from "./joints";
 import type { EquipmentDetails, ExerciseDetails, Workout, WorkoutItem } from "./types";
 
 

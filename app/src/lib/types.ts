@@ -1,13 +1,8 @@
-import { Muscles, Equipment, Joints } from './enums';
+import { Joints } from './joints';
+import type { Equipment } from './equipment';
+import type { Muscles } from './muscles';
 
-/**
- * Equipment represents the different types of equipment that can be used in an exercise.
- */
-export interface EquipmentDetails {
-  id: Equipment;
-  name: string;
-  description?: string;
-}
+
 
 /**
  * Defines what metrics can be tracked for an exercise

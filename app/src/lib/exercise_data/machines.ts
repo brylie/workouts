@@ -1,4 +1,5 @@
-import { Equipment, Muscles } from "$lib/enums";
+import { Equipment } from "$lib/equipment";
+import { Muscles } from "$lib/muscles";
 import type { ExerciseDetails } from "$lib/types";
 
 

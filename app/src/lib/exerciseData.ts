@@ -1,5 +1,4 @@
 import type { ExerciseDetails, WorkoutItem, ExerciseFilters } from './types';
-import { Muscles, Equipment } from './enums';
 import { calisthenicsExercises } from './exercise_data/calisthenics';
 import { dumbbellExercises } from './exercise_data/dumbbells';
 import { machineExercises } from './exercise_data/machines';
@@ -7,6 +6,8 @@ import { kettlebellExercises } from './exercise_data/kettlebell';
 import { bodyweightExercises } from './exercise_data/bodyweight';
 import { pilatesExercises } from './exercise_data/pilates';
 import { yogaPoses } from './exercise_data/yoga';
+import type { Muscles } from './muscles';
+import type { Equipment } from './equipment';
 
 // Combine machine, calisthenics, dumbbell, and kettlebell exercises
 export const allExercises: ExerciseDetails[] = [

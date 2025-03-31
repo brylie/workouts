@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Equipment, Joints, Muscles } from "./enums";
+import { Equipment, Joints, Muscles } from "./joints";
 
 
 describe('Muscles enum', () => {

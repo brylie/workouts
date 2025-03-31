@@ -9,7 +9,7 @@ import {
   filterExercises,
   getFilteredRandomExercises 
 } from './exerciseData';
-import { Muscles, Equipment } from './enums';
+import { Muscles, Equipment } from './joints';
 
 // Test getRandomExercises function
 describe('getRandomExercises', () => {

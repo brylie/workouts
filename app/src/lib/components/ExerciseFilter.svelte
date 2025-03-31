@@ -1,19 +1,19 @@
 <script lang="ts">
 import type { ExerciseFilters } from '$lib/types';
-import { Muscles, Equipment } from '$lib/enums';
-import { equipmentList } from '$lib/equipmentData';
+import { Equipment, equipmentList } from '$lib/equipment';
+import { Muscles, musclesList } from '$lib/muscles';
 
 export let filters: ExerciseFilters;
 export let onFilterChange: (filters: ExerciseFilters) => void;
 
-// Convert enums to arrays for selection
-const muscleOptions = Object.values(Muscles);
+// Use the pre-populated lists for selection
+const muscleOptions = musclesList;
 const equipmentOptions = equipmentList;
 
-function handleMuscleChange(muscle: Muscles, checked: boolean) {
+function handleMuscleChange(muscleId: Muscles, checked: boolean) {
     const updatedMuscles = checked
-        ? [...(filters.muscles || []), muscle]
-        : (filters.muscles || []).filter(m => m !== muscle);
+        ? [...(filters.muscles || []), muscleId]
+        : (filters.muscles || []).filter(m => m !== muscleId);
     
     onFilterChange({
         ...filters,
@@ -38,19 +38,19 @@ function handleEquipmentChange(equipment: Equipment, checked: boolean) {
         <h3 class="text-lg font-medium mb-3">Target Muscles</h3>
         <div class="flex flex-wrap gap-2">
             {#each muscleOptions as muscle}
-                <label class="inline-flex items-center" id="muscle-filter-{muscle}-label">
+                <label class="inline-flex items-center" id="muscle-filter-{muscle.id}-label">
                     <input
                         type="checkbox"
                         class="hidden"
-                        id="muscle-filter-{muscle}"
-                        checked={filters.muscles?.includes(muscle)}
-                        on:change={(e) => handleMuscleChange(muscle, e.currentTarget.checked)}
+                        id="muscle-filter-{muscle.id}"
+                        checked={filters.muscles?.includes(muscle.id)}
+                        on:change={(e) => handleMuscleChange(muscle.id, e.currentTarget.checked)}
                     />
                     <span 
-                        id="muscle-filter-{muscle}-text"
-                        class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.muscles?.includes(muscle) ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'}"
+                        id="muscle-filter-{muscle.id}-text"
+                        class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.muscles?.includes(muscle.id) ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'}"
                     >
-                        {muscle}
+                        {muscle.name}
                     </span>
                 </label>
             {/each}
