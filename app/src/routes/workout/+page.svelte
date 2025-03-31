@@ -6,14 +6,21 @@ import { browser } from '$app/environment';
 import WorkoutItemComponent from '$lib/components/WorkoutItem.svelte';
 import ExerciseFilter from '$lib/components/ExerciseFilter.svelte';
 
-let numberOfExercises = 5;
-let generatedWorkout: WorkoutItem[] = [];
-let savingIndex: number | null = null;
-let saveError: string | null = null;
-let filters: ExerciseFilters = {
+let numberOfExercises = $state(5);
+let generatedWorkout = $state<WorkoutItem[]>([]);
+
+// Tracks which exercise is currently being saved to the database
+// null means no exercise is being saved
+let savingIndex = $state<number | null>(null);
+
+// Stores any error that occurs during the save operation
+// null means no error has occurred
+let saveError = $state<string | null>(null);
+
+let filters = $state<ExerciseFilters>({
     muscles: [],
     equipment: []
-};
+});
 
 function generateWorkout() {
     const exercises = getFilteredRandomExercises(filters, numberOfExercises);
@@ -25,25 +32,20 @@ function generateWorkout() {
 }
 
 function handleFilterChange(newFilters: ExerciseFilters) {
-    filters = newFilters;
+    filters.muscles = newFilters.muscles;
+    filters.equipment = newFilters.equipment;
 }
 
 function updateWorkoutItem(index: number, updates: Partial<WorkoutItem>) {
-    generatedWorkout = generatedWorkout.map((item, i) => 
-        i === index ? { ...item, ...updates } : item
-    );
+    const updatedItem = { ...generatedWorkout[index], ...updates };
+    generatedWorkout[index] = updatedItem;
 }
 
 async function markAsComplete(index: number) {
     const item = generatedWorkout[index];
     
     // Toggle the completed state
-    generatedWorkout = generatedWorkout.map((item, i) => {
-        if (i === index) {
-            return { ...item, completed: !item.completed };
-        }
-        return item;
-    });
+    generatedWorkout[index] = { ...item, completed: !item.completed };
 
     if (browser && item && item.exercise.id) {
         // If the item is now marked as complete, save to database
@@ -72,12 +74,7 @@ async function markAsComplete(index: number) {
                 saveError = 'Failed to save exercise record';
                 
                 // Revert the UI state if saving failed
-                generatedWorkout = generatedWorkout.map((item, i) => {
-                    if (i === index) {
-                        return { ...item, completed: false };
-                    }
-                    return item;
-                });
+                generatedWorkout[index] = { ...item, completed: false };
             } finally {
                 savingIndex = null;
             }
@@ -95,7 +92,13 @@ async function markAsComplete(index: number) {
                 <ExerciseFilter filters={filters} onFilterChange={handleFilterChange} />
             </div>
 
-            <form on:submit|preventDefault={generateWorkout} class="space-y-4">
+            <form 
+                onsubmit={(e) => {
+                    e.preventDefault();
+                    generateWorkout();
+                }} 
+                class="space-y-4"
+            >
                 <div>
                     <label for="exerciseCount" class="block text-sm font-medium mb-2">
                         Number of Exercises
