@@ -11,6 +11,69 @@ describe('ExerciseFilter', () => {
         equipment: []
     };
 
+    test('starts in collapsed state', () => {
+        const { container } = render(ExerciseFilter, {
+            props: {
+                filters: defaultFilters,
+                onFilterChange: vi.fn()
+            }
+        });
+
+        const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
+        expect(checkbox.checked).toBe(false);
+    });
+
+    test('can be expanded and collapsed', async () => {
+        const { container } = render(ExerciseFilter, {
+            props: {
+                filters: defaultFilters,
+                onFilterChange: vi.fn()
+            }
+        });
+
+        const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
+        await fireEvent.click(checkbox);
+        expect(checkbox.checked).toBe(true);
+
+        await fireEvent.click(checkbox);
+        expect(checkbox.checked).toBe(false);
+    });
+
+    test('shows correct badge counts for active filters', () => {
+        const activeFilters: ExerciseFilters = {
+            muscles: [Muscles.CHEST, Muscles.LOWER_BACK],
+            equipment: [Equipment.DUMBBELLS]
+        };
+
+        const { container } = render(ExerciseFilter, {
+            props: {
+                filters: activeFilters,
+                onFilterChange: vi.fn()
+            }
+        });
+
+        const muscleBadge = container.querySelector('.badge.bg-blue-600');
+        const equipmentBadge = container.querySelector('.badge.bg-purple-600');
+
+        expect(muscleBadge?.textContent?.trim()).toBe('2 muscles');
+        expect(equipmentBadge?.textContent?.trim()).toBe('1 equipment');
+    });
+
+    test('hides badges when no filters are active', () => {
+        const { container } = render(ExerciseFilter, {
+            props: {
+                filters: defaultFilters,
+                onFilterChange: vi.fn()
+            }
+        });
+
+        const muscleBadge = container.querySelector('.badge.bg-blue-600');
+        const equipmentBadge = container.querySelector('.badge.bg-purple-600');
+
+        expect(muscleBadge).not.toBeInTheDocument();
+        expect(equipmentBadge).not.toBeInTheDocument();
+    });
+
     test('renders all muscle options', () => {
         const { container } = render(ExerciseFilter, {
             props: {

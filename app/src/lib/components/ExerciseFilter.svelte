@@ -6,9 +6,11 @@ import { Muscles, musclesList } from '../muscles';
 export let filters: ExerciseFilters;
 export let onFilterChange: (filters: ExerciseFilters) => void;
 
-// Use the pre-populated lists for selection
 const muscleOptions = musclesList;
 const equipmentOptions = equipmentList;
+
+$: activeMuscleCount = filters.muscles?.length || 0;
+$: activeEquipmentCount = filters.equipment?.length || 0;
 
 function handleMuscleChange(muscleId: Muscles, checked: boolean) {
     const updatedMuscles = checked
@@ -33,51 +35,67 @@ function handleEquipmentChange(equipment: Equipment, checked: boolean) {
 }
 </script>
 
-<div class="bg-gray-800 p-6 rounded-lg">
-    <div class="mb-6">
-        <h3 class="text-lg font-medium mb-3">Target Muscles</h3>
-        <div class="flex flex-wrap gap-2">
-            {#each muscleOptions as muscle}
-                <label class="inline-flex items-center" id="muscle-filter-{muscle.id}-label">
-                    <input
-                        type="checkbox"
-                        class="hidden"
-                        id="muscle-filter-{muscle.id}"
-                        checked={filters.muscles?.includes(muscle.id)}
-                        on:change={(e) => handleMuscleChange(muscle.id, e.currentTarget.checked)}
-                    />
-                    <span 
-                        id="muscle-filter-{muscle.id}-text"
-                        class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.muscles?.includes(muscle.id) ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'}"
-                    >
-                        {muscle.name}
-                    </span>
-                </label>
-            {/each}
-        </div>
+<div class="collapse collapse-arrow bg-gray-800 rounded-lg">
+    <input type="checkbox" />
+    <div class="collapse-title text-lg font-medium flex items-center gap-3">
+        Filters
+        {#if activeMuscleCount > 0}
+            <div class="badge badge-md bg-blue-600 border-blue-600">
+                {activeMuscleCount} muscles
+            </div>
+        {/if}
+        {#if activeEquipmentCount > 0}
+            <div class="badge badge-md bg-purple-600 border-purple-600">
+                {activeEquipmentCount} equipment
+            </div>
+        {/if}
     </div>
+    <div class="collapse-content">
+        <div class="mb-6">
+            <h3 class="text-lg font-medium mb-3">Target Muscles</h3>
+            <div class="flex flex-wrap gap-2">
+                {#each muscleOptions as muscle}
+                    <label class="inline-flex items-center" id="muscle-filter-{muscle.id}-label">
+                        <input
+                            type="checkbox"
+                            class="hidden"
+                            id="muscle-filter-{muscle.id}"
+                            checked={filters.muscles?.includes(muscle.id)}
+                            on:change={(e) => handleMuscleChange(muscle.id, e.currentTarget.checked)}
+                        />
+                        <span 
+                            id="muscle-filter-{muscle.id}-text"
+                            class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.muscles?.includes(muscle.id) ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'}"
+                        >
+                            {muscle.name}
+                        </span>
+                    </label>
+                {/each}
+            </div>
+        </div>
 
-    <div>
-        <h3 class="text-lg font-medium mb-3">Equipment</h3>
-        <div class="flex flex-wrap gap-2">
-            {#each equipmentOptions as equipment}
-                <label class="inline-flex items-center" id="equipment-filter-{equipment.id}-label">
-                    <input
-                        type="checkbox"
-                        class="hidden"
-                        id="equipment-filter-{equipment.id}"
-                        checked={filters.equipment?.includes(equipment.id)}
-                        on:change={(e) => handleEquipmentChange(equipment.id, e.currentTarget.checked)}
-                    />
-                    <span 
-                        id="equipment-filter-{equipment.id}-text"
-                        class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.equipment?.includes(equipment.id) ? 'bg-purple-600' : 'bg-gray-700 hover:bg-gray-600'}"
-                        title={equipment.description || undefined}
-                    >
-                        {equipment.name}
-                    </span>
-                </label>
-            {/each}
+        <div>
+            <h3 class="text-lg font-medium mb-3">Equipment</h3>
+            <div class="flex flex-wrap gap-2">
+                {#each equipmentOptions as equipment}
+                    <label class="inline-flex items-center" id="equipment-filter-{equipment.id}-label">
+                        <input
+                            type="checkbox"
+                            class="hidden"
+                            id="equipment-filter-{equipment.id}"
+                            checked={filters.equipment?.includes(equipment.id)}
+                            on:change={(e) => handleEquipmentChange(equipment.id, e.currentTarget.checked)}
+                        />
+                        <span 
+                            id="equipment-filter-{equipment.id}-text"
+                            class="cursor-pointer px-3 py-1 rounded text-sm transition-colors {filters.equipment?.includes(equipment.id) ? 'bg-purple-600' : 'bg-gray-700 hover:bg-gray-600'}"
+                            title={equipment.description || undefined}
+                        >
+                            {equipment.name}
+                        </span>
+                    </label>
+                {/each}
+            </div>
         </div>
     </div>
 </div>
