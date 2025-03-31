@@ -77,7 +77,7 @@ export let onMarkComplete: (index: number) => void;
         <h4 class="text-sm font-medium mb-2">Target Muscles:</h4>
         <div class="flex flex-wrap gap-2">
             {#each item.exercise.muscles as muscle}
-                <span class="bg-blue-600 px-2 py-1 rounded text-xs">{muscle}</span>
+                <span class="exercise-muscle bg-blue-600 px-2 py-1 rounded text-xs">{muscle}</span>
             {/each}
         </div>
     </div>
@@ -87,7 +87,7 @@ export let onMarkComplete: (index: number) => void;
             <h4 class="text-sm font-medium mb-2">Required Equipment:</h4>
             <div class="flex flex-wrap gap-2">
                 {#each item.exercise.equipment as equipment}
-                    <span class="bg-purple-600 px-2 py-1 rounded text-xs">{equipment}</span>
+                    <span class="exercise-equipment bg-purple-600 px-2 py-1 rounded text-xs">{equipment}</span>
                 {/each}
             </div>
         </div>

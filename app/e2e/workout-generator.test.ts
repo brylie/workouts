@@ -17,7 +17,7 @@ test.describe('Generate Workout Page', () => {
     await page.locator('#exerciseCount').fill('2');
     
     // Apply muscle filter (CHEST)
-    await page.locator(`#muscle-filter-${Muscles.CHEST}`).click();
+    await page.locator(`#muscle-filter-${Muscles.CHEST}-text`).click();
     
     // Generate workout
     await page.getByRole('button', { name: 'Generate Workout' }).click();
@@ -32,8 +32,8 @@ test.describe('Generate Workout Page', () => {
     // Verify that each exercise has the chest muscle
     for (let i = 0; i < 2; i++) {
       const card = workoutCards.nth(i);
-      const muscleLabels = await card.locator('.bg-blue-600.px-2.py-1.rounded.text-sm').allInnerTexts();
-      const hasChest = muscleLabels.some(label => label.includes('chest'));
+      const muscleLabels = await card.locator('.exercise-muscle').allInnerTexts();
+      const hasChest = muscleLabels.some(label => label.toLowerCase().includes('chest'));
       expect(hasChest).toBeTruthy();
     }
   });
@@ -50,7 +50,7 @@ test.describe('Generate Workout Page', () => {
     await page.locator('#exerciseCount').fill('2');
     
     // Apply equipment filter (Dumbbells)
-    await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}`).click();
+    await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}-text`).click();
     
     // Generate workout
     await page.getByRole('button', { name: 'Generate Workout' }).click();
@@ -63,13 +63,10 @@ test.describe('Generate Workout Page', () => {
     await expect(workoutCards).toHaveCount(2, { timeout: navigationTimeout });
     
     // Verify at least one exercise has Dumbbells
-    const hasExerciseWithDumbbells = await workoutCards.evaluate((cards) => {
-      return Array.from(cards as HTMLElement[]).some(card => {
-        const equipmentLabels = card.querySelectorAll('.bg-purple-600.px-2.py-1.rounded.text-sm');
-        return Array.from(equipmentLabels).some(label => label.textContent?.includes('Dumbbells'));
-      });
-    });
-    expect(hasExerciseWithDumbbells).toBeTruthy();
+    const firstCard = workoutCards.first();
+    const equipmentLabels = await firstCard.locator('.exercise-equipment').allInnerTexts();
+    const hasDumbbells = equipmentLabels.some(label => label.toLowerCase().includes('dumbbells'));
+    expect(hasDumbbells).toBeTruthy();
   });
   
   test('should apply multiple filters to workout generation', async ({ page }) => {
@@ -84,10 +81,10 @@ test.describe('Generate Workout Page', () => {
     await page.locator('#exerciseCount').fill('1');
     
     // Apply muscle filter (Biceps)
-    await page.locator(`#muscle-filter-${Muscles.BICEPS}`).click();
+    await page.locator(`#muscle-filter-${Muscles.BICEPS}-text`).click();
     
     // Apply equipment filter (Dumbbells)
-    await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}`).click();
+    await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}-text`).click();
     
     // Generate workout
     await page.getByRole('button', { name: 'Generate Workout' }).click();
@@ -100,11 +97,11 @@ test.describe('Generate Workout Page', () => {
     await expect(workoutCard).toBeVisible({ timeout: navigationTimeout });
     
     // Verify the exercise has both biceps and dumbbells
-    const muscleLabels = await workoutCard.locator('.bg-blue-600.px-2.py-1.rounded.text-sm').allInnerTexts();
-    const equipmentLabels = await workoutCard.locator('.bg-purple-600.px-2.py-1.rounded.text-sm').allInnerTexts();
+    const muscleLabels = await workoutCard.locator('.exercise-muscle').allInnerTexts();
+    const equipmentLabels = await workoutCard.locator('.exercise-equipment').allInnerTexts();
     
-    const hasBiceps = muscleLabels.some(label => label.includes('biceps'));
-    const hasDumbbells = equipmentLabels.some(label => label.includes('Dumbbells'));
+    const hasBiceps = muscleLabels.some(label => label.toLowerCase().includes('biceps'));
+    const hasDumbbells = equipmentLabels.some(label => label.toLowerCase().includes('dumbbells'));
     
     expect(hasBiceps).toBeTruthy();
     expect(hasDumbbells).toBeTruthy();
@@ -118,13 +115,13 @@ test.describe('Generate Workout Page', () => {
     await expect(page.getByRole('heading', { name: 'Workout Generator' })).toBeVisible({ timeout: navigationTimeout });
     
     // Apply muscle filter (chest)
-    await page.locator(`#muscle-filter-${Muscles.CHEST}`).click();
+    await page.locator(`#muscle-filter-${Muscles.CHEST}-text`).click();
     
     // Verify filter is applied (button style change)
     await expect(page.locator(`#muscle-filter-${Muscles.CHEST}-text`)).toHaveClass(/bg-blue-600/, { timeout: navigationTimeout });
     
     // Click again to remove the filter
-    await page.locator(`#muscle-filter-${Muscles.CHEST}`).click();
+    await page.locator(`#muscle-filter-${Muscles.CHEST}-text`).click();
     
     // Verify filter is removed (button style change)
     await expect(page.locator(`#muscle-filter-${Muscles.CHEST}-text`)).not.toHaveClass(/bg-blue-600/, { timeout: navigationTimeout });
