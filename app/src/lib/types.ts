@@ -36,7 +36,7 @@ export interface ExerciseDetails {
   title: string;
   muscles: Muscles[];
   joints?: Joints[]; // Joints targeted/mobilized by the exercise
-  equipment?: Equipment[]; // Simplified to just use enum values
+  equipment?: Equipment[];
   description?: string;
   tips?: string[];
   variants?: string[];

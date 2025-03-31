@@ -85,6 +85,11 @@ export const equipmentRegistry: Record<Equipment, EquipmentDetails> = {
     id: Equipment.LegPressMachine, 
     name: 'Leg Press Machine', 
     description: 'A machine used for performing leg press exercises.' 
+  },
+  [Equipment.Kettlebell]: { 
+    id: Equipment.Kettlebell, 
+    name: 'Kettlebell', 
+    description: 'A cast-iron or cast-steel weight used for ballistic exercises that combine strength, cardio, and flexibility training.' 
   }
 };
 
