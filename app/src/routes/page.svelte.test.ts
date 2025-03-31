@@ -4,9 +4,15 @@ import { render, screen } from '@testing-library/svelte';
 import Page from './+page.svelte';
 
 describe('Page component', () => {
-	it('should render the welcome message correctly', () => {
-		const { container } = render(Page);
-		expect(container).toMatchSnapshot();
+	it('should have the correct structure with semantic elements', () => {
+		render(Page);
+		const welcomePage = screen.getByTestId('welcome-page');
+		const heading = screen.getByTestId('welcome-heading');
+		const description = screen.getByTestId('welcome-description');
+
+		expect(welcomePage).toBeInTheDocument();
+		expect(heading).toHaveTextContent('Welcome to Workouts');
+		expect(description).toHaveTextContent('Track your exercises and stay fit with our app.');
 	});
 });
 
