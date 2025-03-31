@@ -165,4 +165,66 @@ The output will be in the `app/build` directory.
 3. Run tests to ensure everything works
 4. Submit a pull request
 
+## Ways to Contribute
+
+We follow the [All Contributors](https://allcontributors.org/) philosophy and recognize various types of contributions. You don't need to be a developer to make a significant impact! Here are different ways you can contribute:
+
+### Code Contributions 💻
+
+- Implement new features
+- Fix bugs
+- Improve performance
+- Write tests
+
+### Documentation 📝
+
+- Improve the README
+- Document new features
+- Create tutorials or how-to guides
+- Fix typos or clarify existing documentation
+
+### Design 🎨
+
+- Improve UI/UX
+- Create assets (icons, illustrations)
+- Design mockups for new features
+- Suggest visual improvements
+
+### Testing and QA 🧪
+
+- Report bugs
+- Create test plans
+- Perform manual testing
+- Suggest quality improvements
+
+### Content Creation 📊
+
+- Add new exercises to the database
+- Verify exercise descriptions
+- Create workout routines
+- Suggest improvements to exercise categorization
+
+### Community Support 🙋‍♀️
+
+- Answer questions in discussions
+- Help users troubleshoot issues
+- Review pull requests
+- Mentor new contributors
+
+### Feedback and Ideas 💡
+
+- Suggest new features
+- Participate in discussions
+- Share your experience using the app
+- Provide feedback on proposed changes
+
+### Promotion 📣
+
+- Write about the project
+- Share on social media
+- Create videos or demos
+- Speak about the project at events
+
+Every contribution matters, no matter how small! We appreciate all forms of help and are committed to recognizing all contributors.
+
 Thank you for contributing to Workouts!
