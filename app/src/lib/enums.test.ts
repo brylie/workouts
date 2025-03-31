@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Equipment, Muscles } from "./enums";
+import { Equipment, Joints, Muscles } from "./enums";
 
 
 describe('Muscles enum', () => {
@@ -42,5 +42,18 @@ describe('Muscles enum', () => {
       expect(Equipment.SEATED_ROWING_MACHINE).toBe('seated-rowing-machine');
       expect(Equipment.LEG_PRESS_MACHINE).toBe('leg-press-machine');
       expect(Equipment.KETTLEBELL).toBe('kettlebell');
+    });
+  });
+
+  describe('Joints enum', () => {
+    it('should contain the expected joint types', () => {
+      expect(Joints.ANKLE).toBe('ankle');
+      expect(Joints.ELBOW).toBe('elbow');
+      expect(Joints.HIP).toBe('hip');
+      expect(Joints.KNEE).toBe('knee');
+      expect(Joints.NECK).toBe('neck');
+      expect(Joints.SHOULDER).toBe('shoulder');
+      expect(Joints.SPINE).toBe('spine');
+      expect(Joints.WRIST).toBe('wrist');
     });
   });
