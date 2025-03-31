@@ -330,4 +330,18 @@ export const bodyweightExercises: ExerciseDetails[] = [
 			hasTime: false,
 		},
 	},
+	{
+		id: 'side-lunge',
+		title: 'Side Lunge',
+		muscles: [Muscles.QUADRICEPS, Muscles.GLUTES, Muscles.ADDUCTORS, Muscles.ABDUCTORS],
+		joints: [Joints.KNEE, Joints.HIP, Joints.ANKLE],
+		description:
+			'A lateral movement that targets the inner and outer thighs while also engaging the glutes and quadriceps, improving hip mobility and lateral stability.',
+		metrics: {
+			hasSets: true,
+			hasReps: true,
+			hasWeight: false,
+			hasTime: false,
+		},
+	},
 ];
