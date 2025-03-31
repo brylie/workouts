@@ -1,5 +1,5 @@
 <script lang="ts">
-import { allExercises } from '$lib/exerciseData';
+import { allExercises } from '$lib/exercises';
 import type { ExerciseFilters } from '$lib/types';
 import ExerciseFilter from '$lib/components/ExerciseFilter.svelte';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { getFilteredRandomExercises } from '$lib/exerciseData';
+import { getFilteredRandomExercises } from '$lib/exercises';
 import type { WorkoutItem, CompletedExerciseV2, CompletedExerciseMetrics, ExerciseFilters } from '$lib/types';
 import { saveCompletedExercise } from '$lib/database';
 import { browser } from '$app/environment';

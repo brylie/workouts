@@ -8,7 +8,7 @@ import {
   allExercises,
   filterExercises,
   getFilteredRandomExercises 
-} from './exerciseData';
+} from './exercises';
 import { Equipment } from './equipment';
 import { Muscles } from './muscles';
 
