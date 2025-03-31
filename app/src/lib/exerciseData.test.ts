@@ -9,7 +9,8 @@ import {
   filterExercises,
   getFilteredRandomExercises 
 } from './exerciseData';
-import { Muscles, Equipment } from './joints';
+import { Equipment } from './equipment';
+import { Muscles } from './muscles';
 
 // Test getRandomExercises function
 describe('getRandomExercises', () => {
@@ -42,8 +43,8 @@ describe('getRandomExercises', () => {
   // Test getExercisesByMuscle function
   describe('getExercisesByMuscle', () => {
     it('should return exercises that target the specified muscle group', () => {
-      const exercises = getExercisesByMuscle(Muscles.Abdominals);
-      expect(exercises.every(exercise => exercise.muscles.includes(Muscles.Abdominals))).toBe(true);
+      const exercises = getExercisesByMuscle(Muscles.ABDOMINALS);
+      expect(exercises.every(exercise => exercise.muscles.includes(Muscles.ABDOMINALS))).toBe(true);
     });
   
     // Test getExercisesByMuscle with invalid muscle group
@@ -56,8 +57,8 @@ describe('getRandomExercises', () => {
   // Test getExercisesByEquipment function
   describe('getExercisesByEquipment', () => {
     it('should return exercises that use the specified equipment', () => {
-      const exercises = getExercisesByEquipment(Equipment.Treadmill);
-      expect(exercises.every(exercise => exercise.equipment?.includes(Equipment.Treadmill))).toBe(true);
+      const exercises = getExercisesByEquipment(Equipment.TREADMILL);
+      expect(exercises.every(exercise => exercise.equipment?.includes(Equipment.TREADMILL))).toBe(true);
     });
   
     // Test getExercisesByEquipment with invalid equipment type
@@ -133,32 +134,32 @@ describe('Exercise ID uniqueness', () => {
 describe('filterExercises', () => {
   it('should filter exercises by muscle group', () => {
     const filters = {
-      muscles: [Muscles.Chest]
+      muscles: [Muscles.CHEST]
     };
     const exercises = filterExercises(filters);
     expect(exercises.length).toBeGreaterThan(0);
-    expect(exercises.every(exercise => exercise.muscles.includes(Muscles.Chest))).toBe(true);
+    expect(exercises.every(exercise => exercise.muscles.includes(Muscles.CHEST))).toBe(true);
   });
 
   it('should filter exercises by equipment', () => {
     const filters = {
-      equipment: [Equipment.Dumbbells]
+      equipment: [Equipment.DUMBBELLS]
     };
     const exercises = filterExercises(filters);
     expect(exercises.length).toBeGreaterThan(0);
-    expect(exercises.every(exercise => exercise.equipment?.includes(Equipment.Dumbbells))).toBe(true);
+    expect(exercises.every(exercise => exercise.equipment?.includes(Equipment.DUMBBELLS))).toBe(true);
   });
 
   it('should filter exercises by both muscle and equipment', () => {
     const filters = {
-      muscles: [Muscles.Chest],
-      equipment: [Equipment.Dumbbells]
+      muscles: [Muscles.CHEST],
+      equipment: [Equipment.DUMBBELLS]
     };
     const exercises = filterExercises(filters);
     expect(exercises.length).toBeGreaterThan(0);
     expect(exercises.every(exercise => 
-      exercise.muscles.includes(Muscles.Chest) && 
-      exercise.equipment?.includes(Equipment.Dumbbells)
+      exercise.muscles.includes(Muscles.CHEST) && 
+      exercise.equipment?.includes(Equipment.DUMBBELLS)
     )).toBe(true);
   });
 
@@ -170,7 +171,7 @@ describe('filterExercises', () => {
 
   it('should return empty array when no exercises match filters', () => {
     const filters = {
-      muscles: [Muscles.Chest],
+      muscles: [Muscles.CHEST],
       equipment: ['invalid' as Equipment]
     };
     const exercises = filterExercises(filters);
@@ -182,16 +183,16 @@ describe('filterExercises', () => {
 describe('getFilteredRandomExercises', () => {
   it('should return the specified number of filtered exercises', () => {
     const filters = {
-      muscles: [Muscles.Chest]
+      muscles: [Muscles.CHEST]
     };
     const exercises = getFilteredRandomExercises(filters, 3);
     expect(exercises).toHaveLength(3);
-    expect(exercises.every(exercise => exercise.muscles.includes(Muscles.Chest))).toBe(true);
+    expect(exercises.every(exercise => exercise.muscles.includes(Muscles.CHEST))).toBe(true);
   });
 
   it('should return different exercises on subsequent calls', () => {
     const filters = {
-      muscles: [Muscles.Chest]
+      muscles: [Muscles.CHEST]
     };
     const exercises1 = getFilteredRandomExercises(filters, 3);
     const exercises2 = getFilteredRandomExercises(filters, 3);
@@ -204,8 +205,8 @@ describe('getFilteredRandomExercises', () => {
 
   it('should return all matching exercises when count exceeds available exercises', () => {
     const filters = {
-      muscles: [Muscles.Chest],
-      equipment: [Equipment.Dumbbells]
+      muscles: [Muscles.CHEST],
+      equipment: [Equipment.DUMBBELLS]
     };
     const exercises = getFilteredRandomExercises(filters, 100);
     const allMatchingExercises = filterExercises(filters);
@@ -214,7 +215,7 @@ describe('getFilteredRandomExercises', () => {
 
   it('should return empty array when no exercises match filters', () => {
     const filters = {
-      muscles: [Muscles.Chest],
+      muscles: [Muscles.CHEST],
       equipment: ['invalid' as Equipment]
     };
     const exercises = getFilteredRandomExercises(filters, 3);

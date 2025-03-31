@@ -1,9 +1,9 @@
 import { describe, test, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/svelte';
 import ExerciseFilter from './ExerciseFilter.svelte';
-import type { ExerciseFilters } from '$lib/types';
-import { Muscles } from '$lib/muscles';
-import { Equipment } from '$lib/equipment';
+import type { ExerciseFilters } from '../types';
+import { Muscles, musclesList } from '../muscles';
+import { Equipment } from '../equipment';
 
 describe('ExerciseFilter', () => {
     const defaultFilters: ExerciseFilters = {
@@ -20,13 +20,14 @@ describe('ExerciseFilter', () => {
         });
 
         // Check each muscle enum value has a corresponding filter
-        Object.values(Muscles).forEach(muscle => {
-            const filterInput = container.querySelector(`#muscle-filter-${muscle}`);
-            const filterLabel = container.querySelector(`#muscle-filter-${muscle}-text`);
+        Object.values(Muscles).forEach(muscleId => {
+            const filterInput = container.querySelector(`#muscle-filter-${muscleId}`);
+            const filterLabel = container.querySelector(`#muscle-filter-${muscleId}-text`);
             
             expect(filterInput).toBeInTheDocument();
             expect(filterLabel).toBeInTheDocument();
-            expect(filterLabel?.textContent?.trim()).toBe(muscle);
+            // Check for display name from musclesList instead of enum ID
+            expect(filterLabel?.textContent?.trim()).toBe(musclesList.find(m => m.id === muscleId)?.name);
         });
     });
 

@@ -56,3 +56,24 @@ describe('muscles', () => {
         });
     });
 });
+
+describe('Muscles enum', () => {
+    it('should contain the expected muscle groups', () => {
+      expect(Muscles.ABDOMINALS).toBe('abdominals');
+      expect(Muscles.LATS).toBe('lats');
+      expect(Muscles.BICEPS).toBe('biceps');
+      expect(Muscles.CHEST).toBe('chest');
+      expect(Muscles.GLUTES).toBe('glutes');
+      expect(Muscles.HAMSTRINGS).toBe('hamstrings');
+      expect(Muscles.QUADRICEPS).toBe('quadriceps');
+      expect(Muscles.SHOULDERS).toBe('shoulders');
+      expect(Muscles.TRICEPS).toBe('triceps');
+      expect(Muscles.LOWER_BACK).toBe('lower_back');
+      expect(Muscles.CALVES).toBe('calves');
+      expect(Muscles.TRAPEZIUS).toBe('trapezius');
+      expect(Muscles.ABDUCTORS).toBe('abductors');
+      expect(Muscles.ADDUCTORS).toBe('adductors');
+      expect(Muscles.FOREARMS).toBe('forearms');
+      expect(Muscles.NECK).toBe('neck');
+    });
+  });

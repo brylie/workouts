@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { Muscles, Equipment } from '../src/lib/enums';
+import { Equipment } from '../src/lib/equipment';
+import { Muscles } from '../src/lib/muscles';
 
 test.describe('Exercise Library Page', () => {
   // Increasing timeout for navigation and page load actions

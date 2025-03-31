@@ -1,7 +1,7 @@
 <script lang="ts">
-import type { ExerciseFilters } from '$lib/types';
-import { Equipment, equipmentList } from '$lib/equipment';
-import { Muscles, musclesList } from '$lib/muscles';
+import type { ExerciseFilters } from '../types';
+import { Equipment, equipmentList } from '../equipment';
+import { Muscles, musclesList } from '../muscles';
 
 export let filters: ExerciseFilters;
 export let onFilterChange: (filters: ExerciseFilters) => void;

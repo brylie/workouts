@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { Equipment, Muscles } from "./joints";
-import type { EquipmentDetails, ExerciseDetails, Workout, WorkoutItem } from "./types";
+import { Equipment, type EquipmentDetails } from "./equipment";
+import { Muscles } from "./muscles";
+import type { ExerciseDetails, Workout, WorkoutItem } from "./types";
 
 
 
