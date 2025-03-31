@@ -1,10 +1,18 @@
 import { expect, test } from '@playwright/test';
-import { Equipment } from '../src/lib/equipment';
 import { Muscles } from '../src/lib/muscles';
+import { Equipment } from '../src/lib/equipment';
 
 test.describe('Exercise Library Page', () => {
 	// Increasing timeout for navigation and page load actions
 	const navigationTimeout = 5000;
+
+	// Helper function to expand the filter panel before interacting with filters
+	async function expandFilterPanel(page) {
+		// Use the semantic ID to find the collapse control
+		await page.locator('#exercise-filter-collapse > input[type="checkbox"]').check();
+		// Small delay to ensure the collapse animation completes
+		await page.waitForTimeout(200);
+	}
 
 	test('should display exercises and filter by muscle groups', async ({ page }) => {
 		// Navigate to exercises page
@@ -18,6 +26,9 @@ test.describe('Exercise Library Page', () => {
 		// Count initial exercise cards
 		const initialExerciseCount = await page.locator('.exercise-card').count();
 		expect(initialExerciseCount).toBeGreaterThan(0);
+
+		// Expand the filter panel first
+		await expandFilterPanel(page);
 
 		// Click on a muscle filter (Chest)
 		await page.locator(`#muscle-filter-${Muscles.CHEST}-text`).click();
@@ -45,6 +56,9 @@ test.describe('Exercise Library Page', () => {
 		await expect(page.getByRole('heading', { name: 'Exercise Library' })).toBeVisible({
 			timeout: navigationTimeout,
 		});
+
+		// Expand the filter panel first
+		await expandFilterPanel(page);
 
 		// Click on an equipment filter (Dumbbells)
 		await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}-text`).click();
@@ -84,6 +98,9 @@ test.describe('Exercise Library Page', () => {
 
 		// Count initial exercises
 		const initialCount = await page.locator('.exercise-card').count();
+
+		// Expand the filter panel first
+		await expandFilterPanel(page);
 
 		// Apply muscle filter (Biceps)
 		await page.locator(`#muscle-filter-${Muscles.BICEPS}-text`).click();

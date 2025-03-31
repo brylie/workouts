@@ -6,6 +6,14 @@ test.describe('Generate Workout Page', () => {
 	// Increasing timeout for navigation and page load actions
 	const navigationTimeout = 5000;
 
+	// Helper function to expand the filter panel before interacting with filters
+	async function expandFilterPanel(page) {
+		// Use the semantic ID to find the collapse control
+		await page.locator('#exercise-filter-collapse > input[type="checkbox"]').check();
+		// Small delay to ensure the collapse animation completes
+		await page.waitForTimeout(200);
+	}
+
 	test('should generate workout with filtered exercises', async ({ page }) => {
 		// Navigate to workout page
 		await page.goto('/workouts/workout');
@@ -18,6 +26,9 @@ test.describe('Generate Workout Page', () => {
 		// Set number of exercises to 2 for faster testing
 		await page.locator('#exerciseCount').clear();
 		await page.locator('#exerciseCount').fill('2');
+
+		// Expand filter panel first
+		await expandFilterPanel(page);
 
 		// Apply muscle filter (CHEST)
 		await page.locator(`#muscle-filter-${Muscles.CHEST}-text`).click();
@@ -54,6 +65,9 @@ test.describe('Generate Workout Page', () => {
 		await page.locator('#exerciseCount').clear();
 		await page.locator('#exerciseCount').fill('2');
 
+		// Expand filter panel first
+		await expandFilterPanel(page);
+
 		// Apply equipment filter (Dumbbells)
 		await page.locator(`#equipment-filter-${Equipment.DUMBBELLS}-text`).click();
 
@@ -86,6 +100,9 @@ test.describe('Generate Workout Page', () => {
 		// Set number of exercises to 1 for this specific test
 		await page.locator('#exerciseCount').clear();
 		await page.locator('#exerciseCount').fill('1');
+
+		// Expand filter panel first
+		await expandFilterPanel(page);
 
 		// Apply muscle filter (Biceps)
 		await page.locator(`#muscle-filter-${Muscles.BICEPS}-text`).click();
@@ -122,6 +139,9 @@ test.describe('Generate Workout Page', () => {
 		await expect(page.getByRole('heading', { name: 'Workout Generator' })).toBeVisible({
 			timeout: navigationTimeout,
 		});
+
+		// Expand filter panel first
+		await expandFilterPanel(page);
 
 		// Apply muscle filter (chest)
 		await page.locator(`#muscle-filter-${Muscles.CHEST}-text`).click();

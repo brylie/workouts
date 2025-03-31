@@ -40,7 +40,7 @@
 	}
 </script>
 
-<div class="collapse-arrow collapse rounded-lg bg-gray-800">
+<div id="exercise-filter-collapse" class="collapse-arrow collapse rounded-lg bg-gray-800">
 	<input type="checkbox" />
 	<div class="collapse-title flex items-center gap-3 text-lg font-medium">
 		Filters
