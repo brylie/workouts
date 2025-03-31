@@ -3,12 +3,12 @@ import { allExercises } from '$lib/exercises';
 import type { ExerciseFilters } from '$lib/types';
 import ExerciseFilter from '$lib/components/ExerciseFilter.svelte';
 
-let filters: ExerciseFilters = {
+let filters = $state<ExerciseFilters>({
     muscles: [],
     equipment: []
-};
+});
 
-$: filteredExercises = allExercises.filter(exercise => {
+const filteredExercises = $derived(allExercises.filter(exercise => {
     // Apply muscle filter
     if (filters.muscles?.length) {
         if (!filters.muscles.some(muscle => exercise.muscles.includes(muscle))) {
@@ -24,13 +24,14 @@ $: filteredExercises = allExercises.filter(exercise => {
     }
     
     return true;
-});
+}));
 
 // Sort filtered exercises by title
-$: sortedExercises = [...filteredExercises].sort((a, b) => a.title.localeCompare(b.title));
+const sortedExercises = $derived([...filteredExercises].sort((a, b) => a.title.localeCompare(b.title)));
 
 function handleFilterChange(newFilters: ExerciseFilters) {
-    filters = newFilters;
+    filters.muscles = newFilters.muscles;
+    filters.equipment = newFilters.equipment;
 }
 </script>
 
