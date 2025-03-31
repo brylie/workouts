@@ -48,7 +48,15 @@ describe('types.ts', () => {
           title: 'Push-Up',
           muscles: [Muscles.CHEST, Muscles.TRICEPS],
           equipment: [],
-          description: 'A bodyweight exercise that targets the chest and triceps.'
+          description: 'A bodyweight exercise that targets the chest and triceps.',
+          metrics: {
+            hasSets: true,
+            hasReps: true,
+            hasWeight: false,
+            hasTime: true,
+            hasDistance: false,
+            hasResistance: false,
+          }
         },
         sets: 3,
         reps: 10,
@@ -74,7 +82,15 @@ describe('types.ts', () => {
               title: 'Push-Up',
               muscles: [Muscles.CHEST, Muscles.TRICEPS],
               equipment: [],
-              description: 'A bodyweight exercise that targets the chest and triceps.'
+              description: 'A bodyweight exercise that targets the chest and triceps.',
+              metrics: {
+                hasSets: true,
+                hasReps: true,
+                hasWeight: false,
+                hasTime: true,
+                hasDistance: false,
+                hasResistance: false,
+              }
             },
             sets: 3,
             reps: 10,
