@@ -5,8 +5,8 @@ import { Muscles, musclesList } from '../muscles';
 
 const { filters, onFilterChange }: { filters: ExerciseFilters; onFilterChange: (filters: ExerciseFilters) => void } = $props();
 
-const muscleOptions = musclesList;
-const equipmentOptions = equipmentList;
+const muscleOptions = $derived([...musclesList].sort((a, b) => a.name.localeCompare(b.name)));
+const equipmentOptions = $derived([...equipmentList].sort((a, b) => a.name.localeCompare(b.name)));
 
 const activeMuscleCount = $derived(filters.muscles?.length || 0);
 const activeEquipmentCount = $derived(filters.equipment?.length || 0);
