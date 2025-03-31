@@ -37,8 +37,10 @@
 	}
 
 	function handleFilterChange(newFilters: ExerciseFilters) {
-		filters.muscles = newFilters.muscles;
-		filters.equipment = newFilters.equipment;
+		filters = {
+			muscles: newFilters.muscles,
+			equipment: newFilters.equipment,
+		};
 	}
 
 	function updateWorkoutItem(index: number, updates: Partial<WorkoutItem>) {

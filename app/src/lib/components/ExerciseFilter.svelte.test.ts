@@ -19,7 +19,9 @@ describe('ExerciseFilter', () => {
 			},
 		});
 
-		const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
+		const checkbox = container.querySelector(
+			'#exercise-filter-collapse > input[type="checkbox"]',
+		) as HTMLInputElement;
 		expect(checkbox.checked).toBe(false);
 	});
 
@@ -31,7 +33,9 @@ describe('ExerciseFilter', () => {
 			},
 		});
 
-		const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
+		const checkbox = container.querySelector(
+			'#exercise-filter-collapse > input[type="checkbox"]',
+		) as HTMLInputElement;
 		await fireEvent.click(checkbox);
 		expect(checkbox.checked).toBe(true);
 

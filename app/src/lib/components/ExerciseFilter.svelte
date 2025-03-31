@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { ExerciseFilters } from '../types';
-	import { Equipment, equipmentList } from '../equipment';
-	import { Muscles, musclesList } from '../muscles';
+	import type { ExerciseFilters } from '$lib/types';
+	import { Equipment, equipmentList } from '$lib/equipment';
+	import { Muscles, musclesList } from '$lib/muscles';
 
 	const {
 		filters,
@@ -16,6 +16,10 @@
 	const activeMuscleCount = $derived(filters.muscles?.length || 0);
 	const activeEquipmentCount = $derived(filters.equipment?.length || 0);
 	const muscleLabelText = $derived(activeMuscleCount === 1 ? 'muscle' : 'muscles');
+
+	// Combine count and text to prevent formatting from breaking them apart
+	const muscleBadgeText = $derived(`${activeMuscleCount} ${muscleLabelText}`);
+	const equipmentBadgeText = $derived(`${activeEquipmentCount} equipment`);
 
 	function handleMuscleChange(muscleId: Muscles, checked: boolean) {
 		const updatedMuscles = checked
@@ -45,14 +49,13 @@
 	<div class="collapse-title flex items-center gap-3 text-lg font-medium">
 		Filters
 		{#if activeMuscleCount > 0}
-			<div class="badge badge-md border-blue-600 bg-blue-600">
-				{activeMuscleCount}
-				{muscleLabelText}
+			<div id="muscle-count-badge" class="badge badge-md border-blue-600 bg-blue-600">
+				{muscleBadgeText}
 			</div>
 		{/if}
 		{#if activeEquipmentCount > 0}
-			<div class="badge badge-md border-purple-600 bg-purple-600">
-				{activeEquipmentCount} equipment
+			<div id="equipment-count-badge" class="badge badge-md border-purple-600 bg-purple-600">
+				{equipmentBadgeText}
 			</div>
 		{/if}
 	</div>
