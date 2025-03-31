@@ -44,7 +44,7 @@ function handleFilterChange(newFilters: ExerciseFilters) {
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {#each sortedExercises as exercise}
-                <div class="bg-gray-800 p-6 rounded-lg">
+                <div class="exercise-card bg-gray-800 p-6 rounded-lg">
                     <h2 class="exercise-title text-2xl font-semibold mb-2">{exercise.title}</h2>
                     <p class="exercise-description text-gray-300 mb-4">{exercise.description}</p>
                     
