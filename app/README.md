@@ -68,6 +68,7 @@ pnpm preview
 ## Project Structure
 
 - `src/lib/` - Contains core functionality:
+
   - `enums.ts` - Enumeration types
   - `types.ts` - TypeScript type definitions
   - `equipmentData.ts` - Available equipment data

@@ -3,13 +3,13 @@
 	import { base } from '$app/paths';
 </script>
 
-<div class="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
-    <h1 class="text-4xl font-bold mb-4">404 - Page Not Found</h1>
-    <p class="text-lg mb-8 text-gray-300">The page {$page.url.pathname} could not be found.</p>
-    <a 
-        href="{base}/" 
-        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
-    >
-        Return Home
-    </a>
+<div class="flex min-h-screen flex-col items-center justify-center bg-gray-900 text-white">
+	<h1 class="mb-4 text-4xl font-bold">404 - Page Not Found</h1>
+	<p class="mb-8 text-lg text-gray-300">The page {$page.url.pathname} could not be found.</p>
+	<a
+		href="{base}/"
+		class="rounded bg-blue-600 px-4 py-2 font-bold text-white transition-colors hover:bg-blue-700"
+	>
+		Return Home
+	</a>
 </div>
