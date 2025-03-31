@@ -6,227 +6,230 @@ import { Muscles, musclesList } from '../muscles';
 import { Equipment } from '../equipment';
 
 describe('ExerciseFilter', () => {
-    const defaultFilters: ExerciseFilters = {
-        muscles: [],
-        equipment: []
-    };
+	const defaultFilters: ExerciseFilters = {
+		muscles: [],
+		equipment: [],
+	};
 
-    test('starts in collapsed state', () => {
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: defaultFilters,
-                onFilterChange: vi.fn()
-            }
-        });
+	test('starts in collapsed state', () => {
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: defaultFilters,
+				onFilterChange: vi.fn(),
+			},
+		});
 
-        const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
-        expect(checkbox.checked).toBe(false);
-    });
+		const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
+		expect(checkbox.checked).toBe(false);
+	});
 
-    test('can be expanded and collapsed', async () => {
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: defaultFilters,
-                onFilterChange: vi.fn()
-            }
-        });
+	test('can be expanded and collapsed', async () => {
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: defaultFilters,
+				onFilterChange: vi.fn(),
+			},
+		});
 
-        const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
-        await fireEvent.click(checkbox);
-        expect(checkbox.checked).toBe(true);
+		const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
+		await fireEvent.click(checkbox);
+		expect(checkbox.checked).toBe(true);
 
-        await fireEvent.click(checkbox);
-        expect(checkbox.checked).toBe(false);
-    });
+		await fireEvent.click(checkbox);
+		expect(checkbox.checked).toBe(false);
+	});
 
-    test('shows correct badge counts for active filters', () => {
-        const activeFilters: ExerciseFilters = {
-            muscles: [Muscles.CHEST, Muscles.LOWER_BACK],
-            equipment: [Equipment.DUMBBELLS]
-        };
+	test('shows correct badge counts for active filters', () => {
+		const activeFilters: ExerciseFilters = {
+			muscles: [Muscles.CHEST, Muscles.LOWER_BACK],
+			equipment: [Equipment.DUMBBELLS],
+		};
 
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: activeFilters,
-                onFilterChange: vi.fn()
-            }
-        });
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: activeFilters,
+				onFilterChange: vi.fn(),
+			},
+		});
 
-        const muscleBadge = container.querySelector('.badge.bg-blue-600');
-        const equipmentBadge = container.querySelector('.badge.bg-purple-600');
+		const muscleBadge = container.querySelector('.badge.bg-blue-600');
+		const equipmentBadge = container.querySelector('.badge.bg-purple-600');
 
-        expect(muscleBadge?.textContent?.trim()).toBe('2 muscles');
-        expect(equipmentBadge?.textContent?.trim()).toBe('1 equipment');
-    });
+		expect(muscleBadge?.textContent?.trim()).toBe('2 muscles');
+		expect(equipmentBadge?.textContent?.trim()).toBe('1 equipment');
+	});
 
-    test('hides badges when no filters are active', () => {
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: defaultFilters,
-                onFilterChange: vi.fn()
-            }
-        });
+	test('hides badges when no filters are active', () => {
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: defaultFilters,
+				onFilterChange: vi.fn(),
+			},
+		});
 
-        const muscleBadge = container.querySelector('.badge.bg-blue-600');
-        const equipmentBadge = container.querySelector('.badge.bg-purple-600');
+		const muscleBadge = container.querySelector('.badge.bg-blue-600');
+		const equipmentBadge = container.querySelector('.badge.bg-purple-600');
 
-        expect(muscleBadge).not.toBeInTheDocument();
-        expect(equipmentBadge).not.toBeInTheDocument();
-    });
+		expect(muscleBadge).not.toBeInTheDocument();
+		expect(equipmentBadge).not.toBeInTheDocument();
+	});
 
-    test('renders all muscle options', () => {
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: defaultFilters,
-                onFilterChange: vi.fn()
-            }
-        });
+	test('renders all muscle options', () => {
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: defaultFilters,
+				onFilterChange: vi.fn(),
+			},
+		});
 
-        // Check each muscle enum value has a corresponding filter
-        Object.values(Muscles).forEach(muscleId => {
-            const filterInput = container.querySelector(`#muscle-filter-${muscleId}`);
-            const filterLabel = container.querySelector(`#muscle-filter-${muscleId}-text`);
-            
-            expect(filterInput).toBeInTheDocument();
-            expect(filterLabel).toBeInTheDocument();
-            // Check for display name from musclesList instead of enum ID
-            expect(filterLabel?.textContent?.trim()).toBe(musclesList.find(m => m.id === muscleId)?.name);
-        });
-    });
+		// Check each muscle enum value has a corresponding filter
+		Object.values(Muscles).forEach((muscleId) => {
+			const filterInput = container.querySelector(`#muscle-filter-${muscleId}`);
+			const filterLabel = container.querySelector(`#muscle-filter-${muscleId}-text`);
 
-    test('renders all equipment options', () => {
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: defaultFilters,
-                onFilterChange: vi.fn()
-            }
-        });
+			expect(filterInput).toBeInTheDocument();
+			expect(filterLabel).toBeInTheDocument();
+			// Check for display name from musclesList instead of enum ID
+			expect(filterLabel?.textContent?.trim()).toBe(
+				musclesList.find((m) => m.id === muscleId)?.name,
+			);
+		});
+	});
 
-        // Check each equipment option has a corresponding filter
-        [Equipment.DUMBBELLS, Equipment.KETTLEBELL].forEach(equipment => {
-            const filterInput = container.querySelector(`#equipment-filter-${equipment}`);
-            const filterLabel = container.querySelector(`#equipment-filter-${equipment}-text`);
-            
-            expect(filterInput).toBeInTheDocument();
-            expect(filterLabel).toBeInTheDocument();
-        });
-    });
+	test('renders all equipment options', () => {
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: defaultFilters,
+				onFilterChange: vi.fn(),
+			},
+		});
 
-    test('calls onFilterChange when muscle filter is clicked', async () => {
-        const handleFilterChange = vi.fn();
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: defaultFilters,
-                onFilterChange: handleFilterChange
-            }
-        });
+		// Check each equipment option has a corresponding filter
+		[Equipment.DUMBBELLS, Equipment.KETTLEBELL].forEach((equipment) => {
+			const filterInput = container.querySelector(`#equipment-filter-${equipment}`);
+			const filterLabel = container.querySelector(`#equipment-filter-${equipment}-text`);
 
-        // Click the chest muscle filter
-        const chestFilter = container.querySelector(`#muscle-filter-${Muscles.CHEST}`);
-        await fireEvent.click(chestFilter!);
+			expect(filterInput).toBeInTheDocument();
+			expect(filterLabel).toBeInTheDocument();
+		});
+	});
 
-        expect(handleFilterChange).toHaveBeenCalledWith({
-            muscles: [Muscles.CHEST],
-            equipment: []
-        });
-    });
+	test('calls onFilterChange when muscle filter is clicked', async () => {
+		const handleFilterChange = vi.fn();
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: defaultFilters,
+				onFilterChange: handleFilterChange,
+			},
+		});
 
-    test('calls onFilterChange when equipment filter is clicked', async () => {
-        const handleFilterChange = vi.fn();
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: defaultFilters,
-                onFilterChange: handleFilterChange
-            }
-        });
+		// Click the chest muscle filter
+		const chestFilter = container.querySelector(`#muscle-filter-${Muscles.CHEST}`);
+		await fireEvent.click(chestFilter!);
 
-        // Click the dumbbells equipment filter
-        const dumbbellsFilter = container.querySelector(`#equipment-filter-${Equipment.DUMBBELLS}`);
-        await fireEvent.click(dumbbellsFilter!);
+		expect(handleFilterChange).toHaveBeenCalledWith({
+			muscles: [Muscles.CHEST],
+			equipment: [],
+		});
+	});
 
-        expect(handleFilterChange).toHaveBeenCalledWith({
-            muscles: [],
-            equipment: [Equipment.DUMBBELLS]
-        });
-    });
+	test('calls onFilterChange when equipment filter is clicked', async () => {
+		const handleFilterChange = vi.fn();
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: defaultFilters,
+				onFilterChange: handleFilterChange,
+			},
+		});
 
-    test('updates visual state when filters are active', () => {
-        const activeFilters: ExerciseFilters = {
-            muscles: [Muscles.CHEST],
-            equipment: [Equipment.DUMBBELLS]
-        };
+		// Click the dumbbells equipment filter
+		const dumbbellsFilter = container.querySelector(`#equipment-filter-${Equipment.DUMBBELLS}`);
+		await fireEvent.click(dumbbellsFilter!);
 
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: activeFilters,
-                onFilterChange: vi.fn()
-            }
-        });
+		expect(handleFilterChange).toHaveBeenCalledWith({
+			muscles: [],
+			equipment: [Equipment.DUMBBELLS],
+		});
+	});
 
-        // Check active muscle filter has correct styling
-        const chestFilterText = container.querySelector(`#muscle-filter-${Muscles.CHEST}-text`);
-        expect(chestFilterText).toHaveClass('bg-blue-600');
+	test('updates visual state when filters are active', () => {
+		const activeFilters: ExerciseFilters = {
+			muscles: [Muscles.CHEST],
+			equipment: [Equipment.DUMBBELLS],
+		};
 
-        // Check active equipment filter has correct styling
-        const dumbbellsFilterText = container.querySelector(`#equipment-filter-${Equipment.DUMBBELLS}-text`);
-        expect(dumbbellsFilterText).toHaveClass('bg-purple-600');
-    });
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: activeFilters,
+				onFilterChange: vi.fn(),
+			},
+		});
 
-    test('removes filter when clicking an active filter', async () => {
-        const activeFilters: ExerciseFilters = {
-            muscles: [Muscles.CHEST],
-            equipment: [Equipment.DUMBBELLS]
-        };
+		// Check active muscle filter has correct styling
+		const chestFilterText = container.querySelector(`#muscle-filter-${Muscles.CHEST}-text`);
+		expect(chestFilterText).toHaveClass('bg-blue-600');
 
-        const handleFilterChange = vi.fn();
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: activeFilters,
-                onFilterChange: handleFilterChange
-            }
-        });
+		// Check active equipment filter has correct styling
+		const dumbbellsFilterText = container.querySelector(
+			`#equipment-filter-${Equipment.DUMBBELLS}-text`,
+		);
+		expect(dumbbellsFilterText).toHaveClass('bg-purple-600');
+	});
 
-        // Click the active chest filter to remove it
-        const chestFilter = container.querySelector(`#muscle-filter-${Muscles.CHEST}`);
-        await fireEvent.click(chestFilter!);
+	test('removes filter when clicking an active filter', async () => {
+		const activeFilters: ExerciseFilters = {
+			muscles: [Muscles.CHEST],
+			equipment: [Equipment.DUMBBELLS],
+		};
 
-        expect(handleFilterChange).toHaveBeenCalledWith({
-            muscles: [],
-            equipment: [Equipment.DUMBBELLS]
-        });
-    });
+		const handleFilterChange = vi.fn();
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: activeFilters,
+				onFilterChange: handleFilterChange,
+			},
+		});
 
-    test('shows singular "muscle" text when one muscle filter is active', () => {
-        const singleMuscleFilter: ExerciseFilters = {
-            muscles: [Muscles.CHEST],
-            equipment: []
-        };
+		// Click the active chest filter to remove it
+		const chestFilter = container.querySelector(`#muscle-filter-${Muscles.CHEST}`);
+		await fireEvent.click(chestFilter!);
 
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: singleMuscleFilter,
-                onFilterChange: vi.fn()
-            }
-        });
+		expect(handleFilterChange).toHaveBeenCalledWith({
+			muscles: [],
+			equipment: [Equipment.DUMBBELLS],
+		});
+	});
 
-        const muscleBadge = container.querySelector('.badge.bg-blue-600');
-        expect(muscleBadge?.textContent?.trim()).toBe('1 muscle');
-    });
+	test('shows singular "muscle" text when one muscle filter is active', () => {
+		const singleMuscleFilter: ExerciseFilters = {
+			muscles: [Muscles.CHEST],
+			equipment: [],
+		};
 
-    test("shows plural 'muscles' text when multiple muscle filters are active", () => {
-        const multipleMuscleFilters: ExerciseFilters = {
-            muscles: [Muscles.CHEST, Muscles.LOWER_BACK],
-            equipment: []
-        };
-        const { container } = render(ExerciseFilter, {
-            props: {
-                filters: multipleMuscleFilters,
-                onFilterChange: vi.fn()
-            }
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: singleMuscleFilter,
+				onFilterChange: vi.fn(),
+			},
+		});
 
-        });
+		const muscleBadge = container.querySelector('.badge.bg-blue-600');
+		expect(muscleBadge?.textContent?.trim()).toBe('1 muscle');
+	});
 
-        const muscleBadge = container.querySelector('.badge.bg-blue-600');
-        expect(muscleBadge?.textContent?.trim()).toBe('2 muscles');
-    });
+	test("shows plural 'muscles' text when multiple muscle filters are active", () => {
+		const multipleMuscleFilters: ExerciseFilters = {
+			muscles: [Muscles.CHEST, Muscles.LOWER_BACK],
+			equipment: [],
+		};
+		const { container } = render(ExerciseFilter, {
+			props: {
+				filters: multipleMuscleFilters,
+				onFilterChange: vi.fn(),
+			},
+		});
+
+		const muscleBadge = container.querySelector('.badge.bg-blue-600');
+		expect(muscleBadge?.textContent?.trim()).toBe('2 muscles');
+	});
 });

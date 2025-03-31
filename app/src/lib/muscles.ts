@@ -19,7 +19,7 @@ export enum Muscles {
 	ADDUCTORS = 'adductors',
 	FOREARMS = 'forearms',
 	NECK = 'neck',
-	UPPER_BACK = 'upper_back'
+	UPPER_BACK = 'upper_back',
 }
 
 /**
@@ -37,76 +37,76 @@ export interface MuscleDetails {
 export const musclesRegistry: Record<Muscles, MuscleDetails> = {
 	[Muscles.ABDOMINALS]: {
 		id: Muscles.ABDOMINALS,
-		name: 'Abdominals'
+		name: 'Abdominals',
 	},
 	[Muscles.OBLIQUES]: {
 		id: Muscles.OBLIQUES,
-		name: 'Obliques'
+		name: 'Obliques',
 	},
 	[Muscles.LATS]: {
 		id: Muscles.LATS,
-		name: 'Latissimus Dorsi'
+		name: 'Latissimus Dorsi',
 	},
 	[Muscles.BICEPS]: {
 		id: Muscles.BICEPS,
-		name: 'Biceps'
+		name: 'Biceps',
 	},
 	[Muscles.CHEST]: {
 		id: Muscles.CHEST,
-		name: 'Chest'
+		name: 'Chest',
 	},
 	[Muscles.GLUTES]: {
 		id: Muscles.GLUTES,
-		name: 'Glutes'
+		name: 'Glutes',
 	},
 	[Muscles.HAMSTRINGS]: {
 		id: Muscles.HAMSTRINGS,
-		name: 'Hamstrings'
+		name: 'Hamstrings',
 	},
 	[Muscles.QUADRICEPS]: {
 		id: Muscles.QUADRICEPS,
-		name: 'Quadriceps'
+		name: 'Quadriceps',
 	},
 	[Muscles.SHOULDERS]: {
 		id: Muscles.SHOULDERS,
-		name: 'Shoulders'
+		name: 'Shoulders',
 	},
 	[Muscles.TRICEPS]: {
 		id: Muscles.TRICEPS,
-		name: 'Triceps'
+		name: 'Triceps',
 	},
 	[Muscles.LOWER_BACK]: {
 		id: Muscles.LOWER_BACK,
-		name: 'Lower Back'
+		name: 'Lower Back',
 	},
 	[Muscles.CALVES]: {
 		id: Muscles.CALVES,
-		name: 'Calves'
+		name: 'Calves',
 	},
 	[Muscles.TRAPEZIUS]: {
 		id: Muscles.TRAPEZIUS,
-		name: 'Trapezius'
+		name: 'Trapezius',
 	},
 	[Muscles.ABDUCTORS]: {
 		id: Muscles.ABDUCTORS,
-		name: 'Hip Abductors'
+		name: 'Hip Abductors',
 	},
 	[Muscles.ADDUCTORS]: {
 		id: Muscles.ADDUCTORS,
-		name: 'Hip Adductors'
+		name: 'Hip Adductors',
 	},
 	[Muscles.FOREARMS]: {
 		id: Muscles.FOREARMS,
-		name: 'Forearms'
+		name: 'Forearms',
 	},
 	[Muscles.NECK]: {
 		id: Muscles.NECK,
-		name: 'Neck'
+		name: 'Neck',
 	},
 	[Muscles.UPPER_BACK]: {
 		id: Muscles.UPPER_BACK,
-		name: 'Upper Back'
-	}
+		name: 'Upper Back',
+	},
 };
 
 /**

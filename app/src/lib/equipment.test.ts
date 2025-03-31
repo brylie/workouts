@@ -4,7 +4,7 @@ import {
 	getEquipmentDetails,
 	getEquipmentDetailsForTypes,
 	equipmentRegistry,
-	equipmentList
+	equipmentList,
 } from './equipment';
 
 describe('equipment', () => {
@@ -14,7 +14,7 @@ describe('equipment', () => {
 			expect(details).toEqual({
 				id: Equipment.DUMBBELLS,
 				name: 'Dumbbells',
-				description: 'A pair of handheld weights used for various exercises.'
+				description: 'A pair of handheld weights used for various exercises.',
 			});
 		});
 
@@ -39,20 +39,20 @@ describe('equipment', () => {
 				{
 					id: Equipment.DUMBBELLS,
 					name: 'Dumbbells',
-					description: 'A pair of handheld weights used for various exercises.'
+					description: 'A pair of handheld weights used for various exercises.',
 				},
 				{
 					id: Equipment.BENCH,
 					name: 'Bench',
 					description:
-						'A flat or adjustable bench used for exercises like bench press and dumbbell rows.'
+						'A flat or adjustable bench used for exercises like bench press and dumbbell rows.',
 				},
 				{
 					id: Equipment.KETTLEBELL,
 					name: 'Kettlebell',
 					description:
-						'A cast-iron or cast-steel weight used for ballistic exercises that combine strength, cardio, and flexibility training.'
-				}
+						'A cast-iron or cast-steel weight used for ballistic exercises that combine strength, cardio, and flexibility training.',
+				},
 			]);
 		});
 

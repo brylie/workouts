@@ -3,12 +3,11 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/svelte';
 import Page from './+page.svelte';
 
-
 describe('Page component', () => {
-  it('should render the welcome message correctly', () => {
-    const { container } = render(Page);
-    expect(container).toMatchSnapshot();
-  });
+	it('should render the welcome message correctly', () => {
+		const { container } = render(Page);
+		expect(container).toMatchSnapshot();
+	});
 });
 
 describe('/+page.svelte', () => {

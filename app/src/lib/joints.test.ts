@@ -4,7 +4,7 @@ import {
 	getJointDetails,
 	getJointDetailsForTypes,
 	jointsRegistry,
-	jointsList
+	jointsList,
 } from './joints';
 
 describe('joints', () => {
@@ -13,7 +13,7 @@ describe('joints', () => {
 			const details = getJointDetails(Joints.SHOULDER);
 			expect(details).toEqual({
 				id: Joints.SHOULDER,
-				name: 'Shoulder'
+				name: 'Shoulder',
 			});
 		});
 
@@ -36,7 +36,7 @@ describe('joints', () => {
 			expect(details).toEqual([
 				{ id: Joints.SHOULDER, name: 'Shoulder' },
 				{ id: Joints.ELBOW, name: 'Elbow' },
-				{ id: Joints.WRIST, name: 'Wrist' }
+				{ id: Joints.WRIST, name: 'Wrist' },
 			]);
 		});
 

@@ -39,7 +39,7 @@ export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
 	const exercises = getRandomExercises(count);
 	return exercises.map((exercise) => ({
 		exercise,
-		completed: false
+		completed: false,
 	}));
 }
 
@@ -67,23 +67,23 @@ export function getExercisesByEquipment(equipmentType: Equipment): ExerciseDetai
  * @returns Filtered array of exercises
  */
 export function filterExercises(filters: ExerciseFilters): ExerciseDetails[] {
-  return allExercises.filter(exercise => {
-    // Check muscle filter if provided
-    if (filters.muscles?.length) {
-      if (!filters.muscles.some(muscle => exercise.muscles.includes(muscle))) {
-        return false;
-      }
-    }
-    
-    // Check equipment filter if provided
-    if (filters.equipment?.length) {
-      if (!exercise.equipment?.some(eq => filters.equipment!.includes(eq))) {
-        return false;
-      }
-    }
-    
-    return true;
-  });
+	return allExercises.filter((exercise) => {
+		// Check muscle filter if provided
+		if (filters.muscles?.length) {
+			if (!filters.muscles.some((muscle) => exercise.muscles.includes(muscle))) {
+				return false;
+			}
+		}
+
+		// Check equipment filter if provided
+		if (filters.equipment?.length) {
+			if (!exercise.equipment?.some((eq) => filters.equipment!.includes(eq))) {
+				return false;
+			}
+		}
+
+		return true;
+	});
 }
 
 /**
@@ -93,10 +93,10 @@ export function filterExercises(filters: ExerciseFilters): ExerciseDetails[] {
  * @returns An array of randomly selected exercises
  */
 export function getFilteredRandomExercises(
-  filters: ExerciseFilters,
-  count: number = 5
+	filters: ExerciseFilters,
+	count: number = 5,
 ): ExerciseDetails[] {
-  const filteredExercises = filterExercises(filters);
-  const shuffled = [...filteredExercises].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, Math.min(count, shuffled.length));
+	const filteredExercises = filterExercises(filters);
+	const shuffled = [...filteredExercises].sort(() => 0.5 - Math.random());
+	return shuffled.slice(0, Math.min(count, shuffled.length));
 }

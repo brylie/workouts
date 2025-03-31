@@ -4,7 +4,7 @@ export default defineConfig({
 	webServer: {
 		command: 'pnpm build && pnpm preview --port 4174',
 		port: 4174,
-		reuseExistingServer: true
+		reuseExistingServer: true,
 	},
 
 	testDir: 'e2e',
