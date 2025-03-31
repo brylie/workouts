@@ -64,7 +64,7 @@ test.describe('Generate Workout Page', () => {
     
     // Verify at least one exercise has Dumbbells
     const hasExerciseWithDumbbells = await workoutCards.evaluate((cards) => {
-      return Array.from(cards).some(card => {
+      return Array.from(cards as HTMLElement[]).some(card => {
         const equipmentLabels = card.querySelectorAll('.bg-purple-600.px-2.py-1.rounded.text-sm');
         return Array.from(equipmentLabels).some(label => label.textContent?.includes('Dumbbells'));
       });
