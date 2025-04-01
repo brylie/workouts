@@ -86,10 +86,10 @@ When importing types, follow this pattern:
 
 ```typescript
 // Import types separately
-import type { EquipmentDetails } from './types';
+import type { EquipmentDetails } from "./types";
 
 // Import regular exports
-import { Equipment } from './enums';
+import { Equipment } from "./enums";
 ```
 
 ## Adding Dependencies

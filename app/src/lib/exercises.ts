@@ -1,23 +1,23 @@
-import type { ExerciseDetails, WorkoutItem, ExerciseFilters } from './types';
-import { calisthenicsExercises } from './exercise_data/calisthenics';
-import { dumbbellExercises } from './exercise_data/dumbbells';
-import { machineExercises } from './exercise_data/machines';
-import { kettlebellExercises } from './exercise_data/kettlebell';
-import { bodyweightExercises } from './exercise_data/bodyweight';
-import { pilatesExercises } from './exercise_data/pilates';
-import { yogaPoses } from './exercise_data/yoga';
-import type { Muscles } from './muscles';
-import type { Equipment } from './equipment';
+import type { ExerciseDetails, WorkoutItem, ExerciseFilters } from "./types";
+import { calisthenicsExercises } from "./exercise_data/calisthenics";
+import { dumbbellExercises } from "./exercise_data/dumbbells";
+import { machineExercises } from "./exercise_data/machines";
+import { kettlebellExercises } from "./exercise_data/kettlebell";
+import { bodyweightExercises } from "./exercise_data/bodyweight";
+import { pilatesExercises } from "./exercise_data/pilates";
+import { yogaPoses } from "./exercise_data/yoga";
+import type { Muscles } from "./muscles";
+import type { Equipment } from "./equipment";
 
 // Combine machine, calisthenics, dumbbell, and kettlebell exercises
 export const allExercises: ExerciseDetails[] = [
-	...machineExercises,
-	...calisthenicsExercises,
-	...dumbbellExercises,
-	...kettlebellExercises,
-	...bodyweightExercises,
-	...pilatesExercises,
-	...yogaPoses,
+  ...machineExercises,
+  ...calisthenicsExercises,
+  ...dumbbellExercises,
+  ...kettlebellExercises,
+  ...bodyweightExercises,
+  ...pilatesExercises,
+  ...yogaPoses,
 ];
 
 /**
@@ -26,8 +26,8 @@ export const allExercises: ExerciseDetails[] = [
  * @returns An array of randomly selected exercises
  */
 export function getRandomExercises(count: number = 5): ExerciseDetails[] {
-	const shuffled = [...allExercises].sort(() => 0.5 - Math.random());
-	return shuffled.slice(0, count);
+  const shuffled = [...allExercises].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
 }
 
 /**
@@ -36,11 +36,11 @@ export function getRandomExercises(count: number = 5): ExerciseDetails[] {
  * @returns An array of randomly selected WorkoutItems
  */
 export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
-	const exercises = getRandomExercises(count);
-	return exercises.map((exercise) => ({
-		exercise,
-		completed: false,
-	}));
+  const exercises = getRandomExercises(count);
+  return exercises.map((exercise) => ({
+    exercise,
+    completed: false,
+  }));
 }
 
 /**
@@ -49,7 +49,7 @@ export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
  * @returns An array of exercises that target the specified muscle
  */
 export function getExercisesByMuscle(muscle: Muscles): ExerciseDetails[] {
-	return allExercises.filter((exercise) => exercise.muscles.includes(muscle));
+  return allExercises.filter((exercise) => exercise.muscles.includes(muscle));
 }
 
 /**
@@ -57,8 +57,12 @@ export function getExercisesByMuscle(muscle: Muscles): ExerciseDetails[] {
  * @param equipmentType The type of equipment to filter by
  * @returns An array of exercises that use the specified equipment
  */
-export function getExercisesByEquipment(equipmentType: Equipment): ExerciseDetails[] {
-	return allExercises.filter((exercise) => exercise.equipment?.includes(equipmentType));
+export function getExercisesByEquipment(
+  equipmentType: Equipment,
+): ExerciseDetails[] {
+  return allExercises.filter((exercise) =>
+    exercise.equipment?.includes(equipmentType),
+  );
 }
 
 /**
@@ -67,23 +71,25 @@ export function getExercisesByEquipment(equipmentType: Equipment): ExerciseDetai
  * @returns Filtered array of exercises
  */
 export function filterExercises(filters: ExerciseFilters): ExerciseDetails[] {
-	return allExercises.filter((exercise) => {
-		// Check muscle filter if provided
-		if (filters.muscles?.length) {
-			if (!filters.muscles.some((muscle) => exercise.muscles.includes(muscle))) {
-				return false;
-			}
-		}
+  return allExercises.filter((exercise) => {
+    // Check muscle filter if provided
+    if (filters.muscles?.length) {
+      if (
+        !filters.muscles.some((muscle) => exercise.muscles.includes(muscle))
+      ) {
+        return false;
+      }
+    }
 
-		// Check equipment filter if provided
-		if (filters.equipment?.length) {
-			if (!exercise.equipment?.some((eq) => filters.equipment!.includes(eq))) {
-				return false;
-			}
-		}
+    // Check equipment filter if provided
+    if (filters.equipment?.length) {
+      if (!exercise.equipment?.some((eq) => filters.equipment!.includes(eq))) {
+        return false;
+      }
+    }
 
-		return true;
-	});
+    return true;
+  });
 }
 
 /**
@@ -93,10 +99,10 @@ export function filterExercises(filters: ExerciseFilters): ExerciseDetails[] {
  * @returns An array of randomly selected exercises
  */
 export function getFilteredRandomExercises(
-	filters: ExerciseFilters,
-	count: number = 5,
+  filters: ExerciseFilters,
+  count: number = 5,
 ): ExerciseDetails[] {
-	const filteredExercises = filterExercises(filters);
-	const shuffled = [...filteredExercises].sort(() => 0.5 - Math.random());
-	return shuffled.slice(0, Math.min(count, shuffled.length));
+  const filteredExercises = filterExercises(filters);
+  const shuffled = [...filteredExercises].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, Math.min(count, shuffled.length));
 }
