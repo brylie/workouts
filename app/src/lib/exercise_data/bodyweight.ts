@@ -344,4 +344,30 @@ export const bodyweightExercises: ExerciseDetails[] = [
 			hasTime: false,
 		},
 	},
+	{
+		id: 'leg-raise',
+		title: 'Leg Raise',
+		muscles: [Muscles.ABDOMINALS, Muscles.LOWER_BACK],
+		description:
+			'A core exercise where you lie on your back and lift your legs straight up, engaging the lower abs and hip flexors.',
+		metrics: {
+			hasSets: true,
+			hasReps: true,
+			hasWeight: false,
+			hasTime: false,
+		},
+	},
+	{
+		id: 'heel-touch',
+		title: 'Heel Touch',
+		muscles: [Muscles.OBLIQUES, Muscles.ABDOMINALS],
+		description:
+			'A side-to-side core exercise where you touch your heels alternately while lying on your back, targeting the obliques.',
+		metrics: {
+			hasSets: true,
+			hasReps: true,
+			hasWeight: false,
+			hasTime: false,
+		},
+	},
 ];
