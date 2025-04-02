@@ -1,6 +1,6 @@
 export enum MuscleGroups {
-  UPPER_BODY = "upper body",
-  LOWER_BODY = "lower body",
+  UPPER_BODY = "upper_body",
+  LOWER_BODY = "lower_body",
   CORE = "core",
 }
 

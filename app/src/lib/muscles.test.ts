@@ -27,7 +27,7 @@ describe("muscles", () => {
         id: Muscles.BICEPS,
         name: "Biceps",
         recovery_hours: 48,
-        muscle_group: "upper body",
+        muscle_group: "upper_body",
       });
     });
 
@@ -92,19 +92,19 @@ describe("muscles", () => {
           id: Muscles.BICEPS,
           name: "Biceps",
           recovery_hours: 48,
-          muscle_group: "upper body",
+          muscle_group: "upper_body",
         },
         {
           id: Muscles.TRICEPS,
           name: "Triceps",
           recovery_hours: 48,
-          muscle_group: "upper body",
+          muscle_group: "upper_body",
         },
         {
           id: Muscles.CHEST,
           name: "Chest",
           recovery_hours: 48,
-          muscle_group: "upper body",
+          muscle_group: "upper_body",
         },
       ]);
     });
