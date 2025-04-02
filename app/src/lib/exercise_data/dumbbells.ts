@@ -79,20 +79,6 @@ export const dumbbellExercises: ExerciseDetails[] = [
     },
   },
   {
-    id: "dumbbell-preacher-curl",
-    title: "Dumbbell Preacher Curl",
-    muscles: [Muscles.BICEPS],
-    equipment: [Equipment.DUMBBELLS],
-    description:
-      "Bicep curl performed on a preacher bench to isolate the biceps.",
-    metrics: {
-      hasSets: true,
-      hasReps: true,
-      hasWeight: true,
-      hasTime: false,
-    },
-  },
-  {
     id: "dumbbell-concentration-curl",
     title: "Dumbbell Concentration Curl",
     muscles: [Muscles.BICEPS],
@@ -237,7 +223,36 @@ export const dumbbellExercises: ExerciseDetails[] = [
     title: "Dumbbell Zottman Curl",
     muscles: [Muscles.BICEPS, Muscles.TRICEPS, Muscles.FOREARMS],
     equipment: [Equipment.DUMBBELLS],
-    description: "Bicep curl with a twist to target both biceps and forearms.",
+    description:
+      "Bicep curl palm up on the way up with a twist to palm down on the way down to target both biceps and forearms.",
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false,
+    },
+  },
+  {
+    id: "dumbbell-forearm-rotations",
+    title: "Dumbbell Forearm Rotations",
+    muscles: [Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
+    description:
+      "Rotational movement of the forearms holding dumbbells horizontally in front of you to improve wrist and forearm strength.",
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false,
+    },
+  },
+  {
+    id: "dumbbell-rotational-curl",
+    title: "Dumbbell Rotational Curl",
+    muscles: [Muscles.BICEPS, Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
+    description:
+      "Bicep curl with a rotational motion to engage both biceps and forearms.",
     metrics: {
       hasSets: true,
       hasReps: true,
