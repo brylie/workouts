@@ -232,7 +232,7 @@
             <tr class="bg-base-200">
               <td
                 colspan="5"
-                class="text-lg font-bold"
+                class="text-lg font-bold text-blue-400"
                 id="muscle-group-{muscleGroup.replace(/\s+/g, '-')}"
               >
                 {muscleGroup.charAt(0).toUpperCase() + muscleGroup.slice(1)}
