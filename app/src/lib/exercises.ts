@@ -26,7 +26,7 @@ export const allExercises: ExerciseDetails[] = [
  * @returns The exercise details or null if not found
  */
 export function getExerciseById(id: string): ExerciseDetails | null {
-  return allExercises.find(exercise => exercise.id === id) || null;
+  return allExercises.find((exercise) => exercise.id === id) || null;
 }
 
 /**
