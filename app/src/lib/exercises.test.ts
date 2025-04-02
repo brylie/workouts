@@ -8,6 +8,7 @@ import {
   allExercises,
   filterExercises,
   getFilteredRandomExercises,
+  getExerciseById,
 } from "./exercises";
 import { Equipment } from "./equipment";
 import { Muscles } from "./muscles";
@@ -244,5 +245,25 @@ describe("getFilteredRandomExercises", () => {
     };
     const exercises = getFilteredRandomExercises(filters, 3);
     expect(exercises).toHaveLength(0);
+  });
+});
+
+describe("getExerciseById", () => {
+  it("should return an exercise when given a valid ID", () => {
+    // Get the first exercise from the list to use as a reference
+    const testExercise = allExercises[0];
+    if (testExercise.id) {
+      const result = getExerciseById(testExercise.id);
+      expect(result).not.toBeNull();
+      expect(result?.id).toBe(testExercise.id);
+      expect(result?.title).toBe(testExercise.title);
+    } else {
+      throw new Error("testExercise.id is undefined");
+    }
+  });
+
+  it("should return null when given a non-existent ID", () => {
+    const result = getExerciseById("non-existent-exercise-id");
+    expect(result).toBeNull();
   });
 });

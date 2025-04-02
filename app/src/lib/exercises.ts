@@ -1,13 +1,13 @@
-import type { ExerciseDetails, WorkoutItem, ExerciseFilters } from "./types";
-import { calisthenicsExercises } from "./exercise_data/calisthenics";
-import { dumbbellExercises } from "./exercise_data/dumbbells";
-import { machineExercises } from "./exercise_data/machines";
-import { kettlebellExercises } from "./exercise_data/kettlebell";
-import { bodyweightExercises } from "./exercise_data/bodyweight";
-import { pilatesExercises } from "./exercise_data/pilates";
-import { yogaPoses } from "./exercise_data/yoga";
-import type { Muscles } from "./muscles";
-import type { Equipment } from "./equipment";
+import type { ExerciseDetails, WorkoutItem, ExerciseFilters } from "$lib/types";
+import { calisthenicsExercises } from "$lib/exercise_data/calisthenics";
+import { dumbbellExercises } from "$lib/exercise_data/dumbbells";
+import { machineExercises } from "$lib/exercise_data/machines";
+import { kettlebellExercises } from "$lib/exercise_data/kettlebell";
+import { bodyweightExercises } from "$lib/exercise_data/bodyweight";
+import { pilatesExercises } from "$lib/exercise_data/pilates";
+import { yogaPoses } from "$lib/exercise_data/yoga";
+import type { Muscles } from "$lib/muscles";
+import type { Equipment } from "$lib/equipment";
 
 // Combine machine, calisthenics, dumbbell, and kettlebell exercises
 export const allExercises: ExerciseDetails[] = [
@@ -19,6 +19,15 @@ export const allExercises: ExerciseDetails[] = [
   ...pilatesExercises,
   ...yogaPoses,
 ];
+
+/**
+ * Find an exercise by its ID
+ * @param id The ID of the exercise to find
+ * @returns The exercise details or null if not found
+ */
+export function getExerciseById(id: string): ExerciseDetails | null {
+  return allExercises.find(exercise => exercise.id === id) || null;
+}
 
 /**
  * Get a random selection of exercises for workout generation
