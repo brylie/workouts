@@ -13,8 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history
-          ref: ${{ github.head_ref }} # Explicitly checkout the head of the PR
+          # Explicitly checkout the head of the PR
+          # to avoid issues with stale code running in CI
+          ref: ${{ github.head_ref }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
