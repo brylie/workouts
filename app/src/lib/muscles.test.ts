@@ -84,6 +84,7 @@ describe("muscles", () => {
 describe("Muscles enum", () => {
   it("should contain the expected muscle groups", () => {
     expect(Muscles.ABDOMINALS).toBe("abdominals");
+    expect(Muscles.OBLIQUES).toBe("obliques");
     expect(Muscles.LATS).toBe("lats");
     expect(Muscles.BICEPS).toBe("biceps");
     expect(Muscles.CHEST).toBe("chest");
@@ -99,5 +100,6 @@ describe("Muscles enum", () => {
     expect(Muscles.ADDUCTORS).toBe("adductors");
     expect(Muscles.FOREARMS).toBe("forearms");
     expect(Muscles.NECK).toBe("neck");
+    expect(Muscles.UPPER_BACK).toBe("upper_back");
   });
 });
