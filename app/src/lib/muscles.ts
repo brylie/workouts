@@ -26,6 +26,7 @@ export enum Muscles {
   FOREARMS = "forearms",
   NECK = "neck",
   UPPER_BACK = "upper_back",
+  HIP_FLEXORS = "hip_flexors",
 }
 
 /**
@@ -150,6 +151,12 @@ export const musclesRegistry: Record<Muscles, MuscleDetails> = {
     name: "Upper Back",
     recovery_hours: 48,
     muscle_group: MuscleGroups.UPPER_BODY,
+  },
+  [Muscles.HIP_FLEXORS]: {
+    id: Muscles.HIP_FLEXORS,
+    name: "Hip Flexors",
+    recovery_hours: 48,
+    muscle_group: MuscleGroups.LOWER_BODY,
   },
 };
 
