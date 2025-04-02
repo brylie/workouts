@@ -32,7 +32,7 @@ Workouts is a web-based application built with Svelte 5 that provides a streamli
 
 ## Getting Started
 
-Visit the deployed application at [your-deployment-url] or follow the developer setup instructions in [CONTRIBUTING.md](CONTRIBUTING.md) to run the application locally.
+Visit the deployed application at [brylie.github.io/workouts/](https://brylie.github.io/workouts/) or follow the developer setup instructions in [CONTRIBUTING.md](CONTRIBUTING.md) to run the application locally.
 
 ## License
 
