@@ -178,4 +178,124 @@ export const kettlebellExercises: ExerciseDetails[] = [
     ],
     variants: ["Double Windmill", "Bent Knee Windmill"],
   },
+  {
+    id: "kettlebell-around-the-worlds",
+    title: "Kettlebell Around the Worlds",
+    description:
+      "A core and shoulder stability exercise where the kettlebell is passed around the body in a controlled manner.",
+    muscles: [Muscles.OBLIQUES, Muscles.SHOULDERS],
+    equipment: [Equipment.KETTLEBELL],
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false,
+    },
+    tips: [
+      "Keep your core engaged to prevent excessive twisting",
+      "Move the kettlebell in a smooth, controlled motion",
+      "Maintain a neutral spine throughout",
+    ],
+    variants: ["Single Direction", "Alternating Directions"],
+  },
+  {
+    id: "kettlebell-plank-drags",
+    title: "Kettlebell Plank Drags",
+    description:
+      "A core and shoulder stability exercise where the kettlebell is dragged from front (in front of hand position) to back (hips) while maintaining a plank position.",
+    muscles: [Muscles.ABDOMINALS, Muscles.SHOULDERS],
+    equipment: [Equipment.KETTLEBELL],
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false,
+    },
+    tips: [
+      "Keep your hips level to avoid rotation",
+      "Engage your core to maintain stability",
+      "Drag the kettlebell in a controlled manner",
+    ],
+    variants: ["Single-arm Drag", "Alternating Drags"],
+  },
+  {
+    id: "kettlebell-half-kneel-wood-chops",
+    title: "Kettlebell Half Kneel Wood Chops",
+    description:
+      "A rotational core exercise performed in a half-kneeling position, moving the kettlebell diagonally across the body.",
+    muscles: [Muscles.OBLIQUES, Muscles.SHOULDERS],
+    equipment: [Equipment.KETTLEBELL],
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false,
+    },
+    tips: [
+      "Engage your core to control the movement",
+      "Keep your back straight and avoid leaning forward",
+      "Move the kettlebell in a smooth, diagonal path",
+    ],
+    variants: ["Standing Wood Chops", "Seated Wood Chops"],
+  },
+  {
+    id: "kettlebell-hollow-holds",
+    title: "Kettlebell Hollow Holds",
+    description:
+      "A core stability exercise where the kettlebell is held overhead while legs are lifted (optionally rocking along back) maintaining a hollow body position.",
+    muscles: [Muscles.ABDOMINALS, Muscles.SHOULDERS],
+    equipment: [Equipment.KETTLEBELL],
+    metrics: {
+      hasSets: true,
+      hasReps: false,
+      hasWeight: true,
+      hasTime: true,
+    },
+    tips: [
+      "Keep your lower back pressed into the floor",
+      "Engage your core to maintain the hollow position",
+      "Hold the kettlebell steady overhead",
+    ],
+    variants: ["Single-arm Hold", "Alternating Holds"],
+  },
+  {
+    id: "kettlebell-alternating-knee-tucks",
+    title: "Kettlebell Alternating Knee Tucks",
+    description:
+      "A dynamic core exercise where the kettlebell is held overhead while alternately tucking the knees towards the chest.",
+    muscles: [Muscles.ABDOMINALS, Muscles.HIP_FLEXORS],
+    equipment: [Equipment.KETTLEBELL],
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false,
+    },
+    tips: [
+      "Keep the kettlebell steady overhead",
+      "Engage your core to control the movement",
+      "Move your legs in a smooth, alternating motion",
+    ],
+    variants: ["Double Knee Tucks", "Seated Knee Tucks"],
+  },
+  {
+    id: "kettlebell-overhead-flutter-kicks",
+    title: "Kettlebell Overhead Flutter Kicks",
+    description:
+      "A core exercise where the kettlebell is held overhead while performing flutter kicks with the legs.",
+    muscles: [Muscles.ABDOMINALS, Muscles.HIP_FLEXORS],
+    equipment: [Equipment.KETTLEBELL],
+    metrics: {
+      hasSets: true,
+      hasReps: false,
+      hasWeight: true,
+      hasTime: true,
+    },
+    tips: [
+      "Keep your lower back pressed into the floor",
+      "Engage your core to maintain stability",
+      "Move your legs in a controlled, fluttering motion",
+    ],
+    variants: ["Single-leg Flutter Kicks", "Double-leg Flutter Kicks"],
+  },
 ];
