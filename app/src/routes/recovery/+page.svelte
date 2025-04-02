@@ -26,6 +26,7 @@
     status: MuscleRecoveryStatus;
     lastTrained: Date | null;
     recoveryPercentage: number;
+    exerciseCount: number;
   }
 
   // Using Svelte 5 runes syntax
@@ -102,6 +103,7 @@
           status: muscle.status,
           lastTrained: muscle.last_trained,
           recoveryPercentage: muscle.recovery_percentage,
+          exerciseCount: muscle.exercise_count,
         };
       });
 
@@ -168,6 +170,36 @@
           </div>
         {/each}
       </div>
+      <div class="alert alert-info mt-4 shadow-sm">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="h-6 w-6 shrink-0 stroke-current"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path></svg
+          >
+          <div>
+            <p class="font-semibold">How recovery status is determined:</p>
+            <ul class="ml-5 mt-1 list-disc">
+              <li>Recovered: When the full recovery period has passed</li>
+              <li>
+                Recovering: When a muscle is trained once during its recovery
+                period
+              </li>
+              <li>
+                Overtrained: When a muscle is trained twice or more during its
+                recovery period
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Muscle Recovery Table -->
@@ -178,6 +210,7 @@
             <th>Muscle Name</th>
             <th>Last Trained</th>
             <th>Recovery Status</th>
+            <th>Exercise Count</th>
             <th>Recovery %</th>
           </tr>
         </thead>
@@ -186,7 +219,7 @@
             <!-- Muscle Group Header -->
             <tr class="bg-base-200">
               <td
-                colspan="4"
+                colspan="5"
                 class="text-lg font-bold"
                 id="muscle-group-{muscleGroup.replace(/\s+/g, '-')}"
               >
@@ -207,6 +240,9 @@
                   </div>
                 </td>
                 <td>
+                  <span class="font-mono">{muscle.exerciseCount}</span>
+                </td>
+                <td>
                   <div class="flex items-center">
                     <progress
                       class="progress mr-2 w-24 {getStatusClasses(
@@ -223,7 +259,7 @@
 
             {#if !groupedMuscles[muscleGroup]?.length}
               <tr>
-                <td colspan="4" class="text-center text-gray-500"
+                <td colspan="5" class="text-center text-gray-500"
                   >No muscles in this group</td
                 >
               </tr>

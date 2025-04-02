@@ -3,8 +3,7 @@
  */
 const FULLY_TRAINED_PERCENTAGE = 100; // Maximum recovery percentage
 const MILLISECONDS_IN_HOUR = 1000 * 60 * 60; // Conversion factor for hours
-const RECOVERED_THRESHOLD = 90; // Threshold percentage for fully recovered status
-const RECOVERING_THRESHOLD = 50; // Threshold percentage for recovering status
+const OVERTRAINED_EXERCISE_COUNT = 2; // Number of exercises within recovery period that causes overtraining
 
 // Define and export types for muscle recovery
 export enum MuscleRecoveryStatus {
@@ -18,6 +17,7 @@ export interface MuscleRecovery {
   status: MuscleRecoveryStatus;
   last_trained: Date | null;
   recovery_percentage: number;
+  exercise_count: number; // Number of exercises performed during recovery period
 }
 
 import { musclesList } from "$lib/muscles";
@@ -55,20 +55,24 @@ export function calculateRecoveryPercentage(
 }
 
 /**
- * Determine recovery status based on recovery percentage
+ * Determine recovery status based on exercise count within recovery period
  *
- * @param recoveryPercentage - The calculated recovery percentage
+ * @param exerciseCount - The number of times the muscle has been trained in its recovery period
+ * @param recoveryPercentage - The calculated recovery percentage (for fully recovered determination)
  * @returns The appropriate MuscleRecoveryStatus
  */
-function determineRecoveryStatus(
+function determineRecoveryStatusByExerciseCount(
+  exerciseCount: number,
   recoveryPercentage: number,
 ): MuscleRecoveryStatus {
-  if (recoveryPercentage >= RECOVERED_THRESHOLD) {
-    return MuscleRecoveryStatus.RECOVERED;
-  } else if (recoveryPercentage >= RECOVERING_THRESHOLD) {
-    return MuscleRecoveryStatus.RECOVERING;
+  if (recoveryPercentage >= FULLY_TRAINED_PERCENTAGE) {
+    return MuscleRecoveryStatus.RECOVERED; // Fully recovered when recovery period has elapsed
+  } else if (exerciseCount >= OVERTRAINED_EXERCISE_COUNT) {
+    return MuscleRecoveryStatus.OVERTRAINED; // Overtrained if multiple exercises in recovery period
+  } else if (exerciseCount > 0) {
+    return MuscleRecoveryStatus.RECOVERING; // Recovering if trained once in recovery period
   } else {
-    return MuscleRecoveryStatus.OVERTRAINED;
+    return MuscleRecoveryStatus.RECOVERED; // Default (should not reach here normally)
   }
 }
 
@@ -92,25 +96,30 @@ export async function getMuscleRecoveryStatus(
     endDate,
   );
 
-  // Create a map to track the last time each muscle was trained
+  // Create maps to track muscle training data
   const lastTrainedByMuscle = new Map<string, Date>();
+  const exerciseDatesForMuscle = new Map<string, Date[]>();
 
-  // Process each completed exercise to find when muscles were last trained
+  // Process each completed exercise
   completedExercises.forEach((exercise) => {
     const exerciseDetail = getExerciseById(exercise.exercise_id);
     if (exerciseDetail) {
       // Get the date the exercise was completed
       const completedDate = new Date(exercise.completed_at);
 
-      // Update the last trained date for each muscle used in this exercise
+      // Update training data for each muscle used in this exercise
       exerciseDetail.muscles.forEach((muscleType) => {
         const muscleId = muscleType.toString();
-        const currentLastTrained = lastTrainedByMuscle.get(muscleId);
 
-        // Update only if this is more recent than what we have, or if we don't have a date yet
+        // Track last trained date
+        const currentLastTrained = lastTrainedByMuscle.get(muscleId);
         if (!currentLastTrained || completedDate > currentLastTrained) {
           lastTrainedByMuscle.set(muscleId, completedDate);
         }
+
+        // Track all exercise dates for this muscle
+        const currentDates = exerciseDatesForMuscle.get(muscleId) || [];
+        exerciseDatesForMuscle.set(muscleId, [...currentDates, completedDate]);
       });
     }
   });
@@ -122,13 +131,33 @@ export async function getMuscleRecoveryStatus(
       lastTrainedDate,
       muscle.recovery_hours,
     );
-    const status = determineRecoveryStatus(recoveryPercentage);
+
+    // Count exercises performed within the muscle's recovery window
+    let exerciseCount = 0;
+    if (lastTrainedDate) {
+      const allExerciseDates = exerciseDatesForMuscle.get(muscle.id) || [];
+      const recoveryWindowStartTime = new Date(lastTrainedDate.getTime());
+      recoveryWindowStartTime.setHours(
+        recoveryWindowStartTime.getHours() - muscle.recovery_hours,
+      );
+
+      // Count exercises for this muscle that were done within recovery period
+      exerciseCount = allExerciseDates.filter(
+        (date) => date >= recoveryWindowStartTime && date <= lastTrainedDate,
+      ).length;
+    }
+
+    const status = determineRecoveryStatusByExerciseCount(
+      exerciseCount,
+      recoveryPercentage,
+    );
 
     return {
       id: muscle.id,
       status,
       last_trained: lastTrainedDate,
       recovery_percentage: recoveryPercentage,
+      exercise_count: exerciseCount,
     };
   });
 }
