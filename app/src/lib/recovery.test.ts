@@ -21,7 +21,6 @@ describe("Recovery module", () => {
   const NOW = new Date("2025-04-02T12:00:00Z");
   const ONE_DAY_AGO = new Date("2025-04-01T12:00:00Z");
   const TWO_DAYS_AGO = new Date("2025-03-31T12:00:00Z");
-  const THREE_DAYS_AGO = new Date("2025-03-30T12:00:00Z");
 
   beforeEach(() => {
     // Reset mocks
@@ -52,18 +51,38 @@ describe("Recovery module", () => {
       if (id === "pushups") {
         return {
           id: "pushups",
+          title: "Push Ups",
           name: "Push Ups",
           muscles: [Muscles.CHEST, Muscles.TRICEPS],
           equipment: [],
           joints: [],
+          description: "A bodyweight exercise targeting chest and triceps.",
+          metrics: {
+            hasSets: true,
+            hasReps: true,
+            hasWeight: false,
+            hasTime: false,
+            hasDistance: false,
+            hasResistance: false,
+          },
         };
       } else if (id === "squats") {
         return {
           id: "squats",
+          title: "Squats",
           name: "Squats",
           muscles: [Muscles.QUADRICEPS, Muscles.GLUTES],
           equipment: [],
           joints: [],
+          description: "A lower-body exercise targeting quads and glutes.",
+          metrics: {
+            hasSets: true,
+            hasReps: true,
+            hasWeight: false,
+            hasTime: false,
+            hasDistance: false,
+            hasResistance: false,
+          },
         };
       }
       return null;
