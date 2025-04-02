@@ -14,6 +14,7 @@ describe("muscles", () => {
       expect(details).toEqual({
         id: Muscles.BICEPS,
         name: "Biceps",
+        recovery_hours: 48,
       });
     });
 
@@ -23,6 +24,7 @@ describe("muscles", () => {
         expect(details).toBeDefined();
         expect(details.id).toBe(muscleType);
         expect(details.name).toBeTruthy();
+        expect(details.recovery_hours).toBeGreaterThan(0);
       });
     });
   });
@@ -34,9 +36,9 @@ describe("muscles", () => {
 
       expect(details).toHaveLength(3);
       expect(details).toEqual([
-        { id: Muscles.BICEPS, name: "Biceps" },
-        { id: Muscles.TRICEPS, name: "Triceps" },
-        { id: Muscles.CHEST, name: "Chest" },
+        { id: Muscles.BICEPS, name: "Biceps", recovery_hours: 48 },
+        { id: Muscles.TRICEPS, name: "Triceps", recovery_hours: 48 },
+        { id: Muscles.CHEST, name: "Chest", recovery_hours: 48 },
       ]);
     });
 
