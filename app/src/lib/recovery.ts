@@ -32,7 +32,7 @@ import { getExerciseById } from "$lib/exercises";
  * @param recoveryHours - The number of hours needed for full recovery
  * @returns A number from 0 to 100 representing recovery percentage
  */
-function calculateRecoveryPercentage(
+export function calculateRecoveryPercentage(
   lastTrainedDate: Date | null,
   recoveryHours: number,
 ): number {
