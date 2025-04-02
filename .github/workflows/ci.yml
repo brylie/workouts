@@ -60,7 +60,7 @@ jobs:
       - name: Run muscles test with detailed logs
         run: |
           cd app
-          NODE_OPTIONS='--trace-warnings' pnpm vitest run src/lib/muscles.test.ts --verbose --no-threads
+          NODE_OPTIONS='--trace-warnings' pnpm vitest run src/lib/muscles.test.ts -v --no-threads
         continue-on-error: true
 
       # Display the failing test output directly in the log for easy access
@@ -79,14 +79,14 @@ jobs:
       - name: Run only unit tests with details
         run: |
           cd app
-          pnpm test:unit --verbose
+          pnpm test:unit -v
 
       - name: Debug failing test
         if: failure()
         run: |
           cd app
           echo "Running specific failing test with more details:"
-          pnpm vitest run src/lib/muscles.test.ts --verbose
+          pnpm vitest run src/lib/muscles.test.ts -v
 
       - name: Setup Playwright cache
         uses: actions/cache@v4
