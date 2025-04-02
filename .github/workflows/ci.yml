@@ -27,74 +27,12 @@ jobs:
       - name: Install dependencies
         run: |
           cd app
-          pnpm install --force # Force reinstall to avoid any caching
+          pnpm install --force
 
-      - name: Debug environment
+      - name: Run unit tests
         run: |
           cd app
-          echo "Node version: $(node -v)"
-          echo "pnpm version: $(pnpm -v)"
-          echo "List installed packages:"
-          pnpm list
-          echo "Object.keys polyfill check:"
-          node -e "console.log('Object.keys exists:', typeof Object.keys === 'function')"
-          echo "Object.values polyfill check:"
-          node -e "console.log('Object.values exists:', typeof Object.values === 'function')"
-          echo "Object.entries polyfill check:"
-          node -e "console.log('Object.entries exists:', typeof Object.entries === 'function')"
-
-      - name: Clean build artifacts
-        run: |
-          cd app
-          rm -rf .svelte-kit
-          rm -rf build
-          rm -rf node_modules/.vite
-      # Run specifically the muscles test first to focus on the issue
-      - name: Run muscles test with detailed logs
-        run: |
-          cd app
-          NODE_OPTIONS='--trace-warnings' pnpm vitest run src/lib/muscles.test.ts -v --no-threads
-        continue-on-error: true
-
-      # Display the failing test output directly in the log for easy access
-      - name: Debug muscles.ts file content
-        if: always()
-        run: |
-          cd app
-          echo "============= muscles.ts content ============="
-          cat src/lib/muscles.ts
-          echo "============= muscles.ts file stats ============="
-          stat src/lib/muscles.ts
-          echo "============= Check muscles enum values ============="
-          node -e "const { Muscles, musclesRegistry } = require('./src/lib/muscles.js'); console.log('Enum values:', Object.values(Muscles)); console.log('Registry keys:', Object.keys(musclesRegistry));"
-        continue-on-error: true
-
-      - name: Debug hip_flexors entry specifically
-        run: |
-          cd app
-          node -e "const { Muscles, musclesRegistry } = require('./app/lib/muscles.js'); console.log('hip_flexors entry:', JSON.stringify(musclesRegistry['hip_flexors'], null, 2));"
-
-      - name: Run only unit tests with details
-        run: |
-          cd app
-          pnpm test:unit -v
-
-      - name: Debug failing test
-        if: failure()
-        run: |
-          cd app
-          echo "Running specific failing test with more details:"
-          pnpm vitest run src/lib/muscles.test.ts -v
-
-      - name: Install Playwright browsers
-        run: |
-          cd app
-          pnpm exec playwright install --with-deps chromium
-
-      - name: Run tests in parallel
-        run: |
-          cd app
-          pnpm test:parallel
+          pnpm test:unit
 
       - name: Upload test results
         if: always()
