@@ -11,8 +11,8 @@ describe("muscles", () => {
   describe("getMuscleDetails", () => {
     // First add a specific test to verify the registry itself is correct
     it("should have correct properties for all muscle types in registry", () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      Object.entries(musclesRegistry).forEach(([_, muscle]) => {
+      Object.entries(musclesRegistry).forEach(([muscleKey, muscle]) => {
+        console.log(`Checking muscle: ${muscleKey}`, muscle);
         expect(muscle).toHaveProperty("id");
         expect(muscle).toHaveProperty("name");
         expect(muscle).toHaveProperty("recovery_hours");

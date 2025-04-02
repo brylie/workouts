@@ -43,6 +43,12 @@ jobs:
           echo "Object.entries polyfill check:"
           node -e "console.log('Object.entries exists:', typeof Object.entries === 'function')"
 
+      - name: Clean build artifacts
+        run: |
+          cd app
+          rm -rf .svelte-kit
+          rm -rf build
+          rm -rf node_modules/.vite
       # Run specifically the muscles test first to focus on the issue
       - name: Run muscles test with detailed logs
         run: |
@@ -62,6 +68,11 @@ jobs:
           echo "============= Check muscles enum values ============="
           node -e "const { Muscles, musclesRegistry } = require('./src/lib/muscles.js'); console.log('Enum values:', Object.values(Muscles)); console.log('Registry keys:', Object.keys(musclesRegistry));"
         continue-on-error: true
+
+      - name: Debug hip_flexors entry specifically
+        run: |
+          cd app
+          node -e "const { Muscles, musclesRegistry } = require('./src/lib/muscles.js'); console.log('hip_flexors entry:', JSON.stringify(musclesRegistry['hip_flexors'], null, 2));"
 
       - name: Run only unit tests with details
         run: |
