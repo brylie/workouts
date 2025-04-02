@@ -136,15 +136,16 @@ export async function getMuscleRecoveryStatus(
     let exerciseCount = 0;
     if (lastTrainedDate) {
       const allExerciseDates = exerciseDatesForMuscle.get(muscle.id) || [];
-      const recoveryWindowStartTime = new Date(lastTrainedDate.getTime());
-      recoveryWindowStartTime.setHours(
-        recoveryWindowStartTime.getHours() - muscle.recovery_hours,
-      );
+      const now = new Date();
 
-      // Count exercises for this muscle that were done within recovery period
-      exerciseCount = allExerciseDates.filter(
-        (date) => date >= recoveryWindowStartTime && date <= lastTrainedDate,
-      ).length;
+      // Count exercises for this muscle that are still within their recovery period
+      exerciseCount = allExerciseDates.filter((date) => {
+        const recoveryEndTime = new Date(date.getTime());
+        recoveryEndTime.setHours(
+          recoveryEndTime.getHours() + muscle.recovery_hours,
+        );
+        return recoveryEndTime >= now;
+      }).length;
     }
 
     const status = determineRecoveryStatusByExerciseCount(
