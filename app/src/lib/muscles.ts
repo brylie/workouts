@@ -162,30 +162,13 @@ export const musclesRegistry: Record<Muscles, MuscleDetails> = {
 
 /**
  * Helper function to get muscle details by type.
- * Includes safeguards to ensure valid recovery_hours.
  */
 export function getMuscleDetails(muscleType: Muscles): MuscleDetails {
-  const details = musclesRegistry[muscleType];
-
-  // Add defensive check to ensure recovery_hours is defined
-  if (
-    details &&
-    (details.recovery_hours === undefined || details.recovery_hours === null)
-  ) {
-    console.warn(`Recovery hours not defined for muscle type: ${muscleType}`);
-    // Use default recovery hours of 48 as a fallback
-    return {
-      ...details,
-      recovery_hours: 48,
-    };
-  }
-
-  return details;
+  return musclesRegistry[muscleType];
 }
 
 /**
  * Get multiple muscle details at once
- * Uses the safeguarded getMuscleDetails function to ensure valid recovery_hours
  */
 export function getMuscleDetailsForTypes(types: Muscles[]): MuscleDetails[] {
   return types.map((type) => getMuscleDetails(type));
