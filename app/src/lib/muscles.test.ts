@@ -15,6 +15,7 @@ describe("muscles", () => {
         id: Muscles.BICEPS,
         name: "Biceps",
         recovery_hours: 48,
+        muscle_group: "upper body",
       });
     });
 
@@ -36,9 +37,24 @@ describe("muscles", () => {
 
       expect(details).toHaveLength(3);
       expect(details).toEqual([
-        { id: Muscles.BICEPS, name: "Biceps", recovery_hours: 48 },
-        { id: Muscles.TRICEPS, name: "Triceps", recovery_hours: 48 },
-        { id: Muscles.CHEST, name: "Chest", recovery_hours: 48 },
+        {
+          id: Muscles.BICEPS,
+          name: "Biceps",
+          recovery_hours: 48,
+          muscle_group: "upper body",
+        },
+        {
+          id: Muscles.TRICEPS,
+          name: "Triceps",
+          recovery_hours: 48,
+          muscle_group: "upper body",
+        },
+        {
+          id: Muscles.CHEST,
+          name: "Chest",
+          recovery_hours: 48,
+          muscle_group: "upper body",
+        },
       ]);
     });
 
