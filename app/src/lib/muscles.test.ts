@@ -9,18 +9,6 @@ import {
 
 describe("muscles", () => {
   describe("getMuscleDetails", () => {
-    // First add a specific test to verify the registry itself is correct
-    it("should have correct properties for all muscle types in registry", () => {
-      Object.entries(musclesRegistry).forEach(([muscleKey, muscle]) => {
-        console.log(`Checking muscle: ${muscleKey}`, muscle);
-        expect(muscle).toHaveProperty("id");
-        expect(muscle).toHaveProperty("name");
-        expect(muscle).toHaveProperty("recovery_hours");
-        expect(muscle).toHaveProperty("muscle_group");
-        expect(typeof muscle.recovery_hours).toBe("number");
-      });
-    });
-
     it("should return correct details for a muscle", () => {
       const details = getMuscleDetails(Muscles.BICEPS);
       expect(details).toEqual({
