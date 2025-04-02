@@ -170,35 +170,47 @@
           </div>
         {/each}
       </div>
-      <div class="alert alert-info mt-4 shadow-sm">
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="h-6 w-6 shrink-0 stroke-current"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path></svg
-          >
-          <div>
-            <p class="font-semibold">How recovery status is determined:</p>
-            <ul class="ml-5 mt-1 list-disc">
-              <li>Recovered: When the full recovery period has passed</li>
-              <li>
-                Recovering: When a muscle is trained once during its recovery
-                period
-              </li>
-              <li>
-                Overtrained: When a muscle is trained twice or more during its
-                recovery period
-              </li>
-            </ul>
+      <div class="mt-4">
+        <details
+          class="collapse-arrow border-base-300 bg-base-100 rounded-box collapse border"
+        >
+          <summary class="collapse-title font-medium">
+            <div class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                class="mr-2 h-6 w-6 shrink-0 stroke-current"
+                style="display: inline"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+              <span>How recovery status is determined</span>
+            </div>
+          </summary>
+          <div class="collapse-content">
+            <div>
+              <div>
+                <ul class="ml-5">
+                  <li>Recovered: When the full recovery period has passed</li>
+                  <li>
+                    Recovering: When a muscle is trained once during its
+                    recovery period
+                  </li>
+                  <li>
+                    Overtrained: When a muscle is trained twice or more during
+                    its recovery period
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
+        </details>
       </div>
     </div>
 
