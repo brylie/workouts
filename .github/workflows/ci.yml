@@ -72,7 +72,7 @@ jobs:
       - name: Debug hip_flexors entry specifically
         run: |
           cd app
-          node -e "const { Muscles, musclesRegistry } = require('./src/lib/muscles.js'); console.log('hip_flexors entry:', JSON.stringify(musclesRegistry['hip_flexors'], null, 2));"
+          node -e "const { Muscles, musclesRegistry } = require('./app/lib/muscles.js'); console.log('hip_flexors entry:', JSON.stringify(musclesRegistry['hip_flexors'], null, 2));"
 
       - name: Run only unit tests with details
         run: |
