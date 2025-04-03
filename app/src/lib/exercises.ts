@@ -8,6 +8,8 @@ import { pilatesExercises } from "$lib/exercise_data/pilates";
 import { yogaPoses } from "$lib/exercise_data/yoga";
 import type { Muscles } from "$lib/muscles";
 import type { Equipment } from "$lib/equipment";
+import type { MuscleRecovery } from "$lib/recovery";
+import { MuscleRecoveryStatus } from "$lib/recovery";
 
 // Combine machine, calisthenics, dumbbell, and kettlebell exercises
 export const allExercises: ExerciseDetails[] = [
@@ -46,6 +48,69 @@ export function getRandomExercises(count: number = 5): ExerciseDetails[] {
  */
 export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
   const exercises = getRandomExercises(count);
+  return exercises.map((exercise) => ({
+    exercise,
+    completed: false,
+  }));
+}
+
+/**
+ * Get a random selection of exercises that only target recovered muscles
+ * @param muscleRecoveryStatus Array of muscle recovery status objects
+ * @param count The number of exercises to include (defaults to 5)
+ * @returns An array of randomly selected exercises for recovered muscles
+ */
+export function getExercisesForRecoveredMuscles(
+  muscleRecoveryStatus: MuscleRecovery[],
+  count: number = 5,
+): ExerciseDetails[] {
+  // First, create a set of recovered muscle IDs for efficient lookup
+  const recoveredMuscleIds = new Set<string>(
+    muscleRecoveryStatus
+      .filter((status) => status.status === MuscleRecoveryStatus.RECOVERED)
+      .map((status) => status.id),
+  );
+
+  // If no muscles are recovered, return empty array
+  if (recoveredMuscleIds.size === 0) {
+    return [];
+  }
+
+  // Filter exercises to only include those that target recovered muscles
+  const availableExercises = allExercises.filter((exercise) => {
+    // Only include exercises where ALL targeted muscles are recovered
+    return exercise.muscles.every((muscle) => recoveredMuscleIds.has(muscle));
+  });
+
+  // If no exercises match the recovery criteria, return an empty array
+  if (availableExercises.length === 0) {
+    return [];
+  }
+
+  // Use Fisher-Yates shuffle for better randomization
+  const shuffled = [...availableExercises];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
+/**
+ * Get workout items using only exercises for recovered muscles
+ * @param muscleRecoveryStatus Array of muscle recovery status objects
+ * @param count The number of exercises to include (defaults to 5)
+ * @returns An array of workout items with exercises for recovered muscles
+ */
+export function getWorkoutItemsForRecoveredMuscles(
+  muscleRecoveryStatus: MuscleRecovery[],
+  count: number = 5,
+): WorkoutItem[] {
+  const exercises = getExercisesForRecoveredMuscles(
+    muscleRecoveryStatus,
+    count,
+  );
   return exercises.map((exercise) => ({
     exercise,
     completed: false,

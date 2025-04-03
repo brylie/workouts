@@ -9,9 +9,12 @@ import {
   filterExercises,
   getFilteredRandomExercises,
   getExerciseById,
+  getExercisesForRecoveredMuscles,
+  getWorkoutItemsForRecoveredMuscles,
 } from "./exercises";
 import { Equipment } from "./equipment";
 import { Muscles } from "./muscles";
+import { MuscleRecoveryStatus } from "./recovery";
 
 // Test getRandomExercises function
 describe("getRandomExercises", () => {
@@ -265,5 +268,146 @@ describe("getExerciseById", () => {
   it("should return null when given a non-existent ID", () => {
     const result = getExerciseById("non-existent-exercise-id");
     expect(result).toBeNull();
+  });
+});
+
+describe("getExercisesForRecoveredMuscles", () => {
+  it("should return exercises that only target recovered muscles", () => {
+    const mockRecoveryStatus = [
+      {
+        id: Muscles.CHEST,
+        status: MuscleRecoveryStatus.RECOVERED,
+        last_trained: null,
+        recovery_percentage: 100,
+        exercise_count: 0,
+      },
+      {
+        id: Muscles.BICEPS,
+        status: MuscleRecoveryStatus.RECOVERING,
+        last_trained: new Date(),
+        recovery_percentage: 50,
+        exercise_count: 1,
+      },
+    ];
+
+    const exercises = getExercisesForRecoveredMuscles(mockRecoveryStatus, 3);
+
+    // Verify we got some exercises
+    expect(exercises.length).toBeGreaterThan(0);
+
+    // Verify each exercise only targets recovered muscles
+    exercises.forEach((exercise) => {
+      const hasUnrecoveredMuscle = exercise.muscles.some(
+        (muscle) => muscle === Muscles.BICEPS,
+      );
+      expect(hasUnrecoveredMuscle).toBe(false);
+    });
+  });
+
+  it("should return the specified number of exercises", () => {
+    const mockRecoveryStatus = [
+      {
+        id: Muscles.CHEST,
+        status: MuscleRecoveryStatus.RECOVERED,
+        last_trained: null,
+        recovery_percentage: 100,
+        exercise_count: 0,
+      },
+    ];
+
+    const exercises = getExercisesForRecoveredMuscles(mockRecoveryStatus, 3);
+    expect(exercises.length).toBeLessThanOrEqual(3);
+  });
+
+  it("should return different exercises on subsequent calls", () => {
+    const mockRecoveryStatus = [
+      {
+        id: Muscles.CHEST,
+        status: MuscleRecoveryStatus.RECOVERED,
+        last_trained: null,
+        recovery_percentage: 100,
+        exercise_count: 0,
+      },
+    ];
+
+    const exercises1 = getExercisesForRecoveredMuscles(mockRecoveryStatus, 3);
+    const exercises2 = getExercisesForRecoveredMuscles(mockRecoveryStatus, 3);
+
+    // Convert to IDs for comparison
+    const ids1 = exercises1.map((ex) => ex.id);
+    const ids2 = exercises2.map((ex) => ex.id);
+    expect(ids1).not.toEqual(ids2);
+  });
+
+  it("should return empty array when no muscles are recovered", () => {
+    const mockRecoveryStatus = [
+      {
+        id: Muscles.CHEST,
+        status: MuscleRecoveryStatus.RECOVERING,
+        last_trained: new Date(),
+        recovery_percentage: 50,
+        exercise_count: 1,
+      },
+    ];
+
+    const exercises = getExercisesForRecoveredMuscles(mockRecoveryStatus, 3);
+    expect(exercises).toHaveLength(0);
+  });
+});
+
+describe("getWorkoutItemsForRecoveredMuscles", () => {
+  it("should return workout items for recovered muscles", () => {
+    const mockRecoveryStatus = [
+      {
+        id: Muscles.CHEST,
+        status: MuscleRecoveryStatus.RECOVERED,
+        last_trained: null,
+        recovery_percentage: 100,
+        exercise_count: 0,
+      },
+    ];
+
+    const workoutItems = getWorkoutItemsForRecoveredMuscles(
+      mockRecoveryStatus,
+      3,
+    );
+
+    // Check length
+    expect(workoutItems.length).toBeLessThanOrEqual(3);
+
+    // Check structure and completed status
+    workoutItems.forEach((item) => {
+      expect(item).toHaveProperty("exercise");
+      expect(item).toHaveProperty("completed", false);
+
+      // Verify only recovered muscles are targeted
+      const hasUnrecoveredMuscle = item.exercise.muscles.some(
+        (muscle) =>
+          !mockRecoveryStatus.find(
+            (status) =>
+              status.id === muscle &&
+              status.status === MuscleRecoveryStatus.RECOVERED,
+          ),
+      );
+      expect(hasUnrecoveredMuscle).toBe(false);
+    });
+  });
+
+  it("should return empty array when no muscles are recovered", () => {
+    const mockRecoveryStatus = [
+      {
+        id: Muscles.CHEST,
+        status: MuscleRecoveryStatus.RECOVERING,
+        last_trained: new Date(),
+        recovery_percentage: 50,
+        exercise_count: 1,
+      },
+    ];
+
+    const workoutItems = getWorkoutItemsForRecoveredMuscles(
+      mockRecoveryStatus,
+      3,
+    );
+    expect(workoutItems).toHaveLength(0);
   });
 });
