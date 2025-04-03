@@ -1,6 +1,6 @@
 <script lang="ts">
   import {
-    getWorkoutItemsForRecoveredMuscles,
+    getFilteredWorkoutItemsForRecoveredMuscles,
     updateWorkoutItem as updateWorkoutItemService,
     getWorkoutItemMetrics,
   } from "$lib/workouts";
@@ -30,8 +30,10 @@
   });
 
   async function generateWorkout() {
-    const workoutItems =
-      await getWorkoutItemsForRecoveredMuscles(numberOfExercises);
+    const workoutItems = await getFilteredWorkoutItemsForRecoveredMuscles(
+      filters,
+      numberOfExercises,
+    );
 
     // if the workout is empty, show a warning
     if (workoutItems.length === 0) {

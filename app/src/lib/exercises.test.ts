@@ -7,7 +7,7 @@ import {
   getExercisesByEquipment,
   filterExercises,
   getFilteredRandomExercises,
-  getExercisesForRecoveredMuscles,
+  getFilteredRandomExercisesForRecoveredMuscles,
 } from "$lib/exercises";
 import { Equipment } from "$lib/equipment";
 import { Muscles } from "$lib/muscles";
@@ -257,7 +257,7 @@ describe("exercises", () => {
         recovery.getMuscleRecoveryStatusForAllMuscles,
       ).mockResolvedValueOnce(mockRecoveryStatus);
 
-      const exercises = await getExercisesForRecoveredMuscles(3);
+      const exercises = await getFilteredRandomExercisesForRecoveredMuscles(3);
 
       // Check that each returned exercise only targets recovered muscles
       exercises.forEach((exercise) => {
@@ -275,7 +275,7 @@ describe("exercises", () => {
         recovery.getMuscleRecoveryStatusForAllMuscles,
       ).mockResolvedValueOnce(mockRecoveryStatus);
 
-      const exercises = await getExercisesForRecoveredMuscles(3);
+      const exercises = await getFilteredRandomExercisesForRecoveredMuscles(3);
       expect(exercises.length).toBeLessThanOrEqual(3);
     });
 
@@ -310,8 +310,8 @@ describe("exercises", () => {
         .mockResolvedValueOnce(extendedMockRecoveryStatus);
 
       // Request more exercises to increase chance of different selections
-      const exercises1 = await getExercisesForRecoveredMuscles(5);
-      const exercises2 = await getExercisesForRecoveredMuscles(5);
+      const exercises1 = await getFilteredRandomExercisesForRecoveredMuscles(5);
+      const exercises2 = await getFilteredRandomExercisesForRecoveredMuscles(5);
 
       const ids1 = exercises1.map((e) => e.id);
       const ids2 = exercises2.map((e) => e.id);
@@ -344,7 +344,7 @@ describe("exercises", () => {
         recovery.getMuscleRecoveryStatusForAllMuscles,
       ).mockResolvedValueOnce(noRecoveredMockRecoveryStatus);
 
-      const exercises = await getExercisesForRecoveredMuscles(3);
+      const exercises = await getFilteredRandomExercisesForRecoveredMuscles(3);
       expect(exercises).toHaveLength(0);
     });
   });

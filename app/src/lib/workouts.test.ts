@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   convertExercisesToWorkoutItems,
   getRandomWorkoutItems,
-  getWorkoutItemsForRecoveredMuscles,
+  getFilteredWorkoutItemsForRecoveredMuscles,
   getFilteredWorkoutItems,
   updateWorkoutItem,
   getWorkoutItemMetrics,
@@ -92,13 +92,15 @@ describe("workouts", () => {
     });
 
     it("should get workout items for recovered muscles", async () => {
-      vi.mocked(exercises.getExercisesForRecoveredMuscles).mockResolvedValue([
-        mockExercise,
-      ]);
+      vi.mocked(
+        exercises.getFilteredRandomExercisesForRecoveredMuscles,
+      ).mockResolvedValue([mockExercise]);
 
-      const result = await getWorkoutItemsForRecoveredMuscles();
+      const result = await getFilteredWorkoutItemsForRecoveredMuscles();
 
-      expect(exercises.getExercisesForRecoveredMuscles).toHaveBeenCalledWith(5);
+      expect(
+        exercises.getFilteredRandomExercisesForRecoveredMuscles,
+      ).toHaveBeenCalledWith(5);
       expect(result).toEqual([
         {
           exercise: mockExercise,
@@ -108,11 +110,11 @@ describe("workouts", () => {
     });
 
     it("should handle no recovered muscles", async () => {
-      vi.mocked(exercises.getExercisesForRecoveredMuscles).mockResolvedValue(
-        [],
-      );
+      vi.mocked(
+        exercises.getFilteredRandomExercisesForRecoveredMuscles,
+      ).mockResolvedValue([]);
 
-      const result = await getWorkoutItemsForRecoveredMuscles();
+      const result = await getFilteredWorkoutItemsForRecoveredMuscles();
 
       expect(result).toEqual([]);
     });

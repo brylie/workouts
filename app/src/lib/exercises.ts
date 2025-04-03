@@ -60,10 +60,12 @@ export function getRandomExercises(count: number = 5): ExerciseDetails[] {
 /**
  * Get a random selection of exercises that only target recovered muscles.
  * Automatically fetches the current muscle recovery status.
+ * @param filters Filter criteria
  * @param count The number of exercises to include (defaults to 5)
  * @returns An array of randomly selected exercises for recovered muscles
  */
-export async function getExercisesForRecoveredMuscles(
+export async function getFilteredRandomExercisesForRecoveredMuscles(
+  filters: ExerciseFilters,
   count: number = 5,
 ): Promise<ExerciseDetails[]> {
   const muscleRecoveryStatus = await getMuscleRecoveryStatusForAllMuscles();
@@ -80,8 +82,11 @@ export async function getExercisesForRecoveredMuscles(
     return [];
   }
 
+  // Filter exercises based on provided filters
+  const filteredExercises = filterExercises(filters);
+
   // Filter exercises to only include those that target recovered muscles
-  const availableExercises = allExercises.filter((exercise) => {
+  const availableExercises = filteredExercises.filter((exercise) => {
     // Only include exercises where ALL targeted muscles are recovered
     return exercise.muscles.every((muscle) => recoveredMuscleIds.has(muscle));
   });

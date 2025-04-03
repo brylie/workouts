@@ -6,7 +6,7 @@ import type {
 } from "$lib/types";
 import {
   getRandomExercises,
-  getExercisesForRecoveredMuscles,
+  getFilteredRandomExercisesForRecoveredMuscles,
   getFilteredRandomExercises,
 } from "$lib/exercises";
 
@@ -37,13 +37,18 @@ export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
 /**
  * Get workout items using only exercises for recovered muscles.
  * Automatically fetches the current muscle recovery status.
+ * @param filters Filter criteria
  * @param count The number of exercises to include (defaults to 5)
  * @returns An array of workout items with exercises for recovered muscles
  */
-export async function getWorkoutItemsForRecoveredMuscles(
+export async function getFilteredWorkoutItemsForRecoveredMuscles(
+  filters: ExerciseFilters,
   count: number = 5,
 ): Promise<WorkoutItem[]> {
-  const exercises = await getExercisesForRecoveredMuscles(count);
+  const exercises = await getFilteredRandomExercisesForRecoveredMuscles(
+    filters,
+    count,
+  );
   return convertExercisesToWorkoutItems(exercises);
 }
 
