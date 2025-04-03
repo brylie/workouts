@@ -43,7 +43,7 @@ export interface CompletedExerciseMetrics {
   sets?: number;
   reps?: number;
   weight?: number;
-  time?: string;
+  time?: number;
   distance?: number;
   resistance?: number;
   speed?: number;
