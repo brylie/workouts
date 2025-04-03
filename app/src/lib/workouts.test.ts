@@ -8,12 +8,14 @@ import {
 import { Equipment } from "$lib/equipment";
 import { Muscles } from "$lib/muscles";
 import type { ExerciseDetails, WorkoutItem } from "$lib/types";
+import { getFilteredRandomExercisesForRecoveredMuscles } from "./exercises";
 
 // Mock the exercises module
 vi.mock("$lib/exercises", () => ({
   getRandomExercises: vi.fn(),
   getExercisesForRecoveredMuscles: vi.fn(),
   getFilteredRandomExercises: vi.fn(),
+  getFilteredRandomExercisesForRecoveredMuscles: vi.fn(),
 }));
 
 describe("workouts", () => {
@@ -115,6 +117,34 @@ describe("workouts", () => {
         weight: undefined,
         time: undefined,
       });
+    });
+  });
+
+  describe("getFilteredWorkoutItemsForRecoveredMuscles", () => {
+    it("should call getFilteredRandomExercisesForRecoveredMuscles with the right arguments and return items", async () => {
+      const mockCount = 2;
+      const mockFilters = {
+        muscles: [Muscles.CHEST],
+        equipment: [Equipment.DUMBBELLS],
+      };
+      vi.mocked(
+        getFilteredRandomExercisesForRecoveredMuscles,
+      ).mockResolvedValue([mockExercise]);
+
+      const result = await getFilteredWorkoutItemsForRecoveredMuscles(
+        mockFilters,
+        mockCount,
+      );
+
+      expect(
+        getFilteredRandomExercisesForRecoveredMuscles,
+      ).toHaveBeenCalledWith(mockFilters, mockCount);
+      expect(result).toEqual([
+        {
+          exercise: mockExercise,
+          completed: false,
+        },
+      ]);
     });
   });
 });
