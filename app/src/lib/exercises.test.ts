@@ -328,15 +328,32 @@ describe("getExercisesForRecoveredMuscles", () => {
         recovery_percentage: 100,
         exercise_count: 0,
       },
+      {
+        id: Muscles.SHOULDERS,
+        status: MuscleRecoveryStatus.RECOVERED,
+        last_trained: null,
+        recovery_percentage: 100,
+        exercise_count: 0,
+      },
+      {
+        id: Muscles.TRICEPS,
+        status: MuscleRecoveryStatus.RECOVERED,
+        last_trained: null,
+        recovery_percentage: 100,
+        exercise_count: 0,
+      },
     ];
 
-    const exercises1 = getExercisesForRecoveredMuscles(mockRecoveryStatus, 3);
-    const exercises2 = getExercisesForRecoveredMuscles(mockRecoveryStatus, 3);
+    // Request more exercises to increase chance of different combinations
+    const exercises1 = getExercisesForRecoveredMuscles(mockRecoveryStatus, 5);
+    const exercises2 = getExercisesForRecoveredMuscles(mockRecoveryStatus, 5);
 
     // Convert to IDs for comparison
     const ids1 = exercises1.map((ex) => ex.id);
     const ids2 = exercises2.map((ex) => ex.id);
-    expect(ids1).not.toEqual(ids2);
+
+    // The arrays should be different either in content or order
+    expect(JSON.stringify(ids1)).not.toBe(JSON.stringify(ids2));
   });
 
   it("should return empty array when no muscles are recovered", () => {

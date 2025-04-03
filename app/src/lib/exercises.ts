@@ -23,6 +23,20 @@ export const allExercises: ExerciseDetails[] = [
 ];
 
 /**
+ * Helper function to shuffle an array of exercises using Fisher-Yates algorithm
+ * @param exercises Array of exercises to shuffle
+ * @returns A new array with the exercises in random order
+ */
+function shuffleExercises(exercises: ExerciseDetails[]): ExerciseDetails[] {
+  const shuffled = [...exercises];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+/**
  * Find an exercise by its ID
  * @param id The ID of the exercise to find
  * @returns The exercise details or null if not found
@@ -37,7 +51,7 @@ export function getExerciseById(id: string): ExerciseDetails | null {
  * @returns An array of randomly selected exercises
  */
 export function getRandomExercises(count: number = 5): ExerciseDetails[] {
-  const shuffled = [...allExercises].sort(() => 0.5 - Math.random());
+  const shuffled = shuffleExercises(allExercises);
   return shuffled.slice(0, count);
 }
 
@@ -87,13 +101,7 @@ export function getExercisesForRecoveredMuscles(
     return [];
   }
 
-  // Use Fisher-Yates shuffle for better randomization
-  const shuffled = [...availableExercises];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-
+  const shuffled = shuffleExercises(availableExercises);
   return shuffled.slice(0, Math.min(count, shuffled.length));
 }
 
@@ -177,6 +185,6 @@ export function getFilteredRandomExercises(
   count: number = 5,
 ): ExerciseDetails[] {
   const filteredExercises = filterExercises(filters);
-  const shuffled = [...filteredExercises].sort(() => 0.5 - Math.random());
+  const shuffled = shuffleExercises(filteredExercises);
   return shuffled.slice(0, Math.min(count, shuffled.length));
 }
