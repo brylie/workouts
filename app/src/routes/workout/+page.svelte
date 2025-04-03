@@ -16,7 +16,7 @@
 
   let numberOfExercises = $state(5);
   let generatedWorkout = $state<WorkoutItem[]>([]);
-  let hasRecoveredMuscles = $state(false);
+  let showRecoveryWarning = $state(false);
 
   // Tracks which exercise is currently being saved to the database
   let savingIndex = $state<number | null>(null);
@@ -33,8 +33,10 @@
     const workoutItems =
       await getWorkoutItemsForRecoveredMuscles(numberOfExercises);
 
-    // Update hasRecoveredMuscles based on whether we got any exercises back
-    hasRecoveredMuscles = workoutItems.length > 0;
+    // if the workout is empty, show a warning
+    if (workoutItems.length === 0) {
+      showRecoveryWarning = true;
+    }
 
     generatedWorkout = workoutItems;
   }
@@ -150,7 +152,7 @@
       </div>
     </div>
 
-    {#if !hasRecoveredMuscles && generatedWorkout.length === 0}
+    {#if showRecoveryWarning}
       <div class="mb-6 rounded-lg bg-amber-800 p-6 text-white">
         <h3 class="mb-2 text-xl font-semibold">Time for Recovery!</h3>
         <p class="mb-4">
