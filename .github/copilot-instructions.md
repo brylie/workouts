@@ -11,3 +11,5 @@ Always add semantic classes or IDs to important DOM elements, so our unit test a
 Prefer absolute imports like `$lib/types` instead of relative imports. Don't mix absolute and relative imports. Relative imports in the same directory are alright.
 
 We use Tailwind CSS for styles and daisyUI for semantic components. Where possible, prefer daisyUI components for clean template code.
+
+Business logic should reside mainly in the lib folder (service layer) so our templates can be very thin.
