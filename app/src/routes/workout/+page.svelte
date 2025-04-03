@@ -36,6 +36,8 @@
     // if the workout is empty, show a warning
     if (workoutItems.length === 0) {
       showRecoveryWarning = true;
+    } else {
+      showRecoveryWarning = false;
     }
 
     generatedWorkout = workoutItems;
