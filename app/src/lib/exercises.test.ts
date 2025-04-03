@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   allExercises,
   getExerciseById,
@@ -9,6 +9,10 @@ import {
 } from "$lib/exercises";
 import { Equipment } from "$lib/equipment";
 import { Muscles } from "$lib/muscles";
+import {
+  getMuscleRecoveryStatusForAllMuscles,
+  MuscleRecoveryStatus,
+} from "./recovery";
 
 vi.mock("$lib/recovery", () => ({
   getMuscleRecoveryStatusForAllMuscles: vi.fn(),
@@ -147,6 +151,159 @@ describe("exercises", () => {
     it("should return null when given a non-existent ID", () => {
       const exercise = getExerciseById("non-existent-id");
       expect(exercise).toBeNull();
+    });
+  });
+
+  describe("getFilteredRandomExercisesForRecoveredMuscles", () => {
+    beforeEach(() => {
+      vi.resetAllMocks();
+    });
+
+    it("should return exercises that target only recovered muscles", async () => {
+      // Mock recovered muscles
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
+        {
+          id: Muscles.CHEST,
+          status: MuscleRecoveryStatus.RECOVERED,
+          last_trained: new Date(),
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+        {
+          id: Muscles.BICEPS,
+          status: MuscleRecoveryStatus.RECOVERED,
+          last_trained: new Date(),
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+        {
+          id: Muscles.QUADRICEPS as Muscles,
+          status: MuscleRecoveryStatus.RECOVERING,
+          last_trained: new Date(),
+          recovery_percentage: 50,
+          exercise_count: 0,
+        },
+      ]);
+
+      const filters = {};
+      const result = await getFilteredRandomExercisesForRecoveredMuscles(
+        filters,
+        3,
+      );
+
+      // Verify results only include exercises targeting recovered muscles
+      result.forEach((exercise) => {
+        // Every targeted muscle should be in the recovered set
+        expect(
+          exercise.muscles.every(
+            (muscle) => muscle === Muscles.CHEST || muscle === Muscles.BICEPS,
+          ),
+        ).toBeTruthy();
+      });
+
+      expect(getMuscleRecoveryStatusForAllMuscles).toHaveBeenCalledTimes(1);
+    });
+
+    it("should apply provided filters along with recovery status", async () => {
+      // Mock recovered muscles
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
+        {
+          id: Muscles.CHEST,
+          status: MuscleRecoveryStatus.RECOVERED,
+          last_trained: new Date(),
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+        {
+          id: Muscles.BICEPS,
+          status: MuscleRecoveryStatus.RECOVERED,
+          last_trained: new Date(),
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+        {
+          id: Muscles.QUADRICEPS,
+          status: MuscleRecoveryStatus.RECOVERING,
+          last_trained: null,
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+      ]);
+
+      const filters = {
+        equipment: [Equipment.DUMBBELLS],
+      };
+
+      const result = await getFilteredRandomExercisesForRecoveredMuscles(
+        filters,
+        3,
+      );
+
+      // Verify results match both filters and recovery status
+      result.forEach((exercise) => {
+        // Should only have recovered muscles
+        expect(
+          exercise.muscles.every(
+            (muscle) => muscle === Muscles.CHEST || muscle === Muscles.BICEPS,
+          ),
+        ).toBeTruthy();
+
+        // Should only use dumbbells equipment
+        expect(exercise.equipment).toBeDefined();
+        expect(exercise.equipment!.includes(Equipment.DUMBBELLS)).toBeTruthy();
+      });
+    });
+
+    it("should return an empty array when no muscles are recovered", async () => {
+      // Mock with no recovered muscles
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
+        {
+          id: Muscles.CHEST,
+          status: MuscleRecoveryStatus.RECOVERING,
+          last_trained: null,
+          recovery_percentage: 50,
+          exercise_count: 0,
+        },
+        {
+          id: Muscles.BICEPS,
+          status: MuscleRecoveryStatus.RECOVERING,
+          last_trained: null,
+          recovery_percentage: 50,
+          exercise_count: 0,
+        },
+      ]);
+
+      const filters = {};
+      const result = await getFilteredRandomExercisesForRecoveredMuscles(
+        filters,
+        3,
+      );
+
+      expect(result).toEqual([]);
+    });
+
+    it("should limit results to the specified count", async () => {
+      // Mock all muscles as recovered to ensure we have enough exercises
+      const allMuscleValues = Object.values(Muscles);
+      const allRecovered = allMuscleValues.map((muscle) => ({
+        id: muscle,
+        status: MuscleRecoveryStatus.RECOVERED,
+        last_trained: null,
+        recovery_percentage: 100,
+        exercise_count: 0,
+      }));
+
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue(
+        allRecovered,
+      );
+
+      const count = 2;
+      const result = await getFilteredRandomExercisesForRecoveredMuscles(
+        {},
+        count,
+      );
+
+      expect(result.length).toBeLessThanOrEqual(count);
     });
   });
 });
