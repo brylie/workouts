@@ -63,7 +63,7 @@ export interface WorkoutItem {
   sets?: number;
   reps?: number;
   weight?: number;
-  time?: string;
+  time?: number;
   completed?: boolean;
 }
 

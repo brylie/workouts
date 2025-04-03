@@ -1,9 +1,4 @@
-import type {
-  ExerciseDetails,
-  WorkoutItem,
-  ExerciseFilters,
-  CompletedExerciseMetrics,
-} from "$lib/types";
+import type { ExerciseDetails, ExerciseFilters } from "$lib/types";
 import { calisthenicsExercises } from "$lib/exercise_data/calisthenics";
 import { dumbbellExercises } from "$lib/exercise_data/dumbbells";
 import { machineExercises } from "$lib/exercise_data/machines";
@@ -63,19 +58,6 @@ export function getRandomExercises(count: number = 5): ExerciseDetails[] {
 }
 
 /**
- * Get a list of random workout items for workout generation
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of randomly selected WorkoutItems
- */
-export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
-  const exercises = getRandomExercises(count);
-  return exercises.map((exercise) => ({
-    exercise,
-    completed: false,
-  }));
-}
-
-/**
  * Get a random selection of exercises that only target recovered muscles.
  * Automatically fetches the current muscle recovery status.
  * @param count The number of exercises to include (defaults to 5)
@@ -111,22 +93,6 @@ export async function getExercisesForRecoveredMuscles(
 
   const shuffled = shuffleExercises(availableExercises);
   return shuffled.slice(0, Math.min(count, shuffled.length));
-}
-
-/**
- * Get workout items using only exercises for recovered muscles.
- * Automatically fetches the current muscle recovery status.
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of workout items with exercises for recovered muscles
- */
-export async function getWorkoutItemsForRecoveredMuscles(
-  count: number = 5,
-): Promise<WorkoutItem[]> {
-  const exercises = await getExercisesForRecoveredMuscles(count);
-  return exercises.map((exercise) => ({
-    exercise,
-    completed: false,
-  }));
 }
 
 /**
@@ -191,33 +157,4 @@ export function getFilteredRandomExercises(
   const filteredExercises = filterExercises(filters);
   const shuffled = shuffleExercises(filteredExercises);
   return shuffled.slice(0, Math.min(count, shuffled.length));
-}
-
-/**
- * Update a workout item with partial data
- * @param workoutItem The original workout item
- * @param updates Partial updates to apply
- * @returns Updated workout item
- */
-export function updateWorkoutItem(
-  workoutItem: WorkoutItem,
-  updates: Partial<WorkoutItem>,
-): WorkoutItem {
-  return { ...workoutItem, ...updates };
-}
-
-/**
- * Convert workout item metrics to CompletedExerciseMetrics format
- * @param workoutItem The workout item containing metrics
- * @returns Formatted exercise metrics
- */
-export function getWorkoutItemMetrics(
-  workoutItem: WorkoutItem,
-): CompletedExerciseMetrics {
-  return {
-    sets: workoutItem.sets,
-    reps: workoutItem.reps,
-    weight: workoutItem.weight,
-    time: workoutItem.time,
-  };
 }

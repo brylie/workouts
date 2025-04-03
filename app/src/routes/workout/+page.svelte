@@ -1,18 +1,12 @@
 <script lang="ts">
   import {
-    getFilteredRandomExercises,
-    getExercisesForRecoveredMuscles,
+    getWorkoutItemsForRecoveredMuscles,
     updateWorkoutItem as updateWorkoutItemService,
     getWorkoutItemMetrics,
-  } from "$lib/exercises";
-  import {
-    MuscleRecoveryStatus,
-    getMuscleRecoveryStatusForAllMuscles,
-  } from "$lib/recovery";
+  } from "$lib/workouts";
   import type {
     WorkoutItem,
     CompletedExerciseV2,
-    CompletedExerciseMetrics,
     ExerciseFilters,
   } from "$lib/types";
   import { saveCompletedExercise } from "$lib/database";
@@ -36,16 +30,13 @@
   });
 
   async function generateWorkout() {
-    const exercises = await getExercisesForRecoveredMuscles(numberOfExercises);
+    const workoutItems =
+      await getWorkoutItemsForRecoveredMuscles(numberOfExercises);
 
     // Update hasRecoveredMuscles based on whether we got any exercises back
-    hasRecoveredMuscles = exercises.length > 0;
+    hasRecoveredMuscles = workoutItems.length > 0;
 
-    // Convert exercises into workout items
-    generatedWorkout = exercises.map((exercise) => ({
-      exercise,
-      completed: false,
-    }));
+    generatedWorkout = workoutItems;
   }
 
   function handleFilterChange(newFilters: ExerciseFilters) {
