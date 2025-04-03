@@ -82,7 +82,7 @@ function determineRecoveryStatusByExerciseCount(
  * @param lookbackDays - Optional number of days to look back for exercise history (default: 7 days)
  * @returns An array of MuscleRecovery objects
  */
-export async function getMuscleRecoveryStatus(
+export async function getMuscleRecoveryStatusForAllMuscles(
   lookbackDays = 7,
 ): Promise<MuscleRecovery[]> {
   // Calculate date range: from lookbackDays ago to now
@@ -174,6 +174,7 @@ export async function getSingleMuscleRecoveryStatus(
   muscleId: Muscles,
   lookbackDays = 7,
 ): Promise<MuscleRecovery | null> {
-  const allMuscleStatuses = await getMuscleRecoveryStatus(lookbackDays);
+  const allMuscleStatuses =
+    await getMuscleRecoveryStatusForAllMuscles(lookbackDays);
   return allMuscleStatuses.find((muscle) => muscle.id === muscleId) || null;
 }

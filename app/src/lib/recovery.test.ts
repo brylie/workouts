@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
-  getMuscleRecoveryStatus,
+  getMuscleRecoveryStatusForAllMuscles,
   getSingleMuscleRecoveryStatus,
   calculateRecoveryPercentage,
   MuscleRecoveryStatus,
@@ -204,7 +204,7 @@ describe("Recovery module", () => {
 
   describe("getMuscleRecoveryStatus", () => {
     it("should return recovery status for all muscles", async () => {
-      const result = await getMuscleRecoveryStatus();
+      const result = await getMuscleRecoveryStatusForAllMuscles();
 
       // Should return status for all muscles in the registry
       expect(result.length).toBeGreaterThan(0);
@@ -228,7 +228,7 @@ describe("Recovery module", () => {
     });
 
     it("should calculate correct recovery percentages based on recovery hours", async () => {
-      const result = await getMuscleRecoveryStatus();
+      const result = await getMuscleRecoveryStatusForAllMuscles();
 
       // Chest has 48 hour recovery and was trained 2 days (48 hours) ago
       const chest = result.find((m) => m.id === Muscles.CHEST);
@@ -241,7 +241,7 @@ describe("Recovery module", () => {
 
     it("should respect the lookbackDays parameter", async () => {
       // Test with 1-day lookback
-      await getMuscleRecoveryStatus(1);
+      await getMuscleRecoveryStatusForAllMuscles(1);
 
       // Verify that we only looked back 1 day
       expect(database.getCompletedExercisesByDateRange).toHaveBeenCalledWith(
@@ -280,7 +280,7 @@ describe("Recovery module", () => {
 
   describe("Recovery status determination", () => {
     it("should correctly categorize recovery status based on exercise count", async () => {
-      const results = await getMuscleRecoveryStatus();
+      const results = await getMuscleRecoveryStatusForAllMuscles();
 
       // Chest (trained once 2 days ago) should be RECOVERED (100%)
       const chest = results.find((m) => m.id === Muscles.CHEST);
@@ -306,7 +306,7 @@ describe("Recovery module", () => {
     });
 
     it("should mark untrained muscles as RECOVERED with zero exercise count", async () => {
-      const results = await getMuscleRecoveryStatus();
+      const results = await getMuscleRecoveryStatusForAllMuscles();
 
       // Find a muscle that wasn't trained in our mock data
       const untrained = results.find(
@@ -436,7 +436,7 @@ describe("Recovery module", () => {
         return null;
       });
 
-      const results = await getMuscleRecoveryStatus();
+      const results = await getMuscleRecoveryStatusForAllMuscles();
 
       // Shoulders should have two exercises and be marked as OVERTRAINED
       const shoulders = results.find((m) => m.id === Muscles.SHOULDERS);

@@ -1,7 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { MuscleGroups, musclesList } from "$lib/muscles";
-  import { getMuscleRecoveryStatus, MuscleRecoveryStatus } from "$lib/recovery";
+  import {
+    getMuscleRecoveryStatusForAllMuscles,
+    MuscleRecoveryStatus,
+  } from "$lib/recovery";
 
   const recoveryStatusColors = {
     [MuscleRecoveryStatus.RECOVERING]: {
@@ -81,7 +84,7 @@
   // Load recovery data on component mount
   onMount(async () => {
     try {
-      const allMuscleRecovery = await getMuscleRecoveryStatus(14); // Look back 14 days
+      const allMuscleRecovery = await getMuscleRecoveryStatusForAllMuscles(14); // Look back 14 days
 
       // Enhance recovery data with muscle name and group from musclesRegistry
       muscleRecovery = allMuscleRecovery.map((muscle) => {
