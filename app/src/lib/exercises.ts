@@ -47,15 +47,15 @@ export function getExerciseById(id: string): ExerciseDetails | null {
   return allExercises.find((exercise) => exercise.id === id) || null;
 }
 
-/**
- * Get a random selection of exercises for workout generation
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of randomly selected exercises
- */
-export function getRandomExercises(count: number = 5): ExerciseDetails[] {
-  const shuffled = shuffleExercises(allExercises);
-  return shuffled.slice(0, count);
-}
+// /**
+//  * Get a random selection of exercises for workout generation
+//  * @param count The number of exercises to include (defaults to 5)
+//  * @returns An array of randomly selected exercises
+//  */
+// export function getRandomExercises(count: number = 5): ExerciseDetails[] {
+//   const shuffled = shuffleExercises(allExercises);
+//   return shuffled.slice(0, count);
+// }
 
 /**
  * Get a random selection of exercises that only target recovered muscles.
@@ -147,19 +147,4 @@ export function filterExercises(filters: ExerciseFilters): ExerciseDetails[] {
 
     return true;
   });
-}
-
-/**
- * Get a random selection of filtered exercises for workout generation
- * @param filters Filter criteria
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of randomly selected exercises
- */
-export function getFilteredRandomExercises(
-  filters: ExerciseFilters,
-  count: number = 5,
-): ExerciseDetails[] {
-  const filteredExercises = filterExercises(filters);
-  const shuffled = shuffleExercises(filteredExercises);
-  return shuffled.slice(0, Math.min(count, shuffled.length));
 }

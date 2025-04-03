@@ -4,11 +4,7 @@ import type {
   CompletedExerciseMetrics,
   ExerciseDetails,
 } from "$lib/types";
-import {
-  getRandomExercises,
-  getFilteredRandomExercisesForRecoveredMuscles,
-  getFilteredRandomExercises,
-} from "$lib/exercises";
+import { getFilteredRandomExercisesForRecoveredMuscles } from "$lib/exercises";
 
 /**
  * Convert exercises into workout items
@@ -22,16 +18,6 @@ export function convertExercisesToWorkoutItems(
     exercise,
     completed: false,
   }));
-}
-
-/**
- * Get a list of random workout items for workout generation
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of randomly selected WorkoutItems
- */
-export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
-  const exercises = getRandomExercises(count);
-  return convertExercisesToWorkoutItems(exercises);
 }
 
 /**
@@ -49,20 +35,6 @@ export async function getFilteredWorkoutItemsForRecoveredMuscles(
     filters,
     count,
   );
-  return convertExercisesToWorkoutItems(exercises);
-}
-
-/**
- * Get workout items using filtered exercises
- * @param filters Filter criteria
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of workout items with filtered exercises
- */
-export function getFilteredWorkoutItems(
-  filters: ExerciseFilters,
-  count: number = 5,
-): WorkoutItem[] {
-  const exercises = getFilteredRandomExercises(filters, count);
   return convertExercisesToWorkoutItems(exercises);
 }
 

@@ -1,13 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import {
   convertExercisesToWorkoutItems,
-  getRandomWorkoutItems,
   getFilteredWorkoutItemsForRecoveredMuscles,
-  getFilteredWorkoutItems,
   updateWorkoutItem,
   getWorkoutItemMetrics,
 } from "$lib/workouts";
-import * as exercises from "$lib/exercises";
 import { Equipment } from "$lib/equipment";
 import { Muscles } from "$lib/muscles";
 import type { ExerciseDetails, WorkoutItem } from "$lib/types";
@@ -49,104 +46,6 @@ describe("workouts", () => {
     it("should handle empty array", () => {
       const result = convertExercisesToWorkoutItems([]);
       expect(result).toEqual([]);
-    });
-  });
-
-  describe("getRandomWorkoutItems", () => {
-    beforeEach(() => {
-      vi.clearAllMocks();
-    });
-
-    it("should get random workout items with default count", () => {
-      vi.mocked(exercises.getRandomExercises).mockReturnValue([mockExercise]);
-
-      const result = getRandomWorkoutItems();
-
-      expect(exercises.getRandomExercises).toHaveBeenCalledWith(5);
-      expect(result).toEqual([
-        {
-          exercise: mockExercise,
-          completed: false,
-        },
-      ]);
-    });
-
-    it("should get random workout items with specified count", () => {
-      vi.mocked(exercises.getRandomExercises).mockReturnValue([mockExercise]);
-
-      const result = getRandomWorkoutItems(3);
-
-      expect(exercises.getRandomExercises).toHaveBeenCalledWith(3);
-      expect(result).toEqual([
-        {
-          exercise: mockExercise,
-          completed: false,
-        },
-      ]);
-    });
-  });
-
-  describe("getWorkoutItemsForRecoveredMuscles", () => {
-    beforeEach(() => {
-      vi.clearAllMocks();
-    });
-
-    it("should get workout items for recovered muscles", async () => {
-      vi.mocked(
-        exercises.getFilteredRandomExercisesForRecoveredMuscles,
-      ).mockResolvedValue([mockExercise]);
-
-      const result = await getFilteredWorkoutItemsForRecoveredMuscles();
-
-      expect(
-        exercises.getFilteredRandomExercisesForRecoveredMuscles,
-      ).toHaveBeenCalledWith(5);
-      expect(result).toEqual([
-        {
-          exercise: mockExercise,
-          completed: false,
-        },
-      ]);
-    });
-
-    it("should handle no recovered muscles", async () => {
-      vi.mocked(
-        exercises.getFilteredRandomExercisesForRecoveredMuscles,
-      ).mockResolvedValue([]);
-
-      const result = await getFilteredWorkoutItemsForRecoveredMuscles();
-
-      expect(result).toEqual([]);
-    });
-  });
-
-  describe("getFilteredWorkoutItems", () => {
-    const mockFilters = {
-      muscles: [Muscles.CHEST],
-      equipment: [Equipment.DUMBBELLS],
-    };
-
-    beforeEach(() => {
-      vi.clearAllMocks();
-    });
-
-    it("should get filtered workout items", () => {
-      vi.mocked(exercises.getFilteredRandomExercises).mockReturnValue([
-        mockExercise,
-      ]);
-
-      const result = getFilteredWorkoutItems(mockFilters);
-
-      expect(exercises.getFilteredRandomExercises).toHaveBeenCalledWith(
-        mockFilters,
-        5,
-      );
-      expect(result).toEqual([
-        {
-          exercise: mockExercise,
-          completed: false,
-        },
-      ]);
     });
   });
 

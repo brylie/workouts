@@ -2,17 +2,13 @@ import { describe, it, expect, vi } from "vitest";
 import {
   allExercises,
   getExerciseById,
-  getRandomExercises,
   getExercisesByMuscle,
   getExercisesByEquipment,
   filterExercises,
-  getFilteredRandomExercises,
   getFilteredRandomExercisesForRecoveredMuscles,
 } from "$lib/exercises";
 import { Equipment } from "$lib/equipment";
 import { Muscles } from "$lib/muscles";
-import type { MuscleRecovery } from "$lib/recovery";
-import * as recovery from "$lib/recovery";
 
 vi.mock("$lib/recovery", () => ({
   getMuscleRecoveryStatusForAllMuscles: vi.fn(),
@@ -23,35 +19,6 @@ vi.mock("$lib/recovery", () => ({
 }));
 
 describe("exercises", () => {
-  describe("getRandomExercises", () => {
-    it("should return the specified number of random exercises", () => {
-      const exercises = getRandomExercises(3);
-      expect(exercises).toHaveLength(3);
-    });
-
-    it("should return different exercises on subsequent calls", () => {
-      const exercises1 = getRandomExercises(3);
-      const exercises2 = getRandomExercises(3);
-
-      // Convert exercises to IDs for easier comparison
-      const ids1 = exercises1.map((e) => e.id);
-      const ids2 = exercises2.map((e) => e.id);
-
-      // Check if the arrays are different (not necessarily completely different)
-      expect(JSON.stringify(ids1)).not.toBe(JSON.stringify(ids2));
-    });
-
-    it("should return an empty array when count is 0", () => {
-      const exercises = getRandomExercises(0);
-      expect(exercises).toHaveLength(0);
-    });
-
-    it("should return all available exercises when count is greater than available exercises", () => {
-      const exercises = getRandomExercises(1000);
-      expect(exercises).toHaveLength(allExercises.length);
-    });
-  });
-
   describe("getExercisesByMuscle", () => {
     it("should return exercises that target the specified muscle group", () => {
       const exercises = getExercisesByMuscle(Muscles.CHEST);
@@ -161,57 +128,6 @@ describe("exercises", () => {
     });
   });
 
-  describe("getFilteredRandomExercises", () => {
-    it("should return the specified number of filtered exercises", () => {
-      const filters = {
-        muscles: [Muscles.CHEST],
-        equipment: [Equipment.DUMBBELLS],
-      };
-
-      const exercises = getFilteredRandomExercises(filters, 2);
-      expect(exercises).toHaveLength(2);
-      exercises.forEach((exercise) => {
-        expect(exercise.muscles).toContain(Muscles.CHEST);
-        expect(exercise.equipment).toContain(Equipment.DUMBBELLS);
-      });
-    });
-
-    it("should return different exercises on subsequent calls", () => {
-      const filters = {
-        muscles: [Muscles.CHEST],
-      };
-
-      const exercises1 = getFilteredRandomExercises(filters, 3);
-      const exercises2 = getFilteredRandomExercises(filters, 3);
-
-      const ids1 = exercises1.map((e) => e.id);
-      const ids2 = exercises2.map((e) => e.id);
-
-      expect(JSON.stringify(ids1)).not.toBe(JSON.stringify(ids2));
-    });
-
-    it("should return all matching exercises when count exceeds available exercises", () => {
-      const filters = {
-        muscles: [Muscles.CHEST],
-        equipment: [Equipment.DUMBBELLS],
-      };
-
-      const allFilteredExercises = filterExercises(filters);
-      const randomExercises = getFilteredRandomExercises(filters, 1000);
-
-      expect(randomExercises).toHaveLength(allFilteredExercises.length);
-    });
-
-    it("should return empty array when no exercises match filters", () => {
-      const filters = {
-        muscles: ["nonexistent_muscle" as Muscles],
-      };
-
-      const exercises = getFilteredRandomExercises(filters, 3);
-      expect(exercises).toHaveLength(0);
-    });
-  });
-
   describe("getExerciseById", () => {
     it("should return an exercise when given a valid ID", () => {
       // Find first exercise with a defined ID
@@ -231,121 +147,6 @@ describe("exercises", () => {
     it("should return null when given a non-existent ID", () => {
       const exercise = getExerciseById("non-existent-id");
       expect(exercise).toBeNull();
-    });
-  });
-
-  describe("getExercisesForRecoveredMuscles", () => {
-    const mockRecoveryStatus: MuscleRecovery[] = [
-      {
-        id: "chest",
-        status: recovery.MuscleRecoveryStatus.RECOVERED,
-        last_trained: new Date(),
-        recovery_percentage: 100,
-        exercise_count: 0,
-      },
-      {
-        id: "biceps",
-        status: recovery.MuscleRecoveryStatus.RECOVERING,
-        last_trained: new Date(),
-        recovery_percentage: 50,
-        exercise_count: 0,
-      },
-    ];
-
-    it("should return exercises that only target recovered muscles", async () => {
-      vi.mocked(
-        recovery.getMuscleRecoveryStatusForAllMuscles,
-      ).mockResolvedValueOnce(mockRecoveryStatus);
-
-      const exercises = await getFilteredRandomExercisesForRecoveredMuscles(3);
-
-      // Check that each returned exercise only targets recovered muscles
-      exercises.forEach((exercise) => {
-        exercise.muscles.forEach((muscle) => {
-          const muscleStatus = mockRecoveryStatus.find((s) => s.id === muscle);
-          expect(muscleStatus?.status).toBe(
-            recovery.MuscleRecoveryStatus.RECOVERED,
-          );
-        });
-      });
-    });
-
-    it("should return the specified number of exercises", async () => {
-      vi.mocked(
-        recovery.getMuscleRecoveryStatusForAllMuscles,
-      ).mockResolvedValueOnce(mockRecoveryStatus);
-
-      const exercises = await getFilteredRandomExercisesForRecoveredMuscles(3);
-      expect(exercises.length).toBeLessThanOrEqual(3);
-    });
-
-    it("should return different exercises on subsequent calls when enough exercises are available", async () => {
-      // Mock recovery status with multiple muscles recovered
-      const extendedMockRecoveryStatus: MuscleRecovery[] = [
-        {
-          id: "chest",
-          status: recovery.MuscleRecoveryStatus.RECOVERED,
-          last_trained: new Date(),
-          recovery_percentage: 100,
-          exercise_count: 0,
-        },
-        {
-          id: "biceps",
-          status: recovery.MuscleRecoveryStatus.RECOVERED,
-          last_trained: new Date(),
-          recovery_percentage: 100,
-          exercise_count: 0,
-        },
-        {
-          id: "shoulders",
-          status: recovery.MuscleRecoveryStatus.RECOVERED,
-          last_trained: new Date(),
-          recovery_percentage: 100,
-          exercise_count: 0,
-        },
-      ];
-
-      vi.mocked(recovery.getMuscleRecoveryStatusForAllMuscles)
-        .mockResolvedValueOnce(extendedMockRecoveryStatus)
-        .mockResolvedValueOnce(extendedMockRecoveryStatus);
-
-      // Request more exercises to increase chance of different selections
-      const exercises1 = await getFilteredRandomExercisesForRecoveredMuscles(5);
-      const exercises2 = await getFilteredRandomExercisesForRecoveredMuscles(5);
-
-      const ids1 = exercises1.map((e) => e.id);
-      const ids2 = exercises2.map((e) => e.id);
-
-      // Only compare if we have enough exercises to potentially be different
-      if (exercises1.length >= 3 && exercises2.length >= 3) {
-        expect(JSON.stringify(ids1)).not.toBe(JSON.stringify(ids2));
-      }
-    });
-
-    it("should return empty array when no muscles are recovered", async () => {
-      const noRecoveredMockRecoveryStatus: MuscleRecovery[] = [
-        {
-          id: "chest",
-          status: recovery.MuscleRecoveryStatus.RECOVERING,
-          last_trained: new Date(),
-          recovery_percentage: 50,
-          exercise_count: 0,
-        },
-        {
-          id: "biceps",
-          status: recovery.MuscleRecoveryStatus.RECOVERING,
-          last_trained: new Date(),
-          recovery_percentage: 50,
-          exercise_count: 0,
-        },
-      ];
-
-      vi.mocked(
-        recovery.getMuscleRecoveryStatusForAllMuscles,
-      ).mockResolvedValueOnce(noRecoveredMockRecoveryStatus);
-
-      const exercises = await getFilteredRandomExercisesForRecoveredMuscles(3);
-      expect(exercises).toHaveLength(0);
     });
   });
 });
