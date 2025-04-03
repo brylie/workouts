@@ -1,4 +1,9 @@
-import type { ExerciseDetails, WorkoutItem, ExerciseFilters } from "$lib/types";
+import type {
+  ExerciseDetails,
+  WorkoutItem,
+  ExerciseFilters,
+  CompletedExerciseMetrics,
+} from "$lib/types";
 import { calisthenicsExercises } from "$lib/exercise_data/calisthenics";
 import { dumbbellExercises } from "$lib/exercise_data/dumbbells";
 import { machineExercises } from "$lib/exercise_data/machines";
@@ -8,8 +13,10 @@ import { pilatesExercises } from "$lib/exercise_data/pilates";
 import { yogaPoses } from "$lib/exercise_data/yoga";
 import type { Muscles } from "$lib/muscles";
 import type { Equipment } from "$lib/equipment";
-import type { MuscleRecovery } from "$lib/recovery";
-import { MuscleRecoveryStatus } from "$lib/recovery";
+import {
+  MuscleRecoveryStatus,
+  getMuscleRecoveryStatusForAllMuscles,
+} from "$lib/recovery";
 
 // Combine machine, calisthenics, dumbbell, and kettlebell exercises
 export const allExercises: ExerciseDetails[] = [
@@ -69,16 +76,17 @@ export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
 }
 
 /**
- * Get a random selection of exercises that only target recovered muscles
- * @param muscleRecoveryStatus Array of muscle recovery status objects
+ * Get a random selection of exercises that only target recovered muscles.
+ * Automatically fetches the current muscle recovery status.
  * @param count The number of exercises to include (defaults to 5)
  * @returns An array of randomly selected exercises for recovered muscles
  */
-export function getExercisesForRecoveredMuscles(
-  muscleRecoveryStatus: MuscleRecovery[],
+export async function getExercisesForRecoveredMuscles(
   count: number = 5,
-): ExerciseDetails[] {
-  // First, create a set of recovered muscle IDs for efficient lookup
+): Promise<ExerciseDetails[]> {
+  const muscleRecoveryStatus = await getMuscleRecoveryStatusForAllMuscles();
+
+  // Create a set of recovered muscle IDs for efficient lookup
   const recoveredMuscleIds = new Set<string>(
     muscleRecoveryStatus
       .filter((status) => status.status === MuscleRecoveryStatus.RECOVERED)
@@ -106,19 +114,15 @@ export function getExercisesForRecoveredMuscles(
 }
 
 /**
- * Get workout items using only exercises for recovered muscles
- * @param muscleRecoveryStatus Array of muscle recovery status objects
+ * Get workout items using only exercises for recovered muscles.
+ * Automatically fetches the current muscle recovery status.
  * @param count The number of exercises to include (defaults to 5)
  * @returns An array of workout items with exercises for recovered muscles
  */
-export function getWorkoutItemsForRecoveredMuscles(
-  muscleRecoveryStatus: MuscleRecovery[],
+export async function getWorkoutItemsForRecoveredMuscles(
   count: number = 5,
-): WorkoutItem[] {
-  const exercises = getExercisesForRecoveredMuscles(
-    muscleRecoveryStatus,
-    count,
-  );
+): Promise<WorkoutItem[]> {
+  const exercises = await getExercisesForRecoveredMuscles(count);
   return exercises.map((exercise) => ({
     exercise,
     completed: false,
@@ -187,4 +191,33 @@ export function getFilteredRandomExercises(
   const filteredExercises = filterExercises(filters);
   const shuffled = shuffleExercises(filteredExercises);
   return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
+/**
+ * Update a workout item with partial data
+ * @param workoutItem The original workout item
+ * @param updates Partial updates to apply
+ * @returns Updated workout item
+ */
+export function updateWorkoutItem(
+  workoutItem: WorkoutItem,
+  updates: Partial<WorkoutItem>,
+): WorkoutItem {
+  return { ...workoutItem, ...updates };
+}
+
+/**
+ * Convert workout item metrics to CompletedExerciseMetrics format
+ * @param workoutItem The workout item containing metrics
+ * @returns Formatted exercise metrics
+ */
+export function getWorkoutItemMetrics(
+  workoutItem: WorkoutItem,
+): CompletedExerciseMetrics {
+  return {
+    sets: workoutItem.sets,
+    reps: workoutItem.reps,
+    weight: workoutItem.weight,
+    time: workoutItem.time,
+  };
 }
