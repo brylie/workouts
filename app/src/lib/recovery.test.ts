@@ -227,6 +227,39 @@ describe("Recovery module", () => {
       expect(neck?.recoveryPercentage).toBe(100);
     });
 
+    it("should validate all MuscleRecovery interface fields are present", async () => {
+      const result = await getMuscleRecoveryStatusForAllMuscles();
+
+      // Check first result has all expected fields
+      expect(result.length).toBeGreaterThan(0);
+      const firstMuscle = result[0];
+
+      // Check all interface properties exist
+      expect(firstMuscle).toHaveProperty("id");
+      expect(firstMuscle).toHaveProperty("name");
+      expect(firstMuscle).toHaveProperty("muscleGroup");
+      expect(firstMuscle).toHaveProperty("status");
+      expect(firstMuscle).toHaveProperty("lastTrainedDate");
+      expect(firstMuscle).toHaveProperty("recoveryHours");
+      expect(firstMuscle).toHaveProperty("recoveryPercentage");
+      expect(firstMuscle).toHaveProperty("exerciseCount");
+
+      // Check types of properties
+      expect(typeof firstMuscle.id).toBe("string");
+      expect(typeof firstMuscle.name).toBe("string");
+      expect(typeof firstMuscle.muscleGroup).toBe("string");
+      expect(Object.values(MuscleRecoveryStatus)).toContain(firstMuscle.status);
+      expect(typeof firstMuscle.recoveryHours).toBe("number");
+      expect(typeof firstMuscle.recoveryPercentage).toBe("number");
+      expect(typeof firstMuscle.exerciseCount).toBe("number");
+
+      // lastTrainedDate can be Date or null
+      expect(
+        firstMuscle.lastTrainedDate === null ||
+          firstMuscle.lastTrainedDate instanceof Date,
+      ).toBe(true);
+    });
+
     it("should calculate correct recovery percentages based on recovery hours", async () => {
       const result = await getMuscleRecoveryStatusForAllMuscles();
 
@@ -268,6 +301,14 @@ describe("Recovery module", () => {
       expect(result).not.toBeNull();
       expect(result?.id).toBe(Muscles.CHEST);
       expect(result?.lastTrainedDate).toEqual(TWO_DAYS_AGO);
+
+      // Verify all fields in the MuscleRecovery interface are present
+      expect(result).toHaveProperty("name");
+      expect(result).toHaveProperty("muscleGroup");
+      expect(result).toHaveProperty("status");
+      expect(result).toHaveProperty("recoveryHours");
+      expect(result).toHaveProperty("recoveryPercentage");
+      expect(result).toHaveProperty("exerciseCount");
     });
 
     it("should return null for an invalid muscle ID", async () => {
@@ -288,6 +329,8 @@ describe("Recovery module", () => {
       expect(chest?.recoveryPercentage).toBe(100);
       expect(chest?.exerciseCount).toBe(1);
       expect(chest?.status).toBe(MuscleRecoveryStatus.RECOVERED);
+      expect(chest?.muscleGroup).toBeTruthy();
+      expect(chest?.recoveryHours).toBeGreaterThan(0);
 
       // Quads (trained once 1 day ago, 48h recovery) should be RECOVERING (50%)
       const quads = results.find((m) => m.id === Muscles.QUADRICEPS);
@@ -295,6 +338,8 @@ describe("Recovery module", () => {
       expect(quads?.recoveryPercentage).toBe(50);
       expect(quads?.exerciseCount).toBe(1);
       expect(quads?.status).toBe(MuscleRecoveryStatus.RECOVERING);
+      expect(quads?.muscleGroup).toBeTruthy();
+      expect(quads?.recoveryHours).toBeGreaterThan(0);
 
       // Biceps (trained once 6 hours ago, 48h recovery) should be RECOVERING
       const biceps = results.find((m) => m.id === Muscles.BICEPS);
@@ -303,6 +348,8 @@ describe("Recovery module", () => {
       expect(biceps?.recoveryPercentage).toBeGreaterThan(0);
       expect(biceps?.exerciseCount).toBe(1);
       expect(biceps?.status).toBe(MuscleRecoveryStatus.RECOVERING);
+      expect(biceps?.muscleGroup).toBeTruthy();
+      expect(biceps?.recoveryHours).toBeGreaterThan(0);
     });
 
     it("should mark untrained muscles as RECOVERED with zero exercise count", async () => {
