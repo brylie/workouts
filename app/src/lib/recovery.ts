@@ -4,6 +4,7 @@
 const FULLY_TRAINED_PERCENTAGE = 100; // Maximum recovery percentage
 const MILLISECONDS_IN_HOUR = 1000 * 60 * 60; // Conversion factor for hours
 const OVERTRAINED_EXERCISE_COUNT = 2; // Number of exercises within recovery period that causes overtraining
+const RECOVERY_HOURS_DEFAULT = 24; // Default recovery hours for a muscle
 
 // Define and export types for muscle recovery
 export enum MuscleRecoveryStatus {
@@ -42,6 +43,12 @@ export function calculateRecoveryPercentage(
   // If the muscle was never trained, it's fully recovered
   if (!lastTrainedDate) {
     return FULLY_TRAINED_PERCENTAGE;
+  }
+
+  // If recovery hours are zero, use the default
+  // This is a fallback to avoid division by zero
+  if (recoveryHours <= 0) {
+    recoveryHours = RECOVERY_HOURS_DEFAULT;
   }
 
   const currentTime = new Date();
