@@ -14,10 +14,13 @@ export enum MuscleRecoveryStatus {
 
 export interface MuscleRecovery {
   id: string;
+  name: string;
+  muscleGroup: string;
   status: MuscleRecoveryStatus;
-  last_trained: Date | null;
-  recovery_percentage: number;
-  exercise_count: number; // Number of exercises performed during recovery period
+  lastTrainedDate: Date | null;
+  recoveryHours: number; // Recovery hours for the muscle
+  recoveryPercentage: number;
+  exerciseCount: number; // Number of exercises performed during recovery period
 }
 
 import { musclesList } from "$lib/muscles";
@@ -129,7 +132,7 @@ export async function getMuscleRecoveryStatusForAllMuscles(
     const lastTrainedDate = lastTrainedByMuscle.get(muscle.id) || null;
     const recoveryPercentage = calculateRecoveryPercentage(
       lastTrainedDate,
-      muscle.recovery_hours,
+      muscle.recoveryHours,
     );
 
     // Count exercises performed within the muscle's recovery window
@@ -142,7 +145,7 @@ export async function getMuscleRecoveryStatusForAllMuscles(
       exerciseCount = allExerciseDates.filter((date) => {
         const recoveryEndTime = new Date(date.getTime());
         recoveryEndTime.setHours(
-          recoveryEndTime.getHours() + muscle.recovery_hours,
+          recoveryEndTime.getHours() + muscle.recoveryHours,
         );
         return recoveryEndTime >= now;
       }).length;
@@ -155,10 +158,13 @@ export async function getMuscleRecoveryStatusForAllMuscles(
 
     return {
       id: muscle.id,
+      name: muscle.name,
       status,
-      last_trained: lastTrainedDate,
-      recovery_percentage: recoveryPercentage,
-      exercise_count: exerciseCount,
+      lastTrainedDate,
+      recoveryPercentage,
+      exerciseCount,
+      muscleGroup: muscle.muscleGroup,
+      recoveryHours: muscle.recoveryHours,
     };
   });
 }

@@ -4,6 +4,7 @@
   import {
     getMuscleRecoveryStatusForAllMuscles,
     MuscleRecoveryStatus,
+    type MuscleRecovery,
   } from "$lib/recovery";
 
   const recoveryStatusColors = {
@@ -21,20 +22,8 @@
     },
   };
 
-  // Interface for our enhanced muscle recovery data
-  interface EnhancedMuscleRecovery {
-    id: string;
-    name: string;
-    muscleGroup: MuscleGroups;
-    status: MuscleRecoveryStatus;
-    lastTrained: Date | null;
-    recoveryHours: number;
-    recoveryPercentage: number;
-    exerciseCount: number;
-  }
-
   // Using Svelte 5 runes syntax
-  let muscleRecovery = $state<EnhancedMuscleRecovery[]>([]);
+  let muscleRecovery = $state<MuscleRecovery[]>([]);
   let isLoading = $state(true);
   let error = $state<string | null>(null);
 
@@ -46,7 +35,7 @@
   ]);
 
   // Group muscles by their muscle group - using record instead of $derived function
-  let groupedMuscles = $state<Record<MuscleGroups, EnhancedMuscleRecovery[]>>({
+  let groupedMuscles = $state<Record<MuscleGroups, MuscleRecovery[]>>({
     [MuscleGroups.UPPER_BODY]: [],
     [MuscleGroups.CORE]: [],
     [MuscleGroups.LOWER_BODY]: [],
@@ -54,7 +43,7 @@
 
   // Update grouped muscles whenever muscleRecovery changes
   $effect(() => {
-    const grouped: Record<MuscleGroups, EnhancedMuscleRecovery[]> = {
+    const grouped: Record<MuscleGroups, MuscleRecovery[]> = {
       [MuscleGroups.UPPER_BODY]: [],
       [MuscleGroups.CORE]: [],
       [MuscleGroups.LOWER_BODY]: [],
@@ -64,7 +53,7 @@
     muscleRecovery.forEach((muscle) => {
       const muscleGroup = muscle.muscleGroup;
       if (muscleGroup in grouped) {
-        grouped[muscleGroup].push(muscle);
+        grouped[muscleGroup as MuscleGroups].push(muscle);
       }
     });
 
@@ -84,35 +73,10 @@
 
   // Load recovery data on component mount
   onMount(async () => {
+    const lookBackDays = 14; // Look back 14 days
     try {
-      const allMuscleRecovery = await getMuscleRecoveryStatusForAllMuscles(14); // Look back 14 days
-
-      // Enhance recovery data with muscle name and group from musclesRegistry
-      muscleRecovery = allMuscleRecovery.map((muscle) => {
-        const muscleId = String(muscle.id);
-        let muscleName = muscleId;
-        let muscleGroup = MuscleGroups.UPPER_BODY; // Default
-        let recoveryHours = 0; // Default recovery hours
-
-        // Try to find muscle details in registry
-        const muscleDetail = musclesList.find((m) => m.id === muscle.id);
-        if (muscleDetail) {
-          muscleName = muscleDetail.name;
-          muscleGroup = muscleDetail.muscle_group;
-          recoveryHours = muscleDetail.recovery_hours;
-        }
-
-        return {
-          id: muscleId,
-          name: muscleName,
-          muscleGroup: muscleGroup,
-          status: muscle.status,
-          lastTrained: muscle.last_trained,
-          recoveryPercentage: muscle.recovery_percentage,
-          exerciseCount: muscle.exercise_count,
-          recoveryHours: recoveryHours,
-        };
-      });
+      muscleRecovery = await getMuscleRecoveryStatusForAllMuscles(lookBackDays);
+      console.log("Muscle Recovery Data:", muscleRecovery);
 
       isLoading = false;
     } catch (err) {
@@ -251,7 +215,7 @@
             {#each groupedMuscles[muscleGroup] || [] as muscle}
               <tr class="hover" id="muscle-row-{muscle.id}">
                 <td>{muscle.name}</td>
-                <td>{formatDate(muscle.lastTrained)}</td>
+                <td>{formatDate(muscle.lastTrainedDate)}</td>
                 <td class="text-center">
                   <span class="font-mono">{muscle.recoveryHours}</span>
                 </td>

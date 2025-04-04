@@ -212,19 +212,19 @@ describe("Recovery module", () => {
       // Verify chest was trained 2 days ago with pushups
       const chest = result.find((m) => m.id === Muscles.CHEST);
       expect(chest).toBeDefined();
-      expect(chest?.last_trained).toEqual(TWO_DAYS_AGO);
+      expect(chest?.lastTrainedDate).toEqual(TWO_DAYS_AGO);
 
       // Verify quadriceps was trained 1 day ago with squats
       const quads = result.find((m) => m.id === Muscles.QUADRICEPS);
       expect(quads).toBeDefined();
-      expect(quads?.last_trained).toEqual(ONE_DAY_AGO);
+      expect(quads?.lastTrainedDate).toEqual(ONE_DAY_AGO);
 
-      // Verify a muscle that wasn't trained has null last_trained date
+      // Verify a muscle that wasn't trained has null lastTrainedDate date
       // (Need to find a muscle not used in our test data)
       const neck = result.find((m) => m.id === Muscles.NECK);
       expect(neck).toBeDefined();
-      expect(neck?.last_trained).toBeNull();
-      expect(neck?.recovery_percentage).toBe(100);
+      expect(neck?.lastTrainedDate).toBeNull();
+      expect(neck?.recoveryPercentage).toBe(100);
     });
 
     it("should calculate correct recovery percentages based on recovery hours", async () => {
@@ -232,11 +232,11 @@ describe("Recovery module", () => {
 
       // Chest has 48 hour recovery and was trained 2 days (48 hours) ago
       const chest = result.find((m) => m.id === Muscles.CHEST);
-      expect(chest?.recovery_percentage).toBe(100); // 100% recovered
+      expect(chest?.recoveryPercentage).toBe(100); // 100% recovered
 
       // Quads have 48 hour recovery and were trained 1 day (24 hours) ago
       const quads = result.find((m) => m.id === Muscles.QUADRICEPS);
-      expect(quads?.recovery_percentage).toBe(50); // 50% recovered
+      expect(quads?.recoveryPercentage).toBe(50); // 50% recovered
     });
 
     it("should respect the lookbackDays parameter", async () => {
@@ -267,7 +267,7 @@ describe("Recovery module", () => {
 
       expect(result).not.toBeNull();
       expect(result?.id).toBe(Muscles.CHEST);
-      expect(result?.last_trained).toEqual(TWO_DAYS_AGO);
+      expect(result?.lastTrainedDate).toEqual(TWO_DAYS_AGO);
     });
 
     it("should return null for an invalid muscle ID", async () => {
@@ -285,23 +285,23 @@ describe("Recovery module", () => {
       // Chest (trained once 2 days ago) should be RECOVERED (100%)
       const chest = results.find((m) => m.id === Muscles.CHEST);
       expect(chest).toBeDefined();
-      expect(chest?.recovery_percentage).toBe(100);
-      expect(chest?.exercise_count).toBe(1);
+      expect(chest?.recoveryPercentage).toBe(100);
+      expect(chest?.exerciseCount).toBe(1);
       expect(chest?.status).toBe(MuscleRecoveryStatus.RECOVERED);
 
       // Quads (trained once 1 day ago, 48h recovery) should be RECOVERING (50%)
       const quads = results.find((m) => m.id === Muscles.QUADRICEPS);
       expect(quads).toBeDefined();
-      expect(quads?.recovery_percentage).toBe(50);
-      expect(quads?.exercise_count).toBe(1);
+      expect(quads?.recoveryPercentage).toBe(50);
+      expect(quads?.exerciseCount).toBe(1);
       expect(quads?.status).toBe(MuscleRecoveryStatus.RECOVERING);
 
       // Biceps (trained once 6 hours ago, 48h recovery) should be RECOVERING
       const biceps = results.find((m) => m.id === Muscles.BICEPS);
       expect(biceps).toBeDefined();
-      expect(biceps?.recovery_percentage).toBeLessThan(25);
-      expect(biceps?.recovery_percentage).toBeGreaterThan(0);
-      expect(biceps?.exercise_count).toBe(1);
+      expect(biceps?.recoveryPercentage).toBeLessThan(25);
+      expect(biceps?.recoveryPercentage).toBeGreaterThan(0);
+      expect(biceps?.exerciseCount).toBe(1);
       expect(biceps?.status).toBe(MuscleRecoveryStatus.RECOVERING);
     });
 
@@ -321,8 +321,8 @@ describe("Recovery module", () => {
       );
 
       expect(untrained).toBeDefined();
-      expect(untrained?.recovery_percentage).toBe(100);
-      expect(untrained?.exercise_count).toBe(0);
+      expect(untrained?.recoveryPercentage).toBe(100);
+      expect(untrained?.exerciseCount).toBe(0);
       expect(untrained?.status).toBe(MuscleRecoveryStatus.RECOVERED);
     });
 
@@ -441,7 +441,7 @@ describe("Recovery module", () => {
       // Shoulders should have two exercises and be marked as OVERTRAINED
       const shoulders = results.find((m) => m.id === Muscles.SHOULDERS);
       expect(shoulders).toBeDefined();
-      expect(shoulders?.exercise_count).toBe(2);
+      expect(shoulders?.exerciseCount).toBe(2);
       expect(shoulders?.status).toBe(MuscleRecoveryStatus.OVERTRAINED);
     });
   });

@@ -14,8 +14,8 @@ describe("muscles", () => {
       expect(details).toEqual({
         id: Muscles.BICEPS,
         name: "Biceps",
-        recovery_hours: 48,
-        muscle_group: "upper_body",
+        recoveryHours: 48,
+        muscleGroup: "upper_body",
       });
     });
 
@@ -39,7 +39,7 @@ describe("muscles", () => {
           expect(details).toBeDefined();
           expect(details.id).toBe(muscleType);
           expect(details.name).toBeTruthy();
-          expect(details.recovery_hours).toBeGreaterThan(0);
+          expect(details.recoveryHours).toBeGreaterThan(0);
         } catch (error) {
           console.error(`Test failed for muscle: ${muscleType}`, {
             details,
@@ -79,20 +79,20 @@ describe("muscles", () => {
         {
           id: Muscles.BICEPS,
           name: "Biceps",
-          recovery_hours: 48,
-          muscle_group: "upper_body",
+          recoveryHours: 48,
+          muscleGroup: "upper_body",
         },
         {
           id: Muscles.TRICEPS,
           name: "Triceps",
-          recovery_hours: 48,
-          muscle_group: "upper_body",
+          recoveryHours: 48,
+          muscleGroup: "upper_body",
         },
         {
           id: Muscles.CHEST,
           name: "Chest",
-          recovery_hours: 48,
-          muscle_group: "upper_body",
+          recoveryHours: 48,
+          muscleGroup: "upper_body",
         },
       ]);
     });
