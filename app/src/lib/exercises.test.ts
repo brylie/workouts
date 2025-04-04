@@ -6,6 +6,7 @@ import {
   getExercisesByEquipment,
   filterExercises,
   getFilteredRandomExercisesForRecoveredMuscles,
+  type ExerciseDetails,
 } from "$lib/exercises";
 import { Equipment } from "$lib/equipment";
 import { Muscles } from "$lib/muscles";
@@ -65,6 +66,31 @@ const createRecoveryFixtures = {
 };
 
 describe("exercises", () => {
+  it("should define ExerciseDetails interface", () => {
+    const exercise: ExerciseDetails = {
+      id: "push-up",
+      title: "Push-Up",
+      muscles: [Muscles.CHEST, Muscles.TRICEPS],
+      equipment: [],
+      description: "A bodyweight exercise that targets the chest and triceps.",
+      metrics: {
+        hasSets: true,
+        hasReps: true,
+        hasWeight: false,
+        hasTime: true,
+        hasDistance: false,
+        hasResistance: false,
+      },
+    };
+    expect(exercise).toBeDefined();
+    expect(exercise.id).toBe("push-up");
+    expect(exercise.title).toBe("Push-Up");
+    expect(exercise.muscles).toEqual([Muscles.CHEST, Muscles.TRICEPS]);
+    expect(exercise.equipment).toEqual([]);
+    expect(exercise.description).toBe(
+      "A bodyweight exercise that targets the chest and triceps.",
+    );
+  });
   describe("getExercisesByMuscle", () => {
     it("should return exercises that target the specified muscle group", () => {
       const exercises = getExercisesByMuscle(Muscles.CHEST);

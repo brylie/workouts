@@ -172,7 +172,7 @@ describe("migrateExerciseV1ToV2", () => {
         sets: 3,
         reps: 10,
         weight: 0,
-        time: "00:05:00",
+        time: 0,
       },
     });
   });
@@ -192,7 +192,7 @@ describe("migrateExerciseV1ToV2", () => {
       exercise_id: "plank",
       completed_at: exerciseV1.completed_at,
       metrics: {
-        time: "00:01:00",
+        time: 0,
       },
     });
   });
