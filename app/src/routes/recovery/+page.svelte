@@ -6,6 +6,7 @@
     MuscleRecoveryStatus,
     type MuscleRecovery,
   } from "$lib/recovery";
+  import { formatMuscleGroup } from "$lib/formatting";
 
   const recoveryStatusColors = {
     [MuscleRecoveryStatus.RECOVERING]: {
@@ -51,6 +52,7 @@
 
     // Sort muscles into their groups
     muscleRecovery.forEach((muscle) => {
+      // format the muscle group to remove
       const muscleGroup = muscle.muscleGroup;
       if (muscleGroup in grouped) {
         grouped[muscleGroup as MuscleGroups].push(muscle);
@@ -76,7 +78,6 @@
     const lookBackDays = 14; // Look back 14 days
     try {
       muscleRecovery = await getMuscleRecoveryStatusForAllMuscles(lookBackDays);
-      console.log("Muscle Recovery Data:", muscleRecovery);
 
       isLoading = false;
     } catch (err) {
@@ -207,7 +208,7 @@
                 class="text-lg font-bold text-blue-400"
                 id="muscle-group-{muscleGroup.replace(/\s+/g, '-')}"
               >
-                {muscleGroup.charAt(0).toUpperCase() + muscleGroup.slice(1)}
+                {formatMuscleGroup(muscleGroup)}
               </td>
             </tr>
 

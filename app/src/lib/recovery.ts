@@ -1,3 +1,7 @@
+import { musclesList, type Muscles } from "$lib/muscles";
+import { getCompletedExercisesByDateRange } from "$lib/database";
+import { getExerciseById } from "$lib/exercises";
+
 /**
  * Constants for recovery calculations
  */
@@ -23,11 +27,6 @@ export interface MuscleRecovery {
   recoveryPercentage: number;
   exerciseCount: number; // Number of exercises performed during recovery period
 }
-
-import { musclesList } from "$lib/muscles";
-import type { Muscles } from "$lib/muscles";
-import { getCompletedExercisesByDateRange } from "$lib/database";
-import { getExerciseById } from "$lib/exercises";
 
 /**
  * Calculate the recovery percentage for a muscle based on last trained date and recovery hours
