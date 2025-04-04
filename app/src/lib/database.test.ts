@@ -6,7 +6,7 @@ import {
   getCompletedExercisesByDateRange,
   migrateExerciseV1ToV2,
 } from "./database";
-import type { CompletedExerciseV1, CompletedExerciseV2 } from "./types";
+import type { CompletedExerciseV1, CompletedExerciseV2 } from "./exercises";
 
 // fake-indexeddb is now loaded via vitest-setup-indexeddb.ts setup file
 // No need for manual mocking here
@@ -114,7 +114,7 @@ describe("Workout Database", () => {
         sets: 3,
         reps: 12,
         weight: 50,
-        time: "30",
+        time: 30,
         distance: 1000,
         resistance: 8,
         speed: 10,
@@ -172,7 +172,7 @@ describe("migrateExerciseV1ToV2", () => {
         sets: 3,
         reps: 10,
         weight: 0,
-        time: "00:05:00",
+        time: 0,
       },
     });
   });
@@ -192,7 +192,7 @@ describe("migrateExerciseV1ToV2", () => {
       exercise_id: "plank",
       completed_at: exerciseV1.completed_at,
       metrics: {
-        time: "00:01:00",
+        time: 0,
       },
     });
   });

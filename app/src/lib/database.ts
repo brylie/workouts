@@ -1,9 +1,9 @@
 import Dexie from "dexie";
 import type {
-  CompletedExerciseV2,
-  CompletedExerciseV1,
   CompletedExerciseMetrics,
-} from "./types";
+  CompletedExerciseV1,
+  CompletedExerciseV2,
+} from "./exercises";
 
 /**
  * Dexie database class for workout data.
@@ -72,7 +72,7 @@ export function migrateExerciseV1ToV2(
       sets: exercise.sets,
       reps: exercise.reps,
       weight: exercise.weight,
-      time: exercise.time,
+      time: exercise.time ? parseFloat(exercise.time) : undefined,
     };
 
     // Create new V2 exercise object

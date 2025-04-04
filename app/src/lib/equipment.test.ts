@@ -5,9 +5,24 @@ import {
   getEquipmentDetailsForTypes,
   equipmentRegistry,
   equipmentList,
+  type EquipmentDetails,
 } from "./equipment";
 
 describe("equipment", () => {
+  it("should define EquipmentDetails interface", () => {
+    const equipment: EquipmentDetails = {
+      id: Equipment.DUMBBELLS,
+      name: "Dumbbells",
+      description: "A pair of handheld weights used for various exercises.",
+    };
+    expect(equipment).toBeDefined();
+    expect(equipment.id).toBe("dumbbells");
+    expect(equipment.name).toBe("Dumbbells");
+    expect(equipment.description).toBe(
+      "A pair of handheld weights used for various exercises.",
+    );
+  });
+
   describe("getEquipmentDetails", () => {
     it("should return correct details for equipment", () => {
       const details = getEquipmentDetails(Equipment.DUMBBELLS);

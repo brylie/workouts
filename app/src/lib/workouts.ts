@@ -1,10 +1,32 @@
-import type {
-  WorkoutItem,
-  ExerciseFilters,
-  CompletedExerciseMetrics,
-  ExerciseDetails,
-} from "$lib/types";
-import { getFilteredRandomExercisesForRecoveredMuscles } from "$lib/exercises";
+import {
+  getFilteredRandomExercisesForRecoveredMuscles,
+  type CompletedExerciseMetrics,
+  type ExerciseDetails,
+  type ExerciseFilters,
+} from "$lib/exercises";
+
+/**
+ * WorkoutItem represents a specific instance of an exercise within a workout,
+ * including the performance parameters like sets, reps, etc.
+ */
+export interface WorkoutItem {
+  exercise: ExerciseDetails;
+  sets?: number;
+  reps?: number;
+  weight?: number;
+  time?: number;
+  completed?: boolean;
+}
+
+/**
+ * Workout represents a collection of workout items performed in a single session.
+ */
+export interface Workout {
+  title: string;
+  date: Date;
+  items: WorkoutItem[];
+  notes?: string;
+}
 
 /**
  * Convert exercises into workout items

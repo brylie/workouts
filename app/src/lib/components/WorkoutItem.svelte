@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { WorkoutItem } from "$lib/types";
+  import type { WorkoutItem } from "$lib/workouts";
 
   export let item: WorkoutItem;
   export let index: number;

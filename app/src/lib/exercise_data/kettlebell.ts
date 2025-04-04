@@ -1,6 +1,6 @@
 import { Equipment } from "$lib/equipment";
+import type { ExerciseDetails } from "$lib/exercises";
 import { Muscles } from "$lib/muscles";
-import type { ExerciseDetails } from "$lib/types";
 
 /**
  * Collection of kettlebell exercises

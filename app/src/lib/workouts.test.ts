@@ -4,11 +4,15 @@ import {
   getFilteredWorkoutItemsForRecoveredMuscles,
   updateWorkoutItem,
   getWorkoutItemMetrics,
+  type WorkoutItem,
+  type Workout,
 } from "$lib/workouts";
 import { Equipment } from "$lib/equipment";
 import { Muscles } from "$lib/muscles";
-import type { ExerciseDetails, WorkoutItem } from "$lib/types";
-import { getFilteredRandomExercisesForRecoveredMuscles } from "./exercises";
+import {
+  getFilteredRandomExercisesForRecoveredMuscles,
+  type ExerciseDetails,
+} from "./exercises";
 
 // Mock the exercises module
 vi.mock("$lib/exercises", () => ({
@@ -32,6 +36,75 @@ describe("workouts", () => {
       hasTime: false,
     },
   };
+
+  it("should define WorkoutItem interface", () => {
+    const workoutItem: WorkoutItem = {
+      exercise: {
+        id: "push-up",
+        title: "Push-Up",
+        muscles: [Muscles.CHEST, Muscles.TRICEPS],
+        equipment: [],
+        description:
+          "A bodyweight exercise that targets the chest and triceps.",
+        metrics: {
+          hasSets: true,
+          hasReps: true,
+          hasWeight: false,
+          hasTime: true,
+          hasDistance: false,
+          hasResistance: false,
+        },
+      },
+      sets: 3,
+      reps: 10,
+      weight: 0,
+      time: 30,
+    };
+    expect(workoutItem).toBeDefined();
+    expect(workoutItem.exercise.id).toBe("push-up");
+    expect(workoutItem.sets).toBe(3);
+    expect(workoutItem.reps).toBe(10);
+    expect(workoutItem.weight).toBe(0);
+    expect(workoutItem.time).toBe(30);
+  });
+
+  it("should define Workout interface", () => {
+    const workout: Workout = {
+      title: "Morning Workout",
+      date: new Date("2023-01-01"),
+      items: [
+        {
+          exercise: {
+            id: "push-up",
+            title: "Push-Up",
+            muscles: [Muscles.CHEST, Muscles.TRICEPS],
+            equipment: [],
+            description:
+              "A bodyweight exercise that targets the chest and triceps.",
+            metrics: {
+              hasSets: true,
+              hasReps: true,
+              hasWeight: false,
+              hasTime: true,
+              hasDistance: false,
+              hasResistance: false,
+            },
+          },
+          sets: 3,
+          reps: 10,
+          weight: 0,
+          time: 30,
+        },
+      ],
+      notes: "Great workout!",
+    };
+    expect(workout).toBeDefined();
+    expect(workout.title).toBe("Morning Workout");
+    expect(workout.date).toEqual(new Date("2023-01-01"));
+    expect(workout.items).toHaveLength(1);
+    expect(workout.items[0].exercise.id).toBe("push-up");
+    expect(workout.notes).toBe("Great workout!");
+  });
 
   describe("convertExercisesToWorkoutItems", () => {
     it("should convert exercises to workout items", () => {
