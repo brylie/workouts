@@ -47,16 +47,6 @@ export function getExerciseById(id: string): ExerciseDetails | null {
   return allExercises.find((exercise) => exercise.id === id) || null;
 }
 
-// /**
-//  * Get a random selection of exercises for workout generation
-//  * @param count The number of exercises to include (defaults to 5)
-//  * @returns An array of randomly selected exercises
-//  */
-// export function getRandomExercises(count: number = 5): ExerciseDetails[] {
-//   const shuffled = shuffleExercises(allExercises);
-//   return shuffled.slice(0, count);
-// }
-
 /**
  * Get a random selection of exercises that only target recovered muscles.
  * Automatically fetches the current muscle recovery status.
