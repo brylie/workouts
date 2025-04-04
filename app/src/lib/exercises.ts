@@ -1,13 +1,17 @@
-import type { ExerciseDetails, WorkoutItem, ExerciseFilters } from "./types";
-import { calisthenicsExercises } from "./exercise_data/calisthenics";
-import { dumbbellExercises } from "./exercise_data/dumbbells";
-import { machineExercises } from "./exercise_data/machines";
-import { kettlebellExercises } from "./exercise_data/kettlebell";
-import { bodyweightExercises } from "./exercise_data/bodyweight";
-import { pilatesExercises } from "./exercise_data/pilates";
-import { yogaPoses } from "./exercise_data/yoga";
-import type { Muscles } from "./muscles";
-import type { Equipment } from "./equipment";
+import type { ExerciseDetails, ExerciseFilters } from "$lib/types";
+import { calisthenicsExercises } from "$lib/exercise_data/calisthenics";
+import { dumbbellExercises } from "$lib/exercise_data/dumbbells";
+import { machineExercises } from "$lib/exercise_data/machines";
+import { kettlebellExercises } from "$lib/exercise_data/kettlebell";
+import { bodyweightExercises } from "$lib/exercise_data/bodyweight";
+import { pilatesExercises } from "$lib/exercise_data/pilates";
+import { yogaPoses } from "$lib/exercise_data/yoga";
+import type { Muscles } from "$lib/muscles";
+import type { Equipment } from "$lib/equipment";
+import {
+  MuscleRecoveryStatus,
+  getMuscleRecoveryStatusForAllMuscles,
+} from "$lib/recovery";
 
 // Combine machine, calisthenics, dumbbell, and kettlebell exercises
 export const allExercises: ExerciseDetails[] = [
@@ -21,26 +25,69 @@ export const allExercises: ExerciseDetails[] = [
 ];
 
 /**
- * Get a random selection of exercises for workout generation
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of randomly selected exercises
+ * Helper function to shuffle an array of exercises using Fisher-Yates algorithm
+ * @param exercises Array of exercises to shuffle
+ * @returns A new array with the exercises in random order
  */
-export function getRandomExercises(count: number = 5): ExerciseDetails[] {
-  const shuffled = [...allExercises].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
+function shuffleExercises(exercises: ExerciseDetails[]): ExerciseDetails[] {
+  const shuffled = [...exercises];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
 }
 
 /**
- * Get a list of random workout items for workout generation
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of randomly selected WorkoutItems
+ * Find an exercise by its ID
+ * @param id The ID of the exercise to find
+ * @returns The exercise details or null if not found
  */
-export function getRandomWorkoutItems(count: number = 5): WorkoutItem[] {
-  const exercises = getRandomExercises(count);
-  return exercises.map((exercise) => ({
-    exercise,
-    completed: false,
-  }));
+export function getExerciseById(id: string): ExerciseDetails | null {
+  return allExercises.find((exercise) => exercise.id === id) || null;
+}
+
+/**
+ * Get a random selection of exercises that only target recovered muscles.
+ * Automatically fetches the current muscle recovery status.
+ * @param filters Filter criteria
+ * @param count The number of exercises to include (defaults to 5)
+ * @returns An array of randomly selected exercises for recovered muscles
+ */
+export async function getFilteredRandomExercisesForRecoveredMuscles(
+  filters: ExerciseFilters,
+  count: number = 5,
+): Promise<ExerciseDetails[]> {
+  const muscleRecoveryStatus = await getMuscleRecoveryStatusForAllMuscles();
+
+  // Create a set of recovered muscle IDs for efficient lookup
+  const recoveredMuscleIds = new Set<string>(
+    muscleRecoveryStatus
+      .filter((status) => status.status === MuscleRecoveryStatus.RECOVERED)
+      .map((status) => status.id),
+  );
+
+  // If no muscles are recovered, return empty array
+  if (recoveredMuscleIds.size === 0) {
+    return [];
+  }
+
+  // Filter exercises based on provided filters
+  const filteredExercises = filterExercises(filters);
+
+  // Filter exercises to only include those that target recovered muscles
+  const availableExercises = filteredExercises.filter((exercise) => {
+    // Only include exercises where ALL targeted muscles are recovered
+    return exercise.muscles.every((muscle) => recoveredMuscleIds.has(muscle));
+  });
+
+  // If no exercises match the recovery criteria, return an empty array
+  if (availableExercises.length === 0) {
+    return [];
+  }
+
+  const shuffled = shuffleExercises(availableExercises);
+  return shuffled.slice(0, Math.min(count, shuffled.length));
 }
 
 /**
@@ -90,19 +137,4 @@ export function filterExercises(filters: ExerciseFilters): ExerciseDetails[] {
 
     return true;
   });
-}
-
-/**
- * Get a random selection of filtered exercises for workout generation
- * @param filters Filter criteria
- * @param count The number of exercises to include (defaults to 5)
- * @returns An array of randomly selected exercises
- */
-export function getFilteredRandomExercises(
-  filters: ExerciseFilters,
-  count: number = 5,
-): ExerciseDetails[] {
-  const filteredExercises = filterExercises(filters);
-  const shuffled = [...filteredExercises].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, Math.min(count, shuffled.length));
 }

@@ -14,16 +14,46 @@ describe("muscles", () => {
       expect(details).toEqual({
         id: Muscles.BICEPS,
         name: "Biceps",
+        recoveryHours: 48,
+        muscleGroup: "upper_body",
       });
     });
 
     it("should return details for all muscle types", () => {
       Object.values(Muscles).forEach((muscleType) => {
         const details = getMuscleDetails(muscleType);
-        expect(details).toBeDefined();
-        expect(details.id).toBe(muscleType);
-        expect(details.name).toBeTruthy();
+
+        try {
+          expect(details).toBeDefined();
+          expect(details.id).toBe(muscleType);
+          expect(details.name).toBeTruthy();
+          expect(details.recoveryHours).toBeGreaterThan(0);
+        } catch (error) {
+          console.error(`Test failed for muscle: ${muscleType}`, {
+            details,
+            muscleType,
+            isInRegistry: muscleType in musclesRegistry,
+            registryValue: musclesRegistry[muscleType],
+          });
+          throw error;
+        }
       });
+    });
+
+    it("should verify all enum values are in registry", () => {
+      const enumMuscles = new Set(Object.values(Muscles));
+      const registryKeys = new Set(Object.keys(musclesRegistry));
+
+      // Convert both sets to arrays for easier debugging
+      const missingInRegistry = [...enumMuscles].filter(
+        (m) => !registryKeys.has(m),
+      );
+      const extraInRegistry = [...registryKeys].filter(
+        (k) => !enumMuscles.has(k as Muscles),
+      );
+
+      expect(missingInRegistry).toEqual([]);
+      expect(extraInRegistry).toEqual([]);
     });
   });
 
@@ -34,9 +64,24 @@ describe("muscles", () => {
 
       expect(details).toHaveLength(3);
       expect(details).toEqual([
-        { id: Muscles.BICEPS, name: "Biceps" },
-        { id: Muscles.TRICEPS, name: "Triceps" },
-        { id: Muscles.CHEST, name: "Chest" },
+        {
+          id: Muscles.BICEPS,
+          name: "Biceps",
+          recoveryHours: 48,
+          muscleGroup: "upper_body",
+        },
+        {
+          id: Muscles.TRICEPS,
+          name: "Triceps",
+          recoveryHours: 48,
+          muscleGroup: "upper_body",
+        },
+        {
+          id: Muscles.CHEST,
+          name: "Chest",
+          recoveryHours: 48,
+          muscleGroup: "upper_body",
+        },
       ]);
     });
 
@@ -66,6 +111,7 @@ describe("muscles", () => {
 describe("Muscles enum", () => {
   it("should contain the expected muscle groups", () => {
     expect(Muscles.ABDOMINALS).toBe("abdominals");
+    expect(Muscles.OBLIQUES).toBe("obliques");
     expect(Muscles.LATS).toBe("lats");
     expect(Muscles.BICEPS).toBe("biceps");
     expect(Muscles.CHEST).toBe("chest");
@@ -81,5 +127,6 @@ describe("Muscles enum", () => {
     expect(Muscles.ADDUCTORS).toBe("adductors");
     expect(Muscles.FOREARMS).toBe("forearms");
     expect(Muscles.NECK).toBe("neck");
+    expect(Muscles.UPPER_BACK).toBe("upper_back");
   });
 });

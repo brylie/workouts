@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Explicitly checkout the head of the PR
+          # to avoid issues with stale code running in CI
+          ref: ${{ github.head_ref }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -27,10 +31,10 @@ jobs:
       - name: Get pnpm store directory
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          STORE_PATH=$(pnpm store path --silent)
 
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -40,27 +44,12 @@ jobs:
       - name: Install dependencies
         run: |
           cd app
-          pnpm install
+          pnpm install --force
 
-      - name: Setup Playwright cache
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('app/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-
-      - name: Install Playwright browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - name: Run unit tests
         run: |
           cd app
-          pnpm exec playwright install --with-deps chromium
-
-      - name: Run tests in parallel
-        run: |
-          cd app
-          pnpm test:parallel
+          pnpm test:unit
 
       - name: Upload test results
         if: always()

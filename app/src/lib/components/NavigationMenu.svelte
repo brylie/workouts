@@ -48,6 +48,15 @@
         History
       </a>
       <a
+        href="{base}/recovery"
+        class="text-white transition-colors hover:text-blue-300 {pathname ===
+        base + '/recovery'
+          ? 'font-bold'
+          : ''}"
+      >
+        Recovery
+      </a>
+      <a
         href="{base}/guidelines"
         class="text-white transition-colors hover:text-blue-300 {pathname ===
         base + '/guidelines'

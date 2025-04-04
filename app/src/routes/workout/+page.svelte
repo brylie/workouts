@@ -1,9 +1,12 @@
 <script lang="ts">
-  import { getFilteredRandomExercises } from "$lib/exercises";
+  import {
+    getFilteredWorkoutItemsForRecoveredMuscles,
+    updateWorkoutItem as updateWorkoutItemService,
+    getWorkoutItemMetrics,
+  } from "$lib/workouts";
   import type {
     WorkoutItem,
     CompletedExerciseV2,
-    CompletedExerciseMetrics,
     ExerciseFilters,
   } from "$lib/types";
   import { saveCompletedExercise } from "$lib/database";
@@ -13,13 +16,12 @@
 
   let numberOfExercises = $state(5);
   let generatedWorkout = $state<WorkoutItem[]>([]);
+  let showRecoveryWarning = $state(false);
 
   // Tracks which exercise is currently being saved to the database
-  // null means no exercise is being saved
   let savingIndex = $state<number | null>(null);
 
   // Stores any error that occurs during the save operation
-  // null means no error has occurred
   let saveError = $state<string | null>(null);
 
   let filters = $state<ExerciseFilters>({
@@ -27,13 +29,20 @@
     equipment: [],
   });
 
-  function generateWorkout() {
-    const exercises = getFilteredRandomExercises(filters, numberOfExercises);
-    generatedWorkout = exercises.map((exercise) => ({
-      exercise,
-      completed: false,
-    }));
-    saveError = null;
+  async function generateWorkout() {
+    const workoutItems = await getFilteredWorkoutItemsForRecoveredMuscles(
+      filters,
+      numberOfExercises,
+    );
+
+    // if the workout is empty, show a warning
+    if (workoutItems.length === 0) {
+      showRecoveryWarning = true;
+    } else {
+      showRecoveryWarning = false;
+    }
+
+    generatedWorkout = workoutItems;
   }
 
   function handleFilterChange(newFilters: ExerciseFilters) {
@@ -44,47 +53,42 @@
   }
 
   function updateWorkoutItem(index: number, updates: Partial<WorkoutItem>) {
-    const updatedItem = { ...generatedWorkout[index], ...updates };
-    generatedWorkout[index] = updatedItem;
+    const currentItem = generatedWorkout[index];
+    generatedWorkout[index] = updateWorkoutItemService(currentItem, updates);
   }
 
   async function markAsComplete(index: number) {
     const item = generatedWorkout[index];
 
     // Toggle the completed state
-    generatedWorkout[index] = { ...item, completed: !item.completed };
+    const updatedItem = updateWorkoutItemService(item, {
+      completed: !item.completed,
+    });
+    generatedWorkout[index] = updatedItem;
 
-    if (browser && item && item.exercise.id) {
-      // If the item is now marked as complete, save to database
-      if (!item.completed) {
-        try {
-          savingIndex = index;
+    if (browser && item && item.exercise.id && updatedItem.completed) {
+      try {
+        savingIndex = index;
 
-          // Convert WorkoutItem metrics to CompletedExerciseMetrics
-          const metrics: CompletedExerciseMetrics = {
-            sets: item.sets,
-            reps: item.reps,
-            weight: item.weight,
-            time: item.time,
-          };
+        const metrics = getWorkoutItemMetrics(item);
+        const completedExercise: CompletedExerciseV2 = {
+          exercise_id: item.exercise.id,
+          completed_at: new Date(),
+          metrics,
+        };
 
-          const completedExercise: CompletedExerciseV2 = {
-            exercise_id: item.exercise.id,
-            completed_at: new Date(),
-            metrics,
-          };
+        await saveCompletedExercise(completedExercise);
+        saveError = null;
+      } catch (error) {
+        console.error("Failed to save completed exercise:", error);
+        saveError = "Failed to save exercise record";
 
-          await saveCompletedExercise(completedExercise);
-          saveError = null;
-        } catch (error) {
-          console.error("Failed to save completed exercise:", error);
-          saveError = "Failed to save exercise record";
-
-          // Revert the UI state if saving failed
-          generatedWorkout[index] = { ...item, completed: false };
-        } finally {
-          savingIndex = null;
-        }
+        // Revert the UI state if saving failed
+        generatedWorkout[index] = updateWorkoutItemService(updatedItem, {
+          completed: false,
+        });
+      } finally {
+        savingIndex = null;
       }
     }
   }
@@ -151,6 +155,24 @@
         </p>
       </div>
     </div>
+
+    {#if showRecoveryWarning}
+      <div class="mb-6 rounded-lg bg-amber-800 p-6 text-white">
+        <h3 class="mb-2 text-xl font-semibold">Time for Recovery!</h3>
+        <p class="mb-4">
+          Your muscles need time to recover and grow stronger. Proper recovery
+          helps:
+        </p>
+        <ul class="list-inside list-disc space-y-2">
+          <li>Prevent injury and overtraining</li>
+          <li>Build muscle more effectively</li>
+          <li>Improve overall performance</li>
+        </ul>
+        <p class="mt-4">
+          Consider trying some light stretching or mobility work today instead.
+        </p>
+      </div>
+    {/if}
 
     {#if saveError}
       <div class="mb-6 rounded-lg bg-red-800 p-4 text-white">

@@ -1,248 +1,309 @@
-import { describe, it, expect } from "vitest";
-
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
-  getRandomExercises,
+  allExercises,
+  getExerciseById,
   getExercisesByMuscle,
   getExercisesByEquipment,
-  getRandomWorkoutItems,
-  allExercises,
   filterExercises,
-  getFilteredRandomExercises,
-} from "./exercises";
-import { Equipment } from "./equipment";
-import { Muscles } from "./muscles";
+  getFilteredRandomExercisesForRecoveredMuscles,
+} from "$lib/exercises";
+import { Equipment } from "$lib/equipment";
+import { Muscles } from "$lib/muscles";
+import {
+  getMuscleRecoveryStatusForAllMuscles,
+  MuscleRecoveryStatus,
+} from "./recovery";
 
-// Test getRandomExercises function
-describe("getRandomExercises", () => {
-  it("should return the specified number of random exercises", () => {
-    const exercises = getRandomExercises(3);
-    expect(exercises).toHaveLength(3);
-  });
+vi.mock("$lib/recovery", () => ({
+  getMuscleRecoveryStatusForAllMuscles: vi.fn(),
+  MuscleRecoveryStatus: {
+    RECOVERED: "RECOVERED",
+    RECOVERING: "RECOVERING",
+  },
+}));
 
-  it("should return different exercises on subsequent calls", () => {
-    const exercises1 = getRandomExercises(3);
-    const exercises2 = getRandomExercises(3);
-    expect(exercises1).not.toEqual(exercises2);
-  });
-
-  // Additional tests for edge cases and boundary conditions
-
-  // Test getRandomExercises with count 0
-  it("should return an empty array when count is 0", () => {
-    const exercises = getRandomExercises(0);
-    expect(exercises).toHaveLength(0);
-  });
-
-  // Test getRandomExercises with count greater than available exercises
-  it("should return all available exercises when count is greater than available exercises", () => {
-    const exercises = getRandomExercises(100);
-    expect(exercises).toHaveLength(exercises.length);
-  });
-});
-
-// Test getExercisesByMuscle function
-describe("getExercisesByMuscle", () => {
-  it("should return exercises that target the specified muscle group", () => {
-    const exercises = getExercisesByMuscle(Muscles.ABDOMINALS);
-    expect(
-      exercises.every((exercise) =>
-        exercise.muscles.includes(Muscles.ABDOMINALS),
-      ),
-    ).toBe(true);
-  });
-
-  // Test getExercisesByMuscle with invalid muscle group
-  it("should return an empty array for an invalid muscle group", () => {
-    const exercises = getExercisesByMuscle("invalid" as Muscles);
-    expect(exercises).toHaveLength(0);
-  });
-});
-
-// Test getExercisesByEquipment function
-describe("getExercisesByEquipment", () => {
-  it("should return exercises that use the specified equipment", () => {
-    const exercises = getExercisesByEquipment(Equipment.TREADMILL);
-    expect(
-      exercises.every((exercise) =>
-        exercise.equipment?.includes(Equipment.TREADMILL),
-      ),
-    ).toBe(true);
-  });
-
-  // Test getExercisesByEquipment with invalid equipment type
-  it("should return an empty array for an invalid equipment type", () => {
-    const exercises = getExercisesByEquipment("invalid" as Equipment);
-    expect(exercises).toHaveLength(0);
-  });
-});
-
-// Test getRandomWorkoutItems function
-describe("getRandomWorkoutItems", () => {
-  it("should return the specified number of workout items", () => {
-    const workoutItems = getRandomWorkoutItems(3);
-    expect(workoutItems).toHaveLength(3);
-  });
-
-  it("should return workout items with default not completed value", () => {
-    const workoutItems = getRandomWorkoutItems(1);
-    const item = workoutItems[0];
-
-    expect(item).toHaveProperty("exercise");
-    expect(item).toHaveProperty("completed", false);
-  });
-
-  it("should return different workout items on subsequent calls", () => {
-    const workoutItems1 = getRandomWorkoutItems(3);
-    const workoutItems2 = getRandomWorkoutItems(3);
-
-    // Compare the exercise IDs to check if they're different
-    const ids1 = workoutItems1.map((item) => item.exercise.id);
-    const ids2 = workoutItems2.map((item) => item.exercise.id);
-    expect(ids1).not.toEqual(ids2);
-  });
-
-  it("should return an empty array when count is 0", () => {
-    const workoutItems = getRandomWorkoutItems(0);
-    expect(workoutItems).toHaveLength(0);
-  });
-});
-
-// Test for unique exercise IDs
-describe("Exercise ID uniqueness", () => {
-  it("should have unique IDs for all exercises across all collections", () => {
-    const ids = allExercises.map((exercise) => exercise.id);
-    const uniqueIds = new Set(ids);
-
-    // Check if any IDs are undefined or null
-    expect(
-      ids.every((id) => id !== undefined && id !== null),
-      "Some exercises are missing IDs",
-    ).toBe(true);
-
-    // Find and report duplicates before the assertion
-    if (uniqueIds.size !== allExercises.length) {
-      const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
-      const uniqueDuplicates = [...new Set(duplicates)];
-      console.error("Duplicate IDs:", uniqueDuplicates);
-
-      // For each duplicate ID, find the exercises that use it
-      uniqueDuplicates.forEach((dupId) => {
-        const exercisesWithDupId = allExercises.filter((ex) => ex.id === dupId);
-        console.error(
-          `Exercises with ID "${dupId}":`,
-          exercisesWithDupId.map((ex) => ex.title),
-        );
+describe("exercises", () => {
+  describe("getExercisesByMuscle", () => {
+    it("should return exercises that target the specified muscle group", () => {
+      const exercises = getExercisesByMuscle(Muscles.CHEST);
+      expect(exercises.length).toBeGreaterThan(0);
+      exercises.forEach((exercise) => {
+        expect(exercise.muscles).toContain(Muscles.CHEST);
       });
-    }
+    });
 
-    // Then check if the number of unique IDs matches the total number of exercises
-    expect(
-      uniqueIds.size,
-      `Duplicate IDs found. Total exercises: ${allExercises.length}, Unique IDs: ${uniqueIds.size}`,
-    ).toBe(allExercises.length);
-  });
-});
-
-// Test filterExercises function
-describe("filterExercises", () => {
-  it("should filter exercises by muscle group", () => {
-    const filters = {
-      muscles: [Muscles.CHEST],
-    };
-    const exercises = filterExercises(filters);
-    expect(exercises.length).toBeGreaterThan(0);
-    expect(
-      exercises.every((exercise) => exercise.muscles.includes(Muscles.CHEST)),
-    ).toBe(true);
+    it("should return an empty array for an invalid muscle group", () => {
+      const exercises = getExercisesByMuscle("invalid_muscle" as Muscles);
+      expect(exercises).toHaveLength(0);
+    });
   });
 
-  it("should filter exercises by equipment", () => {
-    const filters = {
-      equipment: [Equipment.DUMBBELLS],
-    };
-    const exercises = filterExercises(filters);
-    expect(exercises.length).toBeGreaterThan(0);
-    expect(
-      exercises.every((exercise) =>
-        exercise.equipment?.includes(Equipment.DUMBBELLS),
-      ),
-    ).toBe(true);
+  describe("getExercisesByEquipment", () => {
+    it("should return exercises that use the specified equipment", () => {
+      const exercises = getExercisesByEquipment(Equipment.DUMBBELLS);
+      expect(exercises.length).toBeGreaterThan(0);
+      exercises.forEach((exercise) => {
+        expect(exercise.equipment).toContain(Equipment.DUMBBELLS);
+      });
+    });
+
+    it("should return an empty array for an invalid equipment type", () => {
+      const exercises = getExercisesByEquipment(
+        "invalid_equipment" as Equipment,
+      );
+      expect(exercises).toHaveLength(0);
+    });
   });
 
-  it("should filter exercises by both muscle and equipment", () => {
-    const filters = {
-      muscles: [Muscles.CHEST],
-      equipment: [Equipment.DUMBBELLS],
-    };
-    const exercises = filterExercises(filters);
-    expect(exercises.length).toBeGreaterThan(0);
-    expect(
-      exercises.every(
-        (exercise) =>
-          exercise.muscles.includes(Muscles.CHEST) &&
-          exercise.equipment?.includes(Equipment.DUMBBELLS),
-      ),
-    ).toBe(true);
+  describe("Exercise ID uniqueness", () => {
+    it("should have unique IDs for all exercises across all collections", () => {
+      const ids = new Set<string>();
+      const duplicates: string[] = [];
+
+      allExercises.forEach((exercise) => {
+        // Ensure id is not undefined before processing
+        const exerciseId = exercise.id;
+        if (exerciseId && ids.has(exerciseId)) {
+          duplicates.push(exerciseId);
+        }
+        if (exerciseId) {
+          ids.add(exerciseId);
+        }
+      });
+
+      expect(duplicates).toHaveLength(0);
+      if (duplicates.length > 0) {
+        console.error(`Found duplicate exercise IDs: ${duplicates.join(", ")}`);
+      }
+    });
   });
 
-  it("should return all exercises when no filters are provided", () => {
-    const filters = {};
-    const exercises = filterExercises(filters);
-    expect(exercises).toEqual(allExercises);
+  describe("filterExercises", () => {
+    it("should filter exercises by muscle group", () => {
+      const filters = {
+        muscles: [Muscles.CHEST],
+      };
+
+      const filteredExercises = filterExercises(filters);
+      expect(filteredExercises.length).toBeGreaterThan(0);
+      filteredExercises.forEach((exercise) => {
+        expect(exercise.muscles).toContain(Muscles.CHEST);
+      });
+    });
+
+    it("should filter exercises by equipment", () => {
+      const filters = {
+        equipment: [Equipment.DUMBBELLS],
+      };
+
+      const filteredExercises = filterExercises(filters);
+      expect(filteredExercises.length).toBeGreaterThan(0);
+      filteredExercises.forEach((exercise) => {
+        expect(exercise.equipment).toContain(Equipment.DUMBBELLS);
+      });
+    });
+
+    it("should filter exercises by both muscle and equipment", () => {
+      const filters = {
+        muscles: [Muscles.CHEST],
+        equipment: [Equipment.DUMBBELLS],
+      };
+
+      const filteredExercises = filterExercises(filters);
+      expect(filteredExercises.length).toBeGreaterThan(0);
+      filteredExercises.forEach((exercise) => {
+        expect(exercise.muscles).toContain(Muscles.CHEST);
+        expect(exercise.equipment).toContain(Equipment.DUMBBELLS);
+      });
+    });
+
+    it("should return all exercises when no filters are provided", () => {
+      const filters = {};
+      const filteredExercises = filterExercises(filters);
+      expect(filteredExercises).toEqual(allExercises);
+    });
+
+    it("should return empty array when no exercises match filters", () => {
+      const filters = {
+        muscles: ["nonexistent_muscle" as Muscles],
+      };
+      const filteredExercises = filterExercises(filters);
+      expect(filteredExercises).toHaveLength(0);
+    });
   });
 
-  it("should return empty array when no exercises match filters", () => {
-    const filters = {
-      muscles: [Muscles.CHEST],
-      equipment: ["invalid" as Equipment],
-    };
-    const exercises = filterExercises(filters);
-    expect(exercises).toHaveLength(0);
-  });
-});
+  describe("getExerciseById", () => {
+    it("should return an exercise when given a valid ID", () => {
+      // Find first exercise with a defined ID
+      const exerciseWithId = allExercises.find((ex) => ex.id !== undefined);
+      if (!exerciseWithId || !exerciseWithId.id) {
+        // Skip test if no exercises with IDs available
+        console.warn("No exercises with IDs available to test");
+        return;
+      }
 
-// Test getFilteredRandomExercises function
-describe("getFilteredRandomExercises", () => {
-  it("should return the specified number of filtered exercises", () => {
-    const filters = {
-      muscles: [Muscles.CHEST],
-    };
-    const exercises = getFilteredRandomExercises(filters, 3);
-    expect(exercises).toHaveLength(3);
-    expect(
-      exercises.every((exercise) => exercise.muscles.includes(Muscles.CHEST)),
-    ).toBe(true);
-  });
+      const validId = exerciseWithId.id;
+      const exercise = getExerciseById(validId);
+      expect(exercise).toBeDefined();
+      expect(exercise?.id).toBe(validId);
+    });
 
-  it("should return different exercises on subsequent calls", () => {
-    const filters = {
-      muscles: [Muscles.CHEST],
-    };
-    const exercises1 = getFilteredRandomExercises(filters, 3);
-    const exercises2 = getFilteredRandomExercises(filters, 3);
-
-    // Convert to IDs for comparison
-    const ids1 = exercises1.map((ex) => ex.id);
-    const ids2 = exercises2.map((ex) => ex.id);
-    expect(ids1).not.toEqual(ids2);
+    it("should return null when given a non-existent ID", () => {
+      const exercise = getExerciseById("non-existent-id");
+      expect(exercise).toBeNull();
+    });
   });
 
-  it("should return all matching exercises when count exceeds available exercises", () => {
-    const filters = {
-      muscles: [Muscles.CHEST],
-      equipment: [Equipment.DUMBBELLS],
-    };
-    const exercises = getFilteredRandomExercises(filters, 100);
-    const allMatchingExercises = filterExercises(filters);
-    expect(exercises).toHaveLength(allMatchingExercises.length);
-  });
+  describe("getFilteredRandomExercisesForRecoveredMuscles", () => {
+    beforeEach(() => {
+      vi.resetAllMocks();
+    });
 
-  it("should return empty array when no exercises match filters", () => {
-    const filters = {
-      muscles: [Muscles.CHEST],
-      equipment: ["invalid" as Equipment],
-    };
-    const exercises = getFilteredRandomExercises(filters, 3);
-    expect(exercises).toHaveLength(0);
+    it("should return exercises that target only recovered muscles", async () => {
+      // Mock recovered muscles
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
+        {
+          id: Muscles.CHEST,
+          status: MuscleRecoveryStatus.RECOVERED,
+          last_trained: new Date(),
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+        {
+          id: Muscles.BICEPS,
+          status: MuscleRecoveryStatus.RECOVERED,
+          last_trained: new Date(),
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+        {
+          id: Muscles.QUADRICEPS as Muscles,
+          status: MuscleRecoveryStatus.RECOVERING,
+          last_trained: new Date(),
+          recovery_percentage: 50,
+          exercise_count: 0,
+        },
+      ]);
+
+      const filters = {};
+      const result = await getFilteredRandomExercisesForRecoveredMuscles(
+        filters,
+        3,
+      );
+
+      // Verify results only include exercises targeting recovered muscles
+      result.forEach((exercise) => {
+        // Every targeted muscle should be in the recovered set
+        expect(
+          exercise.muscles.every(
+            (muscle) => muscle === Muscles.CHEST || muscle === Muscles.BICEPS,
+          ),
+        ).toBeTruthy();
+      });
+
+      expect(getMuscleRecoveryStatusForAllMuscles).toHaveBeenCalledTimes(1);
+    });
+
+    it("should apply provided filters along with recovery status", async () => {
+      // Mock recovered muscles
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
+        {
+          id: Muscles.CHEST,
+          status: MuscleRecoveryStatus.RECOVERED,
+          last_trained: new Date(),
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+        {
+          id: Muscles.BICEPS,
+          status: MuscleRecoveryStatus.RECOVERED,
+          last_trained: new Date(),
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+        {
+          id: Muscles.QUADRICEPS,
+          status: MuscleRecoveryStatus.RECOVERING,
+          last_trained: null,
+          recovery_percentage: 100,
+          exercise_count: 5,
+        },
+      ]);
+
+      const filters = {
+        equipment: [Equipment.DUMBBELLS],
+      };
+
+      const result = await getFilteredRandomExercisesForRecoveredMuscles(
+        filters,
+        3,
+      );
+
+      // Verify results match both filters and recovery status
+      result.forEach((exercise) => {
+        // Should only have recovered muscles
+        expect(
+          exercise.muscles.every(
+            (muscle) => muscle === Muscles.CHEST || muscle === Muscles.BICEPS,
+          ),
+        ).toBeTruthy();
+
+        // Should only use dumbbells equipment
+        expect(exercise.equipment).toBeDefined();
+        expect(exercise.equipment!.includes(Equipment.DUMBBELLS)).toBeTruthy();
+      });
+    });
+
+    it("should return an empty array when no muscles are recovered", async () => {
+      // Mock with no recovered muscles
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
+        {
+          id: Muscles.CHEST,
+          status: MuscleRecoveryStatus.RECOVERING,
+          last_trained: null,
+          recovery_percentage: 50,
+          exercise_count: 0,
+        },
+        {
+          id: Muscles.BICEPS,
+          status: MuscleRecoveryStatus.RECOVERING,
+          last_trained: null,
+          recovery_percentage: 50,
+          exercise_count: 0,
+        },
+      ]);
+
+      const filters = {};
+      const result = await getFilteredRandomExercisesForRecoveredMuscles(
+        filters,
+        3,
+      );
+
+      expect(result).toEqual([]);
+    });
+
+    it("should limit results to the specified count", async () => {
+      // Mock all muscles as recovered to ensure we have enough exercises
+      const allMuscleValues = Object.values(Muscles);
+      const allRecovered = allMuscleValues.map((muscle) => ({
+        id: muscle,
+        status: MuscleRecoveryStatus.RECOVERED,
+        last_trained: null,
+        recovery_percentage: 100,
+        exercise_count: 0,
+      }));
+
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue(
+        allRecovered,
+      );
+
+      const count = 2;
+      const result = await getFilteredRandomExercisesForRecoveredMuscles(
+        {},
+        count,
+      );
+
+      expect(result.length).toBeLessThanOrEqual(count);
+    });
   });
 });
