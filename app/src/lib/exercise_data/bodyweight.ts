@@ -1,4 +1,4 @@
-import type { ExerciseDetails } from "../types";
+import type { ExerciseDetails } from "$lib/exercises";
 import { Joints } from "$lib/joints";
 import { Muscles } from "$lib/muscles";
 

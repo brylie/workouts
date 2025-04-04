@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { Equipment, type EquipmentDetails } from "./equipment";
 import { Muscles } from "./muscles";
-import type { ExerciseDetails, Workout, WorkoutItem } from "./types";
+import type { ExerciseDetails } from "./exercises";
+import type { Workout, WorkoutItem } from "./workouts";
 
 describe("types.ts", () => {
   it("should define EquipmentDetails interface", () => {
@@ -65,7 +66,7 @@ describe("types.ts", () => {
       sets: 3,
       reps: 10,
       weight: 0,
-      time: "30s",
+      time: 30,
     };
     expect(workoutItem).toBeDefined();
     expect(workoutItem.exercise.id).toBe("push-up");
@@ -100,7 +101,7 @@ describe("types.ts", () => {
           sets: 3,
           reps: 10,
           weight: 0,
-          time: "30s",
+          time: 30,
         },
       ],
       notes: "Great workout!",

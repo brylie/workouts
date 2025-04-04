@@ -4,15 +4,12 @@
     updateWorkoutItem as updateWorkoutItemService,
     getWorkoutItemMetrics,
   } from "$lib/workouts";
-  import type {
-    WorkoutItem,
-    CompletedExerciseV2,
-    ExerciseFilters,
-  } from "$lib/types";
+  import type { WorkoutItem } from "$lib/workouts";
   import { saveCompletedExercise } from "$lib/database";
   import { browser } from "$app/environment";
   import WorkoutItemComponent from "$lib/components/WorkoutItem.svelte";
   import ExerciseFilter from "$lib/components/ExerciseFilter.svelte";
+  import type { ExerciseFilters, CompletedExerciseV2 } from "$lib/exercises";
 
   let numberOfExercises = $state(5);
   let generatedWorkout = $state<WorkoutItem[]>([]);

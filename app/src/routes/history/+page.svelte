@@ -3,7 +3,8 @@
     getCompletedExercisesByDateRange,
     deleteCompletedExercise,
   } from "$lib/database";
-  import type { CompletedExerciseV2 } from "$lib/types";
+  import type { CompletedExerciseV2 } from "$lib/exercises";
+
   import { onMount } from "svelte";
 
   let startDate: string;
@@ -112,32 +113,32 @@
           <thead class="border-b border-gray-700">
             <tr>
               <th
-                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
+                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
               >
                 Date
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
+                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
               >
                 Exercise ID
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
+                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
               >
                 Sets
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
+                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
               >
                 Reps
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
+                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
               >
                 Weight
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
+                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
               >
                 Time
               </th>
@@ -146,24 +147,24 @@
           <tbody class="divide-y divide-gray-700">
             {#each completedExercises as exercise}
               <tr>
-                <td class="px-6 py-4 text-sm whitespace-nowrap">
+                <td class="whitespace-nowrap px-6 py-4 text-sm">
                   {formatDate(exercise.completed_at)}
                 </td>
-                <td class="px-6 py-4 text-sm whitespace-nowrap">
+                <td class="whitespace-nowrap px-6 py-4 text-sm">
                   {exercise.exercise_id}
                 </td>
-                <td class="px-6 py-4 text-sm whitespace-nowrap">
+                <td class="whitespace-nowrap px-6 py-4 text-sm">
                   {exercise.metrics.sets ?? "-"}
                 </td>
-                <td class="px-6 py-4 text-sm whitespace-nowrap">
+                <td class="whitespace-nowrap px-6 py-4 text-sm">
                   {exercise.metrics.reps ?? "-"}
                 </td>
-                <td class="px-6 py-4 text-sm whitespace-nowrap">
+                <td class="whitespace-nowrap px-6 py-4 text-sm">
                   {exercise.metrics.weight
                     ? `${exercise.metrics.weight}kg`
                     : "-"}
                 </td>
-                <td class="px-6 py-4 text-sm whitespace-nowrap">
+                <td class="whitespace-nowrap px-6 py-4 text-sm">
                   {exercise.metrics.time ?? "-"}
                 </td>
               </tr>

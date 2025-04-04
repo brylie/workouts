@@ -12,6 +12,7 @@ import { Muscles } from "$lib/muscles";
 import {
   getMuscleRecoveryStatusForAllMuscles,
   MuscleRecoveryStatus,
+  type MuscleRecovery,
 } from "./recovery";
 
 vi.mock("$lib/recovery", () => ({
@@ -21,6 +22,47 @@ vi.mock("$lib/recovery", () => ({
     RECOVERING: "RECOVERING",
   },
 }));
+
+// Test fixtures for muscle recovery data
+const createMuscleRecovery = (
+  muscleId: string,
+  status: MuscleRecoveryStatus,
+  overrides: Partial<MuscleRecovery> = {},
+): MuscleRecovery => ({
+  id: muscleId,
+  name: muscleId.charAt(0).toUpperCase() + muscleId.slice(1).toLowerCase(),
+  status,
+  lastTrainedDate: new Date(),
+  recoveryPercentage: status === MuscleRecoveryStatus.RECOVERED ? 100 : 50,
+  exerciseCount: status === MuscleRecoveryStatus.RECOVERED ? 0 : 1,
+  muscleGroup:
+    muscleId.includes("QUAD") || muscleId.includes("HAMSTRINGS")
+      ? "Lower Body"
+      : "Upper Body",
+  recoveryHours: 48,
+  ...overrides,
+});
+
+// Common recovery status fixtures
+const createRecoveryFixtures = {
+  allRecovered: () => [
+    createMuscleRecovery(Muscles.CHEST, MuscleRecoveryStatus.RECOVERED),
+    createMuscleRecovery(Muscles.BICEPS, MuscleRecoveryStatus.RECOVERED),
+    createMuscleRecovery(Muscles.QUADRICEPS, MuscleRecoveryStatus.RECOVERED),
+  ],
+
+  mixedRecoveryStatus: () => [
+    createMuscleRecovery(Muscles.CHEST, MuscleRecoveryStatus.RECOVERED),
+    createMuscleRecovery(Muscles.BICEPS, MuscleRecoveryStatus.RECOVERED),
+    createMuscleRecovery(Muscles.QUADRICEPS, MuscleRecoveryStatus.RECOVERING),
+  ],
+
+  noneRecovered: () => [
+    createMuscleRecovery(Muscles.CHEST, MuscleRecoveryStatus.RECOVERING),
+    createMuscleRecovery(Muscles.BICEPS, MuscleRecoveryStatus.RECOVERING),
+    createMuscleRecovery(Muscles.QUADRICEPS, MuscleRecoveryStatus.RECOVERING),
+  ],
+};
 
 describe("exercises", () => {
   describe("getExercisesByMuscle", () => {
@@ -161,29 +203,9 @@ describe("exercises", () => {
 
     it("should return exercises that target only recovered muscles", async () => {
       // Mock recovered muscles
-      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
-        {
-          id: Muscles.CHEST,
-          status: MuscleRecoveryStatus.RECOVERED,
-          last_trained: new Date(),
-          recovery_percentage: 100,
-          exercise_count: 5,
-        },
-        {
-          id: Muscles.BICEPS,
-          status: MuscleRecoveryStatus.RECOVERED,
-          last_trained: new Date(),
-          recovery_percentage: 100,
-          exercise_count: 5,
-        },
-        {
-          id: Muscles.QUADRICEPS as Muscles,
-          status: MuscleRecoveryStatus.RECOVERING,
-          last_trained: new Date(),
-          recovery_percentage: 50,
-          exercise_count: 0,
-        },
-      ]);
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue(
+        createRecoveryFixtures.mixedRecoveryStatus(),
+      );
 
       const filters = {};
       const result = await getFilteredRandomExercisesForRecoveredMuscles(
@@ -206,29 +228,9 @@ describe("exercises", () => {
 
     it("should apply provided filters along with recovery status", async () => {
       // Mock recovered muscles
-      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
-        {
-          id: Muscles.CHEST,
-          status: MuscleRecoveryStatus.RECOVERED,
-          last_trained: new Date(),
-          recovery_percentage: 100,
-          exercise_count: 5,
-        },
-        {
-          id: Muscles.BICEPS,
-          status: MuscleRecoveryStatus.RECOVERED,
-          last_trained: new Date(),
-          recovery_percentage: 100,
-          exercise_count: 5,
-        },
-        {
-          id: Muscles.QUADRICEPS,
-          status: MuscleRecoveryStatus.RECOVERING,
-          last_trained: null,
-          recovery_percentage: 100,
-          exercise_count: 5,
-        },
-      ]);
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue(
+        createRecoveryFixtures.mixedRecoveryStatus(),
+      );
 
       const filters = {
         equipment: [Equipment.DUMBBELLS],
@@ -256,22 +258,9 @@ describe("exercises", () => {
 
     it("should return an empty array when no muscles are recovered", async () => {
       // Mock with no recovered muscles
-      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue([
-        {
-          id: Muscles.CHEST,
-          status: MuscleRecoveryStatus.RECOVERING,
-          last_trained: null,
-          recovery_percentage: 50,
-          exercise_count: 0,
-        },
-        {
-          id: Muscles.BICEPS,
-          status: MuscleRecoveryStatus.RECOVERING,
-          last_trained: null,
-          recovery_percentage: 50,
-          exercise_count: 0,
-        },
-      ]);
+      vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue(
+        createRecoveryFixtures.noneRecovered(),
+      );
 
       const filters = {};
       const result = await getFilteredRandomExercisesForRecoveredMuscles(
@@ -284,17 +273,8 @@ describe("exercises", () => {
 
     it("should limit results to the specified count", async () => {
       // Mock all muscles as recovered to ensure we have enough exercises
-      const allMuscleValues = Object.values(Muscles);
-      const allRecovered = allMuscleValues.map((muscle) => ({
-        id: muscle,
-        status: MuscleRecoveryStatus.RECOVERED,
-        last_trained: null,
-        recovery_percentage: 100,
-        exercise_count: 0,
-      }));
-
       vi.mocked(getMuscleRecoveryStatusForAllMuscles).mockResolvedValue(
-        allRecovered,
+        createRecoveryFixtures.allRecovered(),
       );
 
       const count = 2;

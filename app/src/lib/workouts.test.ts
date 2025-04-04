@@ -4,11 +4,14 @@ import {
   getFilteredWorkoutItemsForRecoveredMuscles,
   updateWorkoutItem,
   getWorkoutItemMetrics,
+  type WorkoutItem,
 } from "$lib/workouts";
 import { Equipment } from "$lib/equipment";
 import { Muscles } from "$lib/muscles";
-import type { ExerciseDetails, WorkoutItem } from "$lib/types";
-import { getFilteredRandomExercisesForRecoveredMuscles } from "./exercises";
+import {
+  getFilteredRandomExercisesForRecoveredMuscles,
+  type ExerciseDetails,
+} from "./exercises";
 
 // Mock the exercises module
 vi.mock("$lib/exercises", () => ({

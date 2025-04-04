@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { ExerciseFilters } from "$lib/types";
   import { Equipment, equipmentList } from "$lib/equipment";
+  import type { ExerciseFilters } from "$lib/exercises";
   import { Muscles, musclesList } from "$lib/muscles";
 
   const {

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { allExercises } from "$lib/exercises";
-  import type { ExerciseFilters } from "$lib/types";
+  import { allExercises, type ExerciseFilters } from "$lib/exercises";
+
   import ExerciseFilter from "$lib/components/ExerciseFilter.svelte";
 
   let filters = $state<ExerciseFilters>({

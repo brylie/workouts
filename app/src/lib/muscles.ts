@@ -155,6 +155,8 @@ export const musclesRegistry: Record<Muscles, MuscleDetails> = {
   [Muscles.HIP_FLEXORS]: {
     id: Muscles.HIP_FLEXORS,
     name: "Hip Flexors",
+    recoveryHours: 48,
+    muscleGroup: MuscleGroups.LOWER_BODY,
   },
 };
 

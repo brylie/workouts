@@ -1,9 +1,9 @@
 import { describe, test, expect, vi } from "vitest";
 import { render, fireEvent } from "@testing-library/svelte";
 import ExerciseFilter from "./ExerciseFilter.svelte";
-import type { ExerciseFilters } from "../types";
 import { Muscles, musclesList } from "../muscles";
 import { Equipment } from "../equipment";
+import type { ExerciseFilters } from "$lib/exercises";
 
 describe("ExerciseFilter", () => {
   const defaultFilters: ExerciseFilters = {
