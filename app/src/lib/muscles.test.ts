@@ -20,20 +20,8 @@ describe("muscles", () => {
     });
 
     it("should return details for all muscle types", () => {
-      // First log all muscle types for debugging
-      console.log("All muscle types:", Object.values(Muscles));
-      console.log("Registry keys:", Object.keys(musclesRegistry));
-
       Object.values(Muscles).forEach((muscleType) => {
         const details = getMuscleDetails(muscleType);
-
-        // More detailed debugging before assertions
-        console.log(`Testing muscle type: ${muscleType}`, {
-          details,
-          hasDetails: !!details,
-          recoveryHours: details?.recovery_hours,
-          typeOfRecoveryHours: details ? typeof details.recovery_hours : "N/A",
-        });
 
         try {
           expect(details).toBeDefined();
