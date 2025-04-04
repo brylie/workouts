@@ -165,6 +165,23 @@ describe("Recovery module", () => {
       expect(result).toBe(50);
     });
 
+    it("should use default recovery hours when recoveryHours is zero or negative", () => {
+      // Set last training to 12 hours ago, since default recovery is 24 hours
+      // this should be 50% recovered
+      const trainedRecently = new Date(NOW.getTime() - 12 * 60 * 60 * 1000);
+
+      // Default recovery time is 24 hours, so this should be 50% recovered
+      const resultWithZero = calculateRecoveryPercentage(trainedRecently, 0);
+      expect(resultWithZero).toBe(50);
+
+      // Test with negative value too
+      const resultWithNegative = calculateRecoveryPercentage(
+        trainedRecently,
+        -5,
+      );
+      expect(resultWithNegative).toBe(50);
+    });
+
     it("should return 100% when full recovery time has passed", () => {
       // Set last training to 48 hours ago with 48 hour recovery period
       const fullyRecovered = new Date(NOW.getTime() - 48 * 60 * 60 * 1000);

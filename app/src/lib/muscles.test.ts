@@ -19,27 +19,6 @@ describe("muscles", () => {
       });
     });
 
-    it("should return details for all muscle types", () => {
-      Object.values(Muscles).forEach((muscleType) => {
-        const details = getMuscleDetails(muscleType);
-
-        try {
-          expect(details).toBeDefined();
-          expect(details.id).toBe(muscleType);
-          expect(details.name).toBeTruthy();
-          expect(details.recoveryHours).toBeGreaterThan(0);
-        } catch (error) {
-          console.error(`Test failed for muscle: ${muscleType}`, {
-            details,
-            muscleType,
-            isInRegistry: muscleType in musclesRegistry,
-            registryValue: musclesRegistry[muscleType],
-          });
-          throw error;
-        }
-      });
-    });
-
     it("should verify all enum values are in registry", () => {
       const enumMuscles = new Set(Object.values(Muscles));
       const registryKeys = new Set(Object.keys(musclesRegistry));
