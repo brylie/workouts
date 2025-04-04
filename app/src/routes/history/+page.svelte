@@ -113,32 +113,32 @@
           <thead class="border-b border-gray-700">
             <tr>
               <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
               >
                 Date
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
               >
                 Exercise ID
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
               >
                 Sets
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
               >
                 Reps
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
               >
                 Weight
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-300 uppercase"
               >
                 Time
               </th>
@@ -147,24 +147,24 @@
           <tbody class="divide-y divide-gray-700">
             {#each completedExercises as exercise}
               <tr>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
+                <td class="px-6 py-4 text-sm whitespace-nowrap">
                   {formatDate(exercise.completed_at)}
                 </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
+                <td class="px-6 py-4 text-sm whitespace-nowrap">
                   {exercise.exercise_id}
                 </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
+                <td class="px-6 py-4 text-sm whitespace-nowrap">
                   {exercise.metrics.sets ?? "-"}
                 </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
+                <td class="px-6 py-4 text-sm whitespace-nowrap">
                   {exercise.metrics.reps ?? "-"}
                 </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
+                <td class="px-6 py-4 text-sm whitespace-nowrap">
                   {exercise.metrics.weight
                     ? `${exercise.metrics.weight}kg`
                     : "-"}
                 </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
+                <td class="px-6 py-4 text-sm whitespace-nowrap">
                   {exercise.metrics.time ?? "-"}
                 </td>
               </tr>
