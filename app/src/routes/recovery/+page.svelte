@@ -28,6 +28,7 @@
     muscleGroup: MuscleGroups;
     status: MuscleRecoveryStatus;
     lastTrained: Date | null;
+    recoveryHours: number;
     recoveryPercentage: number;
     exerciseCount: number;
   }
@@ -91,12 +92,14 @@
         const muscleId = String(muscle.id);
         let muscleName = muscleId;
         let muscleGroup = MuscleGroups.UPPER_BODY; // Default
+        let recoveryHours = 0; // Default recovery hours
 
         // Try to find muscle details in registry
         const muscleDetail = musclesList.find((m) => m.id === muscle.id);
         if (muscleDetail) {
           muscleName = muscleDetail.name;
           muscleGroup = muscleDetail.muscle_group;
+          recoveryHours = muscleDetail.recovery_hours;
         }
 
         return {
@@ -107,6 +110,7 @@
           lastTrained: muscle.last_trained,
           recoveryPercentage: muscle.recovery_percentage,
           exerciseCount: muscle.exercise_count,
+          recoveryHours: recoveryHours,
         };
       });
 
@@ -224,17 +228,18 @@
           <tr>
             <th>Muscle Name</th>
             <th>Last Trained</th>
+            <th class="text-center">Recovery time (hours)</th>
             <th>Recovery Status</th>
-            <th>Exercise Count</th>
+            <th class="text-center">Exercise Count</th>
             <th>Recovery %</th>
           </tr>
         </thead>
         <tbody>
           {#each muscleGroupsOrder as muscleGroup}
             <!-- Muscle Group Header -->
-            <tr class="bg-base-200">
+            <tr class="bg-gray-800">
               <td
-                colspan="5"
+                colspan="6"
                 class="text-lg font-bold text-blue-400"
                 id="muscle-group-{muscleGroup.replace(/\s+/g, '-')}"
               >
@@ -247,6 +252,9 @@
               <tr class="hover" id="muscle-row-{muscle.id}">
                 <td>{muscle.name}</td>
                 <td>{formatDate(muscle.lastTrained)}</td>
+                <td class="text-center">
+                  <span class="font-mono">{muscle.recoveryHours}</span>
+                </td>
                 <td>
                   <div
                     class="badge {getStatusClasses(muscle.status)} p-3 text-xs"
@@ -254,8 +262,10 @@
                     {muscle.status}
                   </div>
                 </td>
-                <td>
-                  <span class="font-mono">{muscle.exerciseCount}</span>
+                <td class="text-center">
+                  <span class="text-center font-mono"
+                    >{muscle.exerciseCount}</span
+                  >
                 </td>
                 <td>
                   <div class="flex items-center">
