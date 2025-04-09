@@ -260,6 +260,20 @@ export const dumbbellExercises: ExerciseDetails[] = [
       hasTime: false,
     },
   },
+  {
+    id: "dumbbell-farmer-carry",
+    title: "Dumbbell Farmer Carry",
+    muscles: [Muscles.FOREARMS],
+    equipment: [Equipment.DUMBBELLS],
+    description:
+      "Walking while holding dumbbells at your sides to improve grip strength and core stability.",
+    metrics: {
+      hasSets: false,
+      hasReps: false,
+      hasWeight: true,
+      hasTime: true,
+    },
+  },
   // Shoulder exercises
   {
     id: "dumbbell-shoulder-press",
@@ -339,6 +353,20 @@ export const dumbbellExercises: ExerciseDetails[] = [
     muscles: [Muscles.LATS, Muscles.TRAPEZIUS, Muscles.BICEPS],
     equipment: [Equipment.DUMBBELLS, Equipment.BENCH],
     description: "Single-arm rowing movement targeting the back muscles.",
+    metrics: {
+      hasSets: true,
+      hasReps: true,
+      hasWeight: true,
+      hasTime: false,
+    },
+  },
+  {
+    id: "renegade-row",
+    title: "Renegade Row",
+    muscles: [Muscles.LATS, Muscles.TRAPEZIUS, Muscles.BICEPS],
+    equipment: [Equipment.DUMBBELLS],
+    description:
+      "Plank position row with dumbbells, engaging the back and core muscles.",
     metrics: {
       hasSets: true,
       hasReps: true,
