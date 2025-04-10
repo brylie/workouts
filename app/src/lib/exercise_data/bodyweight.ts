@@ -400,4 +400,22 @@ export const bodyweightExercises: ExerciseDetails[] = [
       hasTime: false,
     },
   },
+  {
+    id: "swimming",
+    title: "Swimming",
+    muscles: [
+      Muscles.LOWER_BACK,
+      Muscles.UPPER_BACK,
+      Muscles.GLUTES,
+      Muscles.SHOULDERS,
+    ],
+    description:
+      "Lying on your stomach, lift arms and legs off the mat and flutter them in an alternating pattern, as if swimming.",
+    metrics: {
+      hasSets: true,
+      hasReps: false,
+      hasWeight: false,
+      hasTime: true,
+    },
+  },
 ];

@@ -3,8 +3,6 @@ import { dumbbellExercises } from "$lib/exercise_data/dumbbells";
 import { machineExercises } from "$lib/exercise_data/machines";
 import { kettlebellExercises } from "$lib/exercise_data/kettlebell";
 import { bodyweightExercises } from "$lib/exercise_data/bodyweight";
-import { pilatesExercises } from "$lib/exercise_data/pilates";
-import { yogaPoses } from "$lib/exercise_data/yoga";
 import type { Muscles } from "$lib/muscles";
 import type { Equipment } from "$lib/equipment";
 import {
@@ -105,8 +103,6 @@ export const allExercises: ExerciseDetails[] = [
   ...dumbbellExercises,
   ...kettlebellExercises,
   ...bodyweightExercises,
-  ...pilatesExercises,
-  ...yogaPoses,
 ];
 
 /**
