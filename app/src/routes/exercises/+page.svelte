@@ -37,6 +37,8 @@
     [...filteredExercises].sort((a, b) => a.title.localeCompare(b.title)),
   );
 
+  const exerciseCount = $derived(filteredExercises.length);
+
   function handleFilterChange(newFilters: ExerciseFilters) {
     filters.muscles = newFilters.muscles;
     filters.equipment = newFilters.equipment;
@@ -46,10 +48,18 @@
 <div class="min-h-screen bg-gray-900 text-white">
   <div class="container mx-auto px-4 py-8">
     <h1 class="mb-8 text-4xl font-bold">Exercise Library</h1>
+    <p class="mb-4 text-lg">
+      Explore our extensive library of exercises to find the perfect workout for
+      you.
+    </p>
 
     <div class="mb-8">
       <ExerciseFilter {filters} onFilterChange={handleFilterChange} />
     </div>
+
+    <p class="mb-4 text-lg">
+      Showing <strong>{exerciseCount}</strong> exercises
+    </p>
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {#each sortedExercises as exercise}
