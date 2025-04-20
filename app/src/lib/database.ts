@@ -4,6 +4,16 @@ import type {
   CompletedExerciseV1,
   CompletedExerciseV2,
 } from "./exercises";
+import { user } from "$lib/supabase/client";
+import { getCurrentUserId } from "$lib/supabase/auth";
+import {
+  saveCompletedExerciseToSupabase,
+  getCompletedExercisesByExerciseIdFromSupabase,
+  getCompletedExercisesByDateRangeFromSupabase,
+  deleteCompletedExerciseFromSupabase,
+  syncExercisesToSupabase,
+} from "$lib/database/supabase-repository";
+import { get } from "svelte/store";
 
 /**
  * Dexie database class for workout data.
@@ -91,14 +101,27 @@ export function migrateExerciseV1ToV2(
 }
 
 /**
- * Save a completed exercise to the database
+ * Check if the user is authenticated and should use Supabase storage
+ * @returns Boolean indicating whether to use Supabase
+ */
+function useSupabase(): boolean {
+  return !!getCurrentUserId();
+}
+
+/**
+ * Save a completed exercise to the appropriate database
  * @param exercise - The completed exercise to save
  * @returns Promise resolving to the ID of the newly created record
  */
 export async function saveCompletedExercise(
   exercise: CompletedExerciseV2,
 ): Promise<number> {
-  return await db.completedExercises.add(exercise);
+  if (useSupabase()) {
+    const userId = getCurrentUserId()!;
+    return await saveCompletedExerciseToSupabase(exercise, userId);
+  } else {
+    return await db.completedExercises.add(exercise);
+  }
 }
 
 /**
@@ -109,10 +132,18 @@ export async function saveCompletedExercise(
 export async function getCompletedExercisesByExerciseId(
   exerciseId: string,
 ): Promise<CompletedExerciseV2[]> {
-  return await db.completedExercises
-    .where("exercise_id")
-    .equals(exerciseId)
-    .sortBy("completed_at");
+  if (useSupabase()) {
+    const userId = getCurrentUserId()!;
+    return await getCompletedExercisesByExerciseIdFromSupabase(
+      exerciseId,
+      userId,
+    );
+  } else {
+    return await db.completedExercises
+      .where("exercise_id")
+      .equals(exerciseId)
+      .sortBy("completed_at");
+  }
 }
 
 /**
@@ -125,10 +156,19 @@ export async function getCompletedExercisesByDateRange(
   startDate: Date,
   endDate: Date,
 ): Promise<CompletedExerciseV2[]> {
-  return await db.completedExercises
-    .where("completed_at")
-    .between(startDate, endDate)
-    .sortBy("completed_at");
+  if (useSupabase()) {
+    const userId = getCurrentUserId()!;
+    return await getCompletedExercisesByDateRangeFromSupabase(
+      startDate,
+      endDate,
+      userId,
+    );
+  } else {
+    return await db.completedExercises
+      .where("completed_at")
+      .between(startDate, endDate)
+      .sortBy("completed_at");
+  }
 }
 
 /**
@@ -137,5 +177,39 @@ export async function getCompletedExercisesByDateRange(
  * @returns Promise that resolves when deletion is complete
  */
 export async function deleteCompletedExercise(id: number): Promise<void> {
-  await db.completedExercises.delete(id);
+  if (useSupabase()) {
+    const userId = getCurrentUserId()!;
+    await deleteCompletedExerciseFromSupabase(id, userId);
+  } else {
+    await db.completedExercises.delete(id);
+  }
+}
+
+/**
+ * Sync all local exercises to Supabase when a user logs in
+ * @returns Promise that resolves when sync is complete
+ */
+export async function syncLocalExercisesToSupabase(): Promise<void> {
+  if (!useSupabase()) {
+    return; // Don't sync if not authenticated
+  }
+
+  const userId = getCurrentUserId()!;
+  const localExercises = await db.completedExercises.toArray();
+
+  if (localExercises.length > 0) {
+    await syncExercisesToSupabase(localExercises, userId);
+  }
+}
+
+// Subscribe to auth state changes to trigger syncing
+if (typeof window !== "undefined") {
+  user.subscribe((currentUser) => {
+    if (currentUser) {
+      // User just logged in, sync local exercises
+      syncLocalExercisesToSupabase().catch((err) => {
+        console.error("Error syncing local exercises to Supabase:", err);
+      });
+    }
+  });
 }

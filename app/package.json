@@ -20,6 +20,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
     "@vitest/coverage-v8": "3.0.8",
     "dexie": "^4.0.11"
   },
