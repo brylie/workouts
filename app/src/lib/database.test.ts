@@ -3,10 +3,21 @@
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import type { CompletedExerciseV2 } from "./exercises";
+import type { User } from "@supabase/supabase-js";
 
 // Define constants we'll need in the mocks
 const MOCK_SUPABASE_ID = 999;
 const mockUserId = "test-user-123";
+
+// Create a properly typed mock User object with all required properties
+const mockUser: User = {
+  id: mockUserId,
+  app_metadata: {},
+  user_metadata: {},
+  aud: "authenticated",
+  created_at: new Date().toISOString(),
+  email: "test@example.com",
+};
 
 // Mock the Supabase repositories with direct mock functions instead of constants
 vi.mock("$lib/database/supabase-repository", () => ({
@@ -27,12 +38,12 @@ vi.mock("$lib/supabase/auth", () => ({
 // Mock the Supabase user store
 vi.mock("$lib/supabase/client", () => {
   // Create mock store with callbacks array
-  let currentUser = null;
-  const subscribers = [];
+  let currentUser: User | null = null;
+  const subscribers: ((value: User | null) => void)[] = [];
 
   return {
     user: {
-      subscribe: vi.fn((callback) => {
+      subscribe: vi.fn((callback: (value: User | null) => void) => {
         subscribers.push(callback);
         callback(currentUser);
         return () => {
@@ -42,7 +53,7 @@ vi.mock("$lib/supabase/client", () => {
           }
         };
       }),
-      set: vi.fn((newUser) => {
+      set: vi.fn((newUser: User | null) => {
         currentUser = newUser;
         subscribers.forEach((callback) => callback(currentUser));
       }),
@@ -61,7 +72,7 @@ import {
 import * as supabaseRepository from "$lib/database/supabase-repository";
 import { getCurrentUserId } from "$lib/supabase/auth";
 import { user } from "$lib/supabase/client";
-import { db } from "./database"; // Import the db instance to spy on it
+import { db } from "./database";
 
 // Sample test data
 const testExercise: CompletedExerciseV2 = {
@@ -303,7 +314,7 @@ describe("Database Abstraction Layer", () => {
       );
 
       // Simulate a user login by triggering the subscribe callback
-      user.set({ id: mockUserId });
+      user.set(mockUser);
 
       // Wait for any promises to resolve
       await vi.waitFor(() => {

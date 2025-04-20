@@ -11,12 +11,13 @@ import {
   getCurrentUserId,
 } from "./auth";
 import { supabase, user } from "./client";
+import type { User } from "@supabase/supabase-js";
 
 // Mock the Supabase client
 vi.mock("./client", () => {
   const writable = vi.fn(() => {
-    const subscribers = [];
-    let value = null;
+    const subscribers: ((value: User | null) => void)[] = [];
+    let value: User | null = null;
 
     return {
       subscribe: vi.fn((callback) => {
@@ -215,7 +216,14 @@ describe("Supabase Auth Module", () => {
   describe("getCurrentUserId", () => {
     it("should return the user ID when authenticated", () => {
       // Set up a mock authenticated user
-      const mockUser = { id: "auth-user-123" };
+      const mockUser = {
+        id: "auth-user-123",
+        app_metadata: {},
+        user_metadata: {},
+        aud: "authenticated",
+        created_at: new Date().toISOString(),
+        email: "test@example.com",
+      };
       vi.mocked(user.subscribe).mockImplementation((callback) => {
         callback(mockUser);
         return () => {};

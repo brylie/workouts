@@ -2,11 +2,11 @@
  * Tests for Supabase client initialization and user state management
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import type { User } from "@supabase/supabase-js";
 
 // Mock setup - we need to mock the module before importing it
 vi.mock("$lib/supabase/client", () => {
-  // Create a mock store with a setter method for tests
-  let currentUser = null;
+  let currentUser: User | null = null;
   const mockStore = {
     subscribe: vi.fn((callback) => {
       callback(currentUser);
@@ -49,8 +49,15 @@ describe("Supabase Client", () => {
     });
 
     it("should return true when a user is present", () => {
-      // Set a mock user
-      const mockUser = { id: "test-user-123", email: "test@example.com" };
+      // Set a mock user with all required User type properties
+      const mockUser = {
+        id: "test-user-123",
+        email: "test@example.com",
+        app_metadata: {},
+        user_metadata: {},
+        aud: "authenticated",
+        created_at: new Date().toISOString(),
+      } as User;
       user.set(mockUser);
 
       const result = isAuthenticated();
