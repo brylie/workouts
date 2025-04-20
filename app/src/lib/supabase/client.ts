@@ -15,16 +15,19 @@ export const user = writable<User | null>(null);
 
 // Initialize user store on client-side only
 if (typeof window !== "undefined") {
-  // Set initial user value on page load
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  user.set(session?.user || null);
-
-  // Update user store when auth state changes
-  supabase.auth.onAuthStateChange((_, session) => {
+  // Using an async IIFE to avoid top-level await
+  (async () => {
+    // Set initial user value on page load
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     user.set(session?.user || null);
-  });
+
+    // Update user store when auth state changes
+    supabase.auth.onAuthStateChange((_, session) => {
+      user.set(session?.user || null);
+    });
+  })();
 }
 
 /**
