@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { writable } from "svelte/store";
 import type { User } from "@supabase/supabase-js";
+import { isBrowser } from "@supabase/ssr";
 
 // Environment variables should be set in .env files
 // https://kit.svelte.dev/docs/modules#$env-dynamic-private
@@ -14,20 +15,16 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export const user = writable<User | null>(null);
 
 // Initialize user store on client-side only
-if (typeof window !== "undefined") {
-  // Using an async IIFE to avoid top-level await
-  (async () => {
-    // Set initial user value on page load
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+if (isBrowser()) {
+  // Set initial user value on page load
+  supabase.auth.getSession().then(({ data: { session } }) => {
     user.set(session?.user || null);
+  });
 
-    // Update user store when auth state changes
-    supabase.auth.onAuthStateChange((_, session) => {
-      user.set(session?.user || null);
-    });
-  })();
+  // Update user store when auth state changes
+  supabase.auth.onAuthStateChange((_, session) => {
+    user.set(session?.user || null);
+  });
 }
 
 /**
