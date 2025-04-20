@@ -17,18 +17,25 @@ export async function saveCompletedExerciseToSupabase(
 ): Promise<number> {
   const supabaseExercise = toSupabaseFormat(exercise, userId);
 
-  const { data, error } = await supabase
-    .from(COMPLETED_EXERCISES_TABLE)
-    .insert(supabaseExercise)
-    .select("id")
-    .single();
+  try {
+    const { data, error } = await supabase
+      .from(COMPLETED_EXERCISES_TABLE)
+      .insert(supabaseExercise)
+      .select("id")
+      .single();
 
-  if (error) {
-    console.error("Error saving exercise to Supabase:", error);
-    throw new Error(`Failed to save exercise to Supabase: ${error.message}`);
+    if (error) {
+      console.error("Error saving exercise to Supabase:", error);
+      throw new Error(`Failed to save exercise to Supabase: ${error.message}`);
+    }
+
+    return data.id;
+  } catch (err) {
+    console.error("Exception when saving exercise to Supabase:", err);
+    throw new Error(
+      `Failed to save exercise to Supabase: ${err instanceof Error ? err.message : String(err)}`,
+    );
   }
-
-  return data.id;
 }
 
 /**

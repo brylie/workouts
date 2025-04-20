@@ -36,7 +36,6 @@ export function toSupabaseFormat(
   userId: string,
 ): SupabaseCompletedExercise {
   return {
-    id: exercise.id,
     exercise_id: exercise.exercise_id,
     completed_at: exercise.completed_at.toISOString(),
     user_id: userId,
