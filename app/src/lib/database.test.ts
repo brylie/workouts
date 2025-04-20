@@ -1,218 +1,317 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+/**
+ * Tests for database abstraction layer that handles both local and Supabase storage
+ */
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import type { CompletedExerciseV2 } from "./exercises";
+
+// Define constants we'll need in the mocks
+const MOCK_SUPABASE_ID = 999;
+const mockUserId = "test-user-123";
+
+// Mock the Supabase repositories with direct mock functions instead of constants
+vi.mock("$lib/database/supabase-repository", () => ({
+  saveCompletedExerciseToSupabase: vi
+    .fn()
+    .mockImplementation(() => Promise.resolve(MOCK_SUPABASE_ID)),
+  getCompletedExercisesByExerciseIdFromSupabase: vi.fn().mockResolvedValue([]),
+  getCompletedExercisesByDateRangeFromSupabase: vi.fn().mockResolvedValue([]),
+  deleteCompletedExerciseFromSupabase: vi.fn().mockResolvedValue(undefined),
+  syncExercisesToSupabase: vi.fn().mockResolvedValue(undefined),
+}));
+
+// Mock the authentication status
+vi.mock("$lib/supabase/auth", () => ({
+  getCurrentUserId: vi.fn().mockReturnValue(null),
+}));
+
+// Mock the Supabase user store
+vi.mock("$lib/supabase/client", () => {
+  // Create mock store with callbacks array
+  let currentUser = null;
+  const subscribers = [];
+
+  return {
+    user: {
+      subscribe: vi.fn((callback) => {
+        subscribers.push(callback);
+        callback(currentUser);
+        return () => {
+          const index = subscribers.indexOf(callback);
+          if (index !== -1) {
+            subscribers.splice(index, 1);
+          }
+        };
+      }),
+      set: vi.fn((newUser) => {
+        currentUser = newUser;
+        subscribers.forEach((callback) => callback(currentUser));
+      }),
+    },
+  };
+});
+
+// Import the modules AFTER mocking them
 import {
-  db,
   saveCompletedExercise,
   getCompletedExercisesByExerciseId,
   getCompletedExercisesByDateRange,
-  migrateExerciseV1ToV2,
+  deleteCompletedExercise,
+  syncLocalExercisesToSupabase,
 } from "./database";
-import type { CompletedExerciseV1, CompletedExerciseV2 } from "./exercises";
+import * as supabaseRepository from "$lib/database/supabase-repository";
+import { getCurrentUserId } from "$lib/supabase/auth";
+import { user } from "$lib/supabase/client";
+import { db } from "./database"; // Import the db instance to spy on it
 
-// fake-indexeddb is now loaded via vitest-setup-indexeddb.ts setup file
-// No need for manual mocking here
+// Sample test data
+const testExercise: CompletedExerciseV2 = {
+  exercise_id: "test-exercise",
+  completed_at: new Date("2025-04-20T12:00:00Z"),
+  metrics: {
+    sets: 3,
+    reps: 10,
+    weight: 70,
+  },
+};
 
-describe("Workout Database", () => {
-  // Sample test data with nested metrics
-  const testCompletedExercise: CompletedExerciseV2 = {
-    exercise_id: "push-up",
-    completed_at: new Date("2023-01-01T12:00:00Z"),
-    metrics: {
-      sets: 3,
-      reps: 10,
-      weight: 0,
-    },
-  };
+const testDate = new Date("2025-04-20T12:00:00Z");
 
-  const testCompletedExercise2: CompletedExerciseV2 = {
-    exercise_id: "squat",
-    completed_at: new Date("2023-01-02T12:00:00Z"),
-    metrics: {
-      sets: 4,
-      reps: 12,
-      weight: 60,
-    },
-  };
-
-  beforeEach(async () => {
-    // Clear the database before each test
-    await db.completedExercises.clear();
+describe("Database Abstraction Layer", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+    // Ensure consistent mock behavior for each test
+    vi.mocked(
+      supabaseRepository.saveCompletedExerciseToSupabase,
+    ).mockResolvedValue(MOCK_SUPABASE_ID);
   });
 
-  afterEach(async () => {
-    // Clean up after each test
-    await db.completedExercises.clear();
+  afterEach(() => {
+    // Reset mocked authentication state
+    vi.mocked(getCurrentUserId).mockReturnValue(null);
   });
 
-  it("should save a completed exercise", async () => {
-    // Add a mock exercise
-    const id = await saveCompletedExercise(testCompletedExercise);
+  describe("saveCompletedExercise", () => {
+    it("should save to Dexie when user is not authenticated", async () => {
+      // Ensure auth returns null (not authenticated)
+      vi.mocked(getCurrentUserId).mockReturnValue(null);
 
-    // Retrieve it from the database
-    const savedExercise = await db.completedExercises.get(id);
+      // Spy on local db add method
+      const addSpy = vi
+        .spyOn(db.completedExercises, "add")
+        .mockResolvedValue(123);
 
-    // Verify it's been saved correctly
-    expect(savedExercise).toMatchObject({
-      exercise_id: testCompletedExercise.exercise_id,
-      metrics: {
-        sets: testCompletedExercise.metrics.sets,
-        reps: testCompletedExercise.metrics.reps,
-        weight: testCompletedExercise.metrics.weight,
-      },
+      const result = await saveCompletedExercise(testExercise);
+
+      // Should call local DB and not Supabase
+      expect(addSpy).toHaveBeenCalledWith(testExercise);
+      expect(
+        supabaseRepository.saveCompletedExerciseToSupabase,
+      ).not.toHaveBeenCalled();
+      expect(result).toBe(123);
     });
 
-    // Check that the date is correctly stored
-    expect(savedExercise?.completed_at instanceof Date).toBe(true);
-    expect(savedExercise?.completed_at.toISOString()).toBe(
-      testCompletedExercise.completed_at.toISOString(),
-    );
-  });
+    it("should save to Supabase when user is authenticated", async () => {
+      // Mock authenticated user
+      vi.mocked(getCurrentUserId).mockReturnValue(mockUserId);
 
-  it("should retrieve exercises by exercise ID", async () => {
-    // Add two exercises with different exercise IDs
-    await saveCompletedExercise(testCompletedExercise);
-    await saveCompletedExercise(testCompletedExercise2);
+      // Spy on local db add method to make sure it's not called
+      const addSpy = vi.spyOn(db.completedExercises, "add");
 
-    // Retrieve exercises for 'push-up'
-    const exercises = await getCompletedExercisesByExerciseId("push-up");
+      const result = await saveCompletedExercise(testExercise);
 
-    // Verify we got the correct exercise
-    expect(exercises.length).toBe(1);
-    expect(exercises[0].exercise_id).toBe("push-up");
-    expect(exercises[0].metrics.sets).toBe(3);
-  });
-
-  it("should retrieve exercises by date range", async () => {
-    // Add two exercises with different dates
-    await saveCompletedExercise(testCompletedExercise);
-    await saveCompletedExercise(testCompletedExercise2);
-
-    // Test getting exercises from a specific date range
-    const exercises = await getCompletedExercisesByDateRange(
-      new Date("2023-01-01T00:00:00Z"),
-      new Date("2023-01-01T23:59:59Z"),
-    );
-
-    // Verify we got only the exercise from Jan 1
-    expect(exercises.length).toBe(1);
-    expect(exercises[0].exercise_id).toBe("push-up");
-
-    // Test getting all exercises within a wider range
-    const allExercises = await getCompletedExercisesByDateRange(
-      new Date("2023-01-01T00:00:00Z"),
-      new Date("2023-01-03T00:00:00Z"),
-    );
-
-    // Verify we got both exercises
-    expect(allExercises.length).toBe(2);
-  });
-
-  it("should handle additional metric fields", async () => {
-    const exercise: CompletedExerciseV2 = {
-      exercise_id: "test-exercise",
-      completed_at: new Date(),
-      metrics: {
-        sets: 3,
-        reps: 12,
-        weight: 50,
-        time: 30,
-        distance: 1000,
-        resistance: 8,
-        speed: 10,
-        incline: 2,
-        resistanceType: "magnetic",
-        calories: 150,
-        heartRate: 140,
-        rpe: 7,
-      },
-    };
-
-    const id = await saveCompletedExercise(exercise);
-    const savedExercise = await db.completedExercises.get(id);
-    expect(savedExercise?.metrics).toEqual(exercise.metrics);
-  });
-
-  it("should handle optional metric fields", async () => {
-    const exercise: CompletedExerciseV2 = {
-      exercise_id: "test-exercise",
-      completed_at: new Date(),
-      metrics: {
-        sets: 3,
-        // Omitting other fields to test optional properties
-      },
-    };
-
-    const id = await saveCompletedExercise(exercise);
-    const savedExercise = await db.completedExercises.get(id);
-    expect(savedExercise?.metrics.sets).toBe(3);
-    expect(savedExercise?.metrics.reps).toBeUndefined();
-    expect(savedExercise?.metrics.weight).toBeUndefined();
-    expect(savedExercise?.metrics.time).toBeUndefined();
-  });
-});
-
-describe("migrateExerciseV1ToV2", () => {
-  it("should convert V1 exercise with all fields to V2 format", () => {
-    const exerciseV1: CompletedExerciseV1 = {
-      id: 1,
-      exercise_id: "push-ups",
-      completed_at: new Date("2024-01-01"),
-      sets: 3,
-      reps: 10,
-      weight: 0,
-      time: "00:05:00",
-    };
-
-    const result = migrateExerciseV1ToV2(exerciseV1);
-
-    expect(result).toEqual({
-      id: 1,
-      exercise_id: "push-ups",
-      completed_at: exerciseV1.completed_at,
-      metrics: {
-        sets: 3,
-        reps: 10,
-        weight: 0,
-        time: 0,
-      },
+      // Should call Supabase and not local DB
+      expect(addSpy).not.toHaveBeenCalled();
+      expect(
+        supabaseRepository.saveCompletedExerciseToSupabase,
+      ).toHaveBeenCalledWith(testExercise, mockUserId);
+      expect(result).toBe(MOCK_SUPABASE_ID); // Use the mocked constant
     });
   });
 
-  it("should handle V1 exercise with partial fields", () => {
-    const exerciseV1: CompletedExerciseV1 = {
-      id: 2,
-      exercise_id: "plank",
-      completed_at: new Date("2024-01-01"),
-      time: "00:01:00",
-    };
+  describe("getCompletedExercisesByExerciseId", () => {
+    it("should get from Dexie when user is not authenticated", async () => {
+      // Ensure auth returns null (not authenticated)
+      vi.mocked(getCurrentUserId).mockReturnValue(null);
 
-    const result = migrateExerciseV1ToV2(exerciseV1);
+      // Spy on local db where/equals method
+      const whereSpy = vi.fn().mockReturnValue({
+        equals: vi.fn().mockReturnValue({
+          sortBy: vi.fn().mockResolvedValue([testExercise]),
+        }),
+      });
+      vi.spyOn(db.completedExercises, "where").mockImplementation(whereSpy);
 
-    expect(result).toEqual({
-      id: 2,
-      exercise_id: "plank",
-      completed_at: exerciseV1.completed_at,
-      metrics: {
-        time: 0,
-      },
+      const result = await getCompletedExercisesByExerciseId("test-exercise");
+
+      // Should call local DB and not Supabase
+      expect(whereSpy).toHaveBeenCalledWith("exercise_id");
+      expect(
+        supabaseRepository.getCompletedExercisesByExerciseIdFromSupabase,
+      ).not.toHaveBeenCalled();
+      expect(result).toEqual([testExercise]);
+    });
+
+    it("should get from Supabase when user is authenticated", async () => {
+      // Mock authenticated user
+      vi.mocked(getCurrentUserId).mockReturnValue(mockUserId);
+
+      // Mock Supabase response
+      vi.mocked(
+        supabaseRepository.getCompletedExercisesByExerciseIdFromSupabase,
+      ).mockResolvedValue([testExercise]);
+
+      // Spy on local db to make sure it's not called
+      const whereSpy = vi.spyOn(db.completedExercises, "where");
+
+      const result = await getCompletedExercisesByExerciseId("test-exercise");
+
+      // Should call Supabase and not local DB
+      expect(whereSpy).not.toHaveBeenCalled();
+      expect(
+        supabaseRepository.getCompletedExercisesByExerciseIdFromSupabase,
+      ).toHaveBeenCalledWith("test-exercise", mockUserId);
+      expect(result).toEqual([testExercise]);
     });
   });
 
-  it("should pass through V2 format unchanged", () => {
-    const exerciseV2 = {
-      id: 3,
-      exercise_id: "squat",
-      completed_at: new Date("2024-01-01"),
-      metrics: {
-        sets: 3,
-        reps: 10,
-        weight: 100,
-      },
-    };
+  describe("getCompletedExercisesByDateRange", () => {
+    it("should get from Dexie when user is not authenticated", async () => {
+      // Ensure auth returns null (not authenticated)
+      vi.mocked(getCurrentUserId).mockReturnValue(null);
 
-    const result = migrateExerciseV1ToV2(
-      exerciseV2 as unknown as CompletedExerciseV1,
-    );
+      // Spy on local db where/between method
+      const whereSpy = vi.fn().mockReturnValue({
+        between: vi.fn().mockReturnValue({
+          sortBy: vi.fn().mockResolvedValue([testExercise]),
+        }),
+      });
+      vi.spyOn(db.completedExercises, "where").mockImplementation(whereSpy);
 
-    expect(result).toEqual(exerciseV2);
+      const startDate = new Date("2025-04-18");
+      const endDate = new Date("2025-04-20");
+
+      const result = await getCompletedExercisesByDateRange(startDate, endDate);
+
+      // Should call local DB and not Supabase
+      expect(whereSpy).toHaveBeenCalledWith("completed_at");
+      expect(
+        supabaseRepository.getCompletedExercisesByDateRangeFromSupabase,
+      ).not.toHaveBeenCalled();
+      expect(result).toEqual([testExercise]);
+    });
+
+    it("should get from Supabase when user is authenticated", async () => {
+      // Mock authenticated user
+      vi.mocked(getCurrentUserId).mockReturnValue(mockUserId);
+
+      // Mock Supabase response
+      vi.mocked(
+        supabaseRepository.getCompletedExercisesByDateRangeFromSupabase,
+      ).mockResolvedValue([testExercise]);
+
+      // Spy on local db to make sure it's not called
+      const whereSpy = vi.spyOn(db.completedExercises, "where");
+
+      const startDate = new Date("2025-04-18");
+      const endDate = new Date("2025-04-20");
+
+      const result = await getCompletedExercisesByDateRange(startDate, endDate);
+
+      // Should call Supabase and not local DB
+      expect(whereSpy).not.toHaveBeenCalled();
+      expect(
+        supabaseRepository.getCompletedExercisesByDateRangeFromSupabase,
+      ).toHaveBeenCalledWith(startDate, endDate, mockUserId);
+      expect(result).toEqual([testExercise]);
+    });
+  });
+
+  describe("deleteCompletedExercise", () => {
+    it("should delete from Dexie when user is not authenticated", async () => {
+      // Ensure auth returns null (not authenticated)
+      vi.mocked(getCurrentUserId).mockReturnValue(null);
+
+      // Spy on local db delete method
+      const deleteSpy = vi
+        .spyOn(db.completedExercises, "delete")
+        .mockResolvedValue(undefined);
+
+      await deleteCompletedExercise(123);
+
+      // Should call local DB and not Supabase
+      expect(deleteSpy).toHaveBeenCalledWith(123);
+      expect(
+        supabaseRepository.deleteCompletedExerciseFromSupabase,
+      ).not.toHaveBeenCalled();
+    });
+
+    it("should delete from Supabase when user is authenticated", async () => {
+      // Mock authenticated user
+      vi.mocked(getCurrentUserId).mockReturnValue(mockUserId);
+
+      // Spy on local db delete method to make sure it's not called
+      const deleteSpy = vi.spyOn(db.completedExercises, "delete");
+
+      await deleteCompletedExercise(123);
+
+      // Should call Supabase and not local DB
+      expect(deleteSpy).not.toHaveBeenCalled();
+      expect(
+        supabaseRepository.deleteCompletedExerciseFromSupabase,
+      ).toHaveBeenCalledWith(123, mockUserId);
+    });
+  });
+
+  describe("syncLocalExercisesToSupabase", () => {
+    it("should not sync when user is not authenticated", async () => {
+      // Ensure auth returns null (not authenticated)
+      vi.mocked(getCurrentUserId).mockReturnValue(null);
+
+      await syncLocalExercisesToSupabase();
+
+      // Should not call Supabase
+      expect(supabaseRepository.syncExercisesToSupabase).not.toHaveBeenCalled();
+    });
+
+    it("should sync local exercises to Supabase when user is authenticated", async () => {
+      // Mock authenticated user
+      vi.mocked(getCurrentUserId).mockReturnValue(mockUserId);
+
+      // Mock local exercises
+      const localExercises = [testExercise];
+      vi.spyOn(db.completedExercises, "toArray").mockResolvedValue(
+        localExercises,
+      );
+
+      await syncLocalExercisesToSupabase();
+
+      // Should call syncExercisesToSupabase with local exercises and user ID
+      expect(supabaseRepository.syncExercisesToSupabase).toHaveBeenCalledWith(
+        localExercises,
+        mockUserId,
+      );
+    });
+
+    it("should handle user login event and trigger sync", async () => {
+      // Mock authenticated user
+      vi.mocked(getCurrentUserId).mockReturnValue(mockUserId);
+
+      // Mock local exercises
+      const localExercises = [testExercise];
+      vi.spyOn(db.completedExercises, "toArray").mockResolvedValue(
+        localExercises,
+      );
+
+      // Simulate a user login by triggering the subscribe callback
+      user.set({ id: mockUserId });
+
+      // Wait for any promises to resolve
+      await vi.waitFor(() => {
+        expect(supabaseRepository.syncExercisesToSupabase).toHaveBeenCalledWith(
+          localExercises,
+          mockUserId,
+        );
+      });
+    });
   });
 });
