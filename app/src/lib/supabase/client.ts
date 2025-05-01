@@ -2,14 +2,10 @@ import { createClient } from "@supabase/supabase-js";
 import { writable } from "svelte/store";
 import type { User } from "@supabase/supabase-js";
 import { isBrowser } from "@supabase/ssr";
-
-// Environment variables should be set in .env files
-// https://kit.svelte.dev/docs/modules#$env-dynamic-private
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from "$env/static/public";
 
 // Create Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 
 // Create a store for the authenticated user
 export const user = writable<User | null>(null);
