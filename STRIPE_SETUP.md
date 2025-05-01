@@ -11,8 +11,6 @@ This guide explains how to set up Stripe subscriptions for the Workouts applicat
 
 Set up the Stripe environment variables in your `.env` file (based on `.env.example` if needed.)
 
-> Note: For backward compatibility, the application also supports the legacy `VITE_` prefixed versions of these variables, but the non-prefixed versions are recommended.
-
 ## Stripe Product and Price Setup
 
 1. Log in to your Stripe Dashboard: https://dashboard.stripe.com/
