@@ -2,6 +2,7 @@
   import { page } from "$app/state";
   import { base } from "$app/paths";
   import AuthDropdown from "$lib/components/AuthDropdown.svelte";
+  import { hasActiveSubscription } from "$lib/subscription/subscription-service";
 
   // Track active route to highlight current page
   let pathname = $derived(page.url.pathname);
@@ -70,6 +71,17 @@
         id="nav-guidelines"
       >
         Guidelines
+      </a>
+
+      <a
+        href="{base}/subscription"
+        class="subscription-link transition-colors {$hasActiveSubscription
+          ? 'text-success hover:text-success-content'
+          : 'hover:text-primary'} 
+          {pathname === base + '/subscription' ? 'font-bold' : ''}"
+        id="nav-subscription"
+      >
+        {$hasActiveSubscription ? "★ Pro" : "Upgrade"}
       </a>
 
       <!-- Add Authentication Dropdown -->
