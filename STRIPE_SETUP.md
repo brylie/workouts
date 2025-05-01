@@ -9,18 +9,7 @@ This guide explains how to set up Stripe subscriptions for the Workouts applicat
 
 ## Environment Variables
 
-Add the following environment variables to your `.env` file in the app directory:
-
-```bash
-# Stripe API keys
-STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key
-STRIPE_SECRET_KEY=sk_test_your_secret_key
-STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
-
-# Supabase Service Role Key (for webhook operations)
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-SUPABASE_URL=your_supabase_url
-```
+Set up the Stripe environment variables in your `.env` file (based on `.env.example` if needed.)
 
 > Note: For backward compatibility, the application also supports the legacy `VITE_` prefixed versions of these variables, but the non-prefixed versions are recommended.
 
