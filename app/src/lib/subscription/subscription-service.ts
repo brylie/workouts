@@ -136,18 +136,28 @@ export async function getOrCreateCustomerId(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
         Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({ user_id }),
-      credentials: "include",
     });
 
     if (!response.ok) {
-      const errorData = await response
-        .json()
-        .catch(() => ({ error: "Unknown error" }));
-      return { error: errorData.error || response.statusText };
+      const errorText = await response.text();
+      let errorMessage = response.statusText;
+
+      try {
+        const errorData = JSON.parse(errorText);
+        errorMessage = errorData.error || errorMessage;
+      } catch (e) {
+        // If not valid JSON, use the text as is
+        errorMessage = errorText || errorMessage;
+      }
+
+      console.error(
+        `Customer creation failed (${response.status}):`,
+        errorMessage,
+      );
+      return { error: errorMessage };
     }
 
     const { customerId } = await response.json();
@@ -193,21 +203,31 @@ export async function createCheckoutSession(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
         Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({
         priceId,
         customerId,
       }),
-      credentials: "include",
     });
 
     if (!response.ok) {
-      const errorData = await response
-        .json()
-        .catch(() => ({ error: "Unknown error" }));
-      return { error: errorData.error || response.statusText };
+      const errorText = await response.text();
+      let errorMessage = response.statusText;
+
+      try {
+        const errorData = JSON.parse(errorText);
+        errorMessage = errorData.error || errorMessage;
+      } catch (e) {
+        // If not valid JSON, use the text as is
+        errorMessage = errorText || errorMessage;
+      }
+
+      console.error(
+        `Checkout creation failed (${response.status}):`,
+        errorMessage,
+      );
+      return { error: errorMessage };
     }
 
     const { url } = await response.json();
