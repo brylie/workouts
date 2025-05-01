@@ -13,16 +13,14 @@ Add the following environment variables to your `.env` file in the app directory
 
 ```bash
 # Stripe API keys
-STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key
-STRIPE_SECRET_KEY=sk_test_your_secret_key
-STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key
+PRIVATE_STRIPE_SECRET_KEY=sk_test_your_secret_key
+PRIVATE_STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
 
 # Supabase Service Role Key (for webhook operations)
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-SUPABASE_URL=your_supabase_url
+PRIVATE_SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+PUBLIC_SUPABASE_URL=your_supabase_url
 ```
-
-> Note: For backward compatibility, the application also supports the legacy `VITE_` prefixed versions of these variables, but the non-prefixed versions are recommended.
 
 ## Stripe Product and Price Setup
 

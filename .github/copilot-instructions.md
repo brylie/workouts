@@ -10,8 +10,13 @@ When improving unit test coverage, run only the unit tests since running e2e tes
 
 ## Svelte 5
 
+Make sure to use the latest Svelte 5 features and syntax. Use the Context7 API to get the  current project documentation for Svelte 5.
+
 This project uses Svelte 5. Use the Svelte 5 runes syntax instead of the older `$:` syntax.
 
+Use the new Svelte 5 syntax for $props()
+
+Use `onclick` instead of `on:click` for event handlers.
 
 ## Semantic Classes
 
