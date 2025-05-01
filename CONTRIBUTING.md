@@ -8,6 +8,7 @@ This document provides guidelines and instructions for contributing to the Worko
 
 - [Node.js](https://nodejs.org/) (LTS version recommended)
 - [pnpm](https://pnpm.io/) (for package management)
+- [Supabase CLI](https://supabase.com/docs/guides/cli) (for database migrations)
 
 ### Getting Started
 
@@ -24,16 +25,112 @@ This document provides guidelines and instructions for contributing to the Worko
    pnpm install
    ```
 
-3. Start the development server
+3. Set up Supabase (optional, for backend development)
+   
+   If you're working with the Supabase backend, you'll need to set up your local environment:
+   
+   ```bash
+   # Install Supabase CLI if you haven't already
+   npm install -g supabase
+   
+   # Login to Supabase
+   supabase login
+   
+   # Link to your Supabase project (get the reference ID from the project settings)
+   supabase link --project-ref your-project-ref
+   ```
+
+4. Start the development server
    ```bash
    pnpm dev
    ```
 
 The application will be available at `http://localhost:5173` by default.
 
+## Working with Supabase
+
+### Database Migrations
+
+The project uses Supabase migrations to manage database schema changes. Migrations are stored in the `supabase/migrations/` directory.
+
+#### Creating a New Migration
+
+To create a new migration:
+
+```bash
+cd app
+supabase migration new name_of_migration
+```
+
+This will create a new SQL file in the `supabase/migrations/` directory with a timestamp prefix.
+
+#### Checking Migration Status
+
+To see which migrations have been applied locally and remotely:
+
+```bash
+supabase migration list
+```
+
+#### Applying Migrations
+
+To apply pending migrations to your local database:
+
+```bash
+supabase migration up
+```
+
+To push migrations to the remote Supabase instance:
+
+```bash
+supabase db push
+```
+
+#### Troubleshooting Migrations
+
+If you encounter issues with migration synchronization between local and remote databases:
+
+1. List the current migration status:
+   ```bash
+   supabase migration list
+   ```
+
+2. Repair migration history if needed:
+   ```bash
+   # Mark a migration as reverted
+   supabase migration repair --status reverted <migration_version>
+   
+   # Mark a migration as applied
+   supabase migration repair --status applied <migration_version>
+   ```
+
+3. Pull the current database schema:
+   ```bash
+   supabase db pull
+   ```
+
+### Environment Variables for Supabase
+
+Create a `.env` file in the `app` directory with your Supabase credentials:
+
+```bash
+# Supabase connection
+SUPABASE_URL=your_supabase_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
+# For subscription functionality
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+```
+
+See `STRIPE_SETUP.md` for more details on setting up the subscription system.
+
 ## Project Structure
 
-- `src/lib/` - Contains core functionality:
+The project code is in the `app/` directory. All commands should be run from this directory. Console commands will automatically be run in the app/ directory.
+
+- `src/lib/` - Contains core functionality (service layer):
 
   - `types.ts` - TypeScript type definitions
   - `database.ts` - IndexedDB database interactions via Dexie
@@ -43,6 +140,7 @@ The application will be available at `http://localhost:5173` by default.
   - `equipment.ts` - Equipment enums
   - `components/` - Reusable Svelte components
   - `exercise_data/` - Exercise definitions by category
+  - `server/` - Server-side code for API endpoints
 
 - `src/routes/` - SvelteKit routes:
   - `/` - Home page
@@ -50,8 +148,26 @@ The application will be available at `http://localhost:5173` by default.
   - `/workout/` - Workout planning and tracking
   - `/history/` - Exercise history and reporting
   - `/guidelines/` - Training guidelines
+  - `/api/` - Server API endpoints
+
+Business logic should reside mainly in the lib folder (service layer) so templates can remain thin.
 
 ## Coding Standards
+
+### Package Management
+
+This project uses pnpm for package management. Always use pnpm commands for installing, updating, or removing dependencies:
+
+```bash
+# Install dependencies
+pnpm install
+
+# Add a new dependency
+pnpm add <package-name>
+
+# Add a dev dependency
+pnpm add -D <package-name>
+```
 
 ### Svelte 5 Runes
 
@@ -72,6 +188,8 @@ This project uses Svelte 5 with the new runes syntax. Use `$state()`, `$derived(
 ### Imports
 
 - Prefer absolute imports from `$lib` over relative imports
+- Don't mix absolute and relative imports
+- Relative imports in the same directory are acceptable
 - Use consistent import ordering (built-ins, then external packages, then internal modules)
 
 ```ts
@@ -85,6 +203,10 @@ import { browser } from "$app/environment";
 import type { WorkoutItem } from "../lib/types"; // Bad: relative import
 import { saveCompletedExercise } from "$lib/database";
 ```
+
+### UI Components
+
+We use Tailwind CSS for styles and daisyUI for semantic components. Where possible, prefer daisyUI components for clean template code.
 
 ### Semantic Element Naming
 
@@ -111,16 +233,16 @@ Add semantic classes or IDs to important DOM elements for testing and self-docum
 Run only unit tests during development (faster than running all tests):
 
 ```bash
-cd app
 pnpm test:unit
 ```
+
+When improving unit test coverage, run only the unit tests since running e2e tests may be unnecessary.
 
 ### End-to-End Tests
 
 Run end-to-end tests when needed:
 
 ```bash
-cd app
 pnpm test:e2e
 ```
 
@@ -129,7 +251,6 @@ pnpm test:e2e
 Run all tests before submitting PRs:
 
 ```bash
-cd app
 pnpm test
 ```
 
