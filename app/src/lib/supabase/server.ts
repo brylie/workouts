@@ -3,7 +3,10 @@
  * This file provides utilities for working with Supabase on the server side
  */
 import { createClient } from "@supabase/supabase-js";
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from "$env/static/public";
+import {
+  PUBLIC_SUPABASE_URL,
+  PUBLIC_SUPABASE_ANON_KEY,
+} from "$env/static/public";
 import { SUPABASE_SERVICE_ROLE_KEY } from "$env/static/private";
 import type { RequestEvent } from "@sveltejs/kit";
 import type { Database } from "$lib/database/supabase-types";
@@ -63,7 +66,7 @@ export function createSupabaseAdminClient() {
       "Missing Supabase admin environment variables. Check your .env file configuration.",
     );
   }
-  
+
   return createClient<Database>(
     PUBLIC_SUPABASE_URL,
     SUPABASE_SERVICE_ROLE_KEY,
@@ -71,7 +74,7 @@ export function createSupabaseAdminClient() {
       auth: {
         autoRefreshToken: false,
         persistSession: false,
-      }
-    }
+      },
+    },
   );
 }
