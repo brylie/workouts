@@ -38,9 +38,9 @@ export const pricingPlans: PricingPlan[] = [
     id: "premium_monthly",
     name: "Premium",
     description: "Advanced features for fitness enthusiasts",
-    price: 9.99,
+    price: 5,
     interval: "month",
-    currency: "usd",
+    currency: "eur",
     features: [
       "All free features",
       "Unlimited saved workouts",
@@ -48,17 +48,17 @@ export const pricingPlans: PricingPlan[] = [
       "Advanced recovery tracking",
       "Priority support",
     ],
-    stripe_price_id: "price_premium_monthly", // Replace with your actual Stripe price ID
-    stripe_product_id: "prod_premium", // Replace with your actual Stripe product ID
+    stripe_price_id: "price_1RDiXiIMUCSg0j0skDWw4IBg",
+    stripe_product_id: "prod_S7yURRJSZJHP9d",
     highlight: true,
   },
   {
     id: "premium_yearly",
     name: "Premium Yearly",
     description: "Save 20% with annual billing",
-    price: 96,
+    price: 30,
     interval: "year",
-    currency: "usd",
+    currency: "eur",
     features: [
       "All free features",
       "Unlimited saved workouts",
@@ -67,8 +67,8 @@ export const pricingPlans: PricingPlan[] = [
       "Priority support",
       "2 months free compared to monthly plan",
     ],
-    stripe_price_id: "price_premium_yearly", // Replace with your actual Stripe price ID
-    stripe_product_id: "prod_premium", // Replace with your actual Stripe product ID
+    stripe_price_id: "price_1RDiabIMUCSg0j0sJ8ciAdWC",
+    stripe_product_id: "prod_S7yURRJSZJHP9d",
     highlight: false,
   },
 ];
