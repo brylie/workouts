@@ -4,6 +4,7 @@
  */
 
 import { env } from "$env/dynamic/private";
+import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 
 // The server-side environment variables
 // Using platform's env system for private variables first, then import.meta.env as fallback
@@ -22,11 +23,7 @@ export const SUPABASE_SERVICE_ROLE_KEY =
   import.meta.env.SUPABASE_SERVICE_ROLE_KEY ||
   import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY ||
   "";
-export const SUPABASE_URL =
-  env.SUPABASE_URL ||
-  import.meta.env.SUPABASE_URL ||
-  import.meta.env.VITE_SUPABASE_URL ||
-  "";
+export const SUPABASE_URL = PUBLIC_SUPABASE_URL;
 
 // Function to check if all required environment variables are set
 export function validateEnv() {

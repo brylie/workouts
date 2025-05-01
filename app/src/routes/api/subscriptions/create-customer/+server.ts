@@ -1,10 +1,12 @@
 import { json } from "@sveltejs/kit";
-import { stripe, isStripeConfigured } from "$lib/server/stripe";
+import { isStripeConfigured } from "$lib/server/stripe";
 import {
   getSupabaseAdmin,
   isSupabaseAdminConfigured,
 } from "$lib/server/supabase-admin";
+import { getOrCreateCustomerId } from "$lib/server/subscription";
 import type { RequestHandler } from "./$types";
+import { createSupabaseServerClient } from "$lib/supabase";
 
 export const POST: RequestHandler = async ({ request, locals }) => {
   try {
@@ -25,9 +27,40 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
     const supabaseAdmin = getSupabaseAdmin();
 
-    // Ensure user is authenticated
-    // In SvelteKit 5, we access the session directly from locals
-    const session = locals.session;
+    // Authentication check - multiple methods for robustness
+    let session = locals.session;
+
+    // 1. Try Authorization header if no session in locals
+    if (!session) {
+      const authHeader = request.headers.get("Authorization");
+
+      if (authHeader?.startsWith("Bearer ")) {
+        const token = authHeader.slice(7);
+
+        // Create a Supabase client with the provided token
+        const supabaseServer = createSupabaseServerClient({
+          request,
+          cookies: locals.cookies,
+        });
+
+        const { data, error } = await supabaseServer.auth.getUser(token);
+
+        if (!error && data?.user) {
+          // Use getSession to get the full session
+          const { data: sessionData } = await supabaseServer.auth.getSession();
+          session = sessionData.session;
+        }
+      }
+    }
+
+    // 2. Try getSupabaseServer if available
+    if (!session && locals.getSupabaseServer) {
+      const supabaseServer = locals.getSupabaseServer();
+      const { data: sessionData } = await supabaseServer.auth.getSession();
+      session = sessionData.session;
+    }
+
+    // If still no session, return unauthorized
     if (!session) {
       return json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -39,42 +72,18 @@ export const POST: RequestHandler = async ({ request, locals }) => {
       return json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Fetch user data to create customer
-    const { data: userData, error: userError } = await supabaseAdmin
-      .from("profiles")
-      .select("*")
-      .eq("id", user_id)
-      .single();
-
-    if (userError) {
-      console.error("Error fetching user profile:", userError);
-      return json({ error: "Failed to fetch user profile" }, { status: 500 });
-    }
-
-    // Create a Stripe customer
-    const customer = await stripe.customers.create({
-      email: session.user.email,
-      name: userData.full_name || session.user.email,
-      metadata: {
-        user_id,
-      },
+    // Use the server helper to get or create customer ID
+    const { customerId, error: customerError } = await getOrCreateCustomerId({
+      supabaseAdmin,
+      user: session.user,
     });
 
-    // Save the customer ID in our database
-    const { error: insertError } = await supabaseAdmin
-      .from("stripe_customers")
-      .insert({
-        user_id,
-        stripe_customer_id: customer.id,
-        updated_at: new Date().toISOString(),
-      });
-
-    if (insertError) {
-      console.error("Error saving customer ID:", insertError);
-      return json({ error: "Failed to save customer ID" }, { status: 500 });
+    if (customerError || !customerId) {
+      console.error("Error creating customer:", customerError);
+      return json({ error: "Failed to create customer" }, { status: 500 });
     }
 
-    return json({ customerId: customer.id });
+    return json({ customerId });
   } catch (error) {
     console.error("Error creating customer:", error);
     return json({ error: "Failed to create customer" }, { status: 500 });

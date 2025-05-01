@@ -16,6 +16,11 @@ async function getSession(event: RequestEvent) {
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
+  // Ignore Chrome DevTools special paths to prevent 404 errors in logs
+  if (event.url.pathname.startsWith("/.well-known/appspecific")) {
+    return new Response(null, { status: 200 });
+  }
+
   // Set the session in locals for server routes to access
   event.locals.session = await getSession(event);
 

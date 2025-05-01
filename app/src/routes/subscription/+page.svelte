@@ -3,18 +3,19 @@
     pricingPlans,
     type PricingPlan,
   } from "$lib/subscription/pricing-plans";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { user } from "$lib/supabase/client";
   import {
     isSubscriptionActive,
-    getOrCreateCustomerId,
+    createCheckoutSession,
+    isLoading,
+    subscriptionError,
   } from "$lib/subscription/subscription-service";
-  import { invalidateAll } from "$app/navigation";
 
+  let activeSubscription = false;
   let loading = false;
   let error = "";
-  let activeSubscription = false;
 
   // Check if user already has an active subscription
   onMount(async () => {
@@ -38,29 +39,18 @@
       loading = true;
       error = "";
 
-      // Get or create customer ID
-      const customerId = await getOrCreateCustomerId($user.id);
-      if (!customerId) {
-        throw new Error("Failed to create customer");
+      // Create checkout session using the improved API
+      const { url, error: checkoutError } = await createCheckoutSession(
+        plan.stripe_price_id,
+      );
+
+      if (checkoutError) {
+        throw new Error(checkoutError);
       }
 
-      // Create checkout session
-      const response = await fetch("/api/subscriptions/create-checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ priceId: plan.stripe_price_id }),
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create checkout session");
+      if (!url) {
+        throw new Error("Failed to create checkout session");
       }
-
-      const { url } = await response.json();
 
       // Redirect to Stripe Checkout
       window.location.href = url;
@@ -83,7 +73,7 @@
     <h1 class="mb-8 text-center text-4xl font-bold">Choose Your Plan</h1>
 
     {#if activeSubscription}
-      <div class="alert alert-success mb-8">
+      <div class="alert alert-success mb-8" id="active-subscription-alert">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6 flex-shrink-0 stroke-current"
@@ -104,7 +94,7 @@
     {/if}
 
     {#if error}
-      <div class="alert alert-error mb-8">
+      <div class="alert alert-error mb-8" id="subscription-error-alert">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6 flex-shrink-0 stroke-current"
@@ -125,6 +115,7 @@
       {#each pricingPlans as plan}
         <div
           class="subscription-plan card bg-base-200 transition-all hover:shadow-lg"
+          data-plan-id={plan.id}
         >
           <div class="card-body">
             <h2 class="card-title text-2xl">{plan.name}</h2>
@@ -139,7 +130,7 @@
 
             <ul class="space-y-2">
               {#each plan.features as feature}
-                <li class="flex items-center">
+                <li class="plan-feature flex items-center">
                   <svg
                     class="text-accent mr-2 h-5 w-5"
                     fill="currentColor"
