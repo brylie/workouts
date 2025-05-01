@@ -1,9 +1,18 @@
 import { supabase } from "$lib/supabase/client";
 import type { CompletedExerciseV2 } from "$lib/exercises";
 import { fromSupabaseFormat, toSupabaseFormat } from "./models";
+import { isSubscriptionActive } from "$lib/subscription/subscription-service";
 
 // Table name for completed exercises in Supabase
 const COMPLETED_EXERCISES_TABLE = "completed_exercises";
+
+/**
+ * Check if the user has permission to use Supabase storage
+ * This will check if the user has an active subscription
+ */
+async function canUseSupabase(): Promise<boolean> {
+  return await isSubscriptionActive();
+}
 
 /**
  * Save a completed exercise to Supabase
@@ -15,6 +24,11 @@ export async function saveCompletedExerciseToSupabase(
   exercise: CompletedExerciseV2,
   userId: string,
 ): Promise<number> {
+  // Check subscription status
+  if (!(await canUseSupabase())) {
+    throw new Error("Subscription required to save exercises to the cloud");
+  }
+
   const supabaseExercise = toSupabaseFormat(exercise, userId);
 
   try {
@@ -48,6 +62,11 @@ export async function getCompletedExercisesByExerciseIdFromSupabase(
   exerciseId: string,
   userId: string,
 ): Promise<CompletedExerciseV2[]> {
+  // Check subscription status
+  if (!(await canUseSupabase())) {
+    throw new Error("Subscription required to fetch exercises from the cloud");
+  }
+
   const { data, error } = await supabase
     .from(COMPLETED_EXERCISES_TABLE)
     .select("*")
@@ -77,6 +96,11 @@ export async function getCompletedExercisesByDateRangeFromSupabase(
   endDate: Date,
   userId: string,
 ): Promise<CompletedExerciseV2[]> {
+  // Check subscription status
+  if (!(await canUseSupabase())) {
+    throw new Error("Subscription required to fetch exercises from the cloud");
+  }
+
   const { data, error } = await supabase
     .from(COMPLETED_EXERCISES_TABLE)
     .select("*")
@@ -105,6 +129,11 @@ export async function deleteCompletedExerciseFromSupabase(
   id: number,
   userId: string,
 ): Promise<void> {
+  // Check subscription status
+  if (!(await canUseSupabase())) {
+    throw new Error("Subscription required to delete exercises from the cloud");
+  }
+
   const { error } = await supabase
     .from(COMPLETED_EXERCISES_TABLE)
     .delete()
@@ -129,6 +158,11 @@ export async function syncExercisesToSupabase(
   exercises: CompletedExerciseV2[],
   userId: string,
 ): Promise<void> {
+  // Check subscription status
+  if (!(await canUseSupabase())) {
+    throw new Error("Subscription required to sync exercises to the cloud");
+  }
+
   const supabaseExercises = exercises.map((ex) => toSupabaseFormat(ex, userId));
 
   const { error } = await supabase

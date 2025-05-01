@@ -1,6 +1,8 @@
 <script lang="ts">
   import { getCompletedExercisesByDateRange } from "$lib/database";
   import type { CompletedExerciseV2 } from "$lib/exercises";
+  import SubscriptionGuard from "$lib/components/SubscriptionGuard.svelte";
+  import { user } from "$lib/supabase/client";
 
   import { onMount } from "svelte";
 
@@ -29,7 +31,18 @@
       completedExercises = await getCompletedExercisesByDateRange(start, end);
     } catch (err) {
       console.error("Failed to load exercise history", err);
-      error = "Failed to load exercise history. Please try again later.";
+
+      // Check if error is related to subscription
+      if (
+        err instanceof Error &&
+        err.message.includes("Subscription required")
+      ) {
+        error =
+          "Subscription required to access full exercise history. Please subscribe to unlock this feature.";
+      } else {
+        error = "Failed to load exercise history. Please try again later.";
+      }
+
       completedExercises = [];
     } finally {
       isLoading = false;
@@ -48,6 +61,10 @@
     loadHistory();
   });
 </script>
+
+<svelte:head>
+  <title>Workout History | Workouts App</title>
+</svelte:head>
 
 <div class="min-h-screen bg-gray-900 text-white">
   <div class="container mx-auto px-4 py-8">
@@ -105,70 +122,73 @@
         <p>No exercise history found for the selected date range.</p>
       </div>
     {:else}
-      <div class="mx-auto max-w-4xl overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-700">
-          <thead class="border-b border-gray-700">
-            <tr>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
-              >
-                Date
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
-              >
-                Exercise ID
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
-              >
-                Sets
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
-              >
-                Reps
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
-              >
-                Weight
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
-              >
-                Time
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-700">
-            {#each completedExercises as exercise}
+      <!-- Show exercise history inside SubscriptionGuard -->
+      <SubscriptionGuard>
+        <div class="exercise-history-table mx-auto max-w-4xl overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-700">
+            <thead class="border-b border-gray-700">
               <tr>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
-                  {formatDate(exercise.completed_at)}
-                </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
-                  {exercise.exercise_id}
-                </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
-                  {exercise.metrics.sets ?? "-"}
-                </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
-                  {exercise.metrics.reps ?? "-"}
-                </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
-                  {exercise.metrics.weight
-                    ? `${exercise.metrics.weight}kg`
-                    : "-"}
-                </td>
-                <td class="whitespace-nowrap px-6 py-4 text-sm">
-                  {exercise.metrics.time ?? "-"}
-                </td>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                >
+                  Date
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                >
+                  Exercise ID
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                >
+                  Sets
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                >
+                  Reps
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                >
+                  Weight
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-300"
+                >
+                  Time
+                </th>
               </tr>
-            {/each}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody class="divide-y divide-gray-700">
+              {#each completedExercises as exercise}
+                <tr>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm">
+                    {formatDate(exercise.completed_at)}
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm">
+                    {exercise.exercise_id}
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm">
+                    {exercise.metrics.sets ?? "-"}
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm">
+                    {exercise.metrics.reps ?? "-"}
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm">
+                    {exercise.metrics.weight
+                      ? `${exercise.metrics.weight}kg`
+                      : "-"}
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm">
+                    {exercise.metrics.time ?? "-"}
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      </SubscriptionGuard>
     {/if}
   </div>
 </div>
