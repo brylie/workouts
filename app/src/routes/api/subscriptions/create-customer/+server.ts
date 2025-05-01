@@ -26,7 +26,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
     const supabaseAdmin = getSupabaseAdmin();
 
     // Ensure user is authenticated
-    const session = await locals.getSession();
+    // In SvelteKit 5, we access the session directly from locals
+    const session = locals.session;
     if (!session) {
       return json({ error: "Unauthorized" }, { status: 401 });
     }

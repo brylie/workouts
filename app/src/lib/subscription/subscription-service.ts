@@ -59,7 +59,11 @@ export async function initSubscription(): Promise<void> {
       .eq("user_id", userId)
       .order("created_at", { ascending: false })
       .limit(1)
-      .single();
+      .single()
+      .headers({
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      });
 
     if (error) {
       console.error("Error fetching subscription:", error);
@@ -103,7 +107,11 @@ export async function getOrCreateCustomerId(
       .from("stripe_customers")
       .select("stripe_customer_id")
       .eq("user_id", user_id)
-      .single();
+      .single()
+      .headers({
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      });
 
     if (fetchError && fetchError.code !== "PGRST116") {
       // PGRST116 = not found
@@ -123,8 +131,10 @@ export async function getOrCreateCustomerId(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({ user_id }),
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -135,7 +145,7 @@ export async function getOrCreateCustomerId(
     return customerId;
   } catch (err) {
     console.error("Error in getOrCreateCustomerId:", err);
-    return null;
+    throw err; // Re-throw the error to provide better feedback
   }
 }
 
@@ -157,7 +167,11 @@ export async function isSubscriptionActive(): Promise<boolean> {
       .eq("user_id", userId)
       .order("created_at", { ascending: false })
       .limit(1)
-      .single();
+      .single()
+      .headers({
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      });
 
     if (error || !data) {
       return false;

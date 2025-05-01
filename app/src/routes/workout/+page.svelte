@@ -206,8 +206,8 @@
         <div>
           <button
             class="btn btn-sm btn-primary"
-            on:click={() => (window.location.href = "/subscription")}
-            >View Plans</button
+            onclick={() => (window.location.href = "/subscription")}
+            id="view-subscription-plans">View Plans</button
           >
         </div>
       </div>
